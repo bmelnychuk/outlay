@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_main">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/DarkToolbarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true" />
+
+
+    <RelativeLayout
+        android:id="@+id/githubContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_rippled_rect"
+        android:clickable="true"
+        android:padding="@dimen/spacing_default">
+
+        <com.github.johnkil.print.PrintView
+            android:id="@+id/githubIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/spacing_default"
+            android:clickable="false"
+            app:iconColor="@android:color/white"
+            app:iconFont="fonts/ss-social-regular.otf"
+            app:iconSize="@dimen/toolbar_icon_size"
+            app:iconText="&#xF671;" />
+
+        <TextView
+            android:id="@+id/githubLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/githubIcon"
+            android:clickable="false"
+            android:text="@string/text_github_url"
+            android:textSize="@dimen/text_big" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/githubContainer"
+        android:layout_below="@+id/toolbar">
+
+        <RelativeLayout
+            android:paddingLeft="@dimen/spacing_default"
+            android:paddingRight="@dimen/spacing_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColorLink="@color/accent"
+                android:id="@+id/aboutText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_default"
+                android:layout_marginRight="@dimen/spacing_default"
+                android:text="@string/text_about"
+                android:textSize="@dimen/text_very_big" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

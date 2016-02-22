@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="primary">#242539</color>-->
+    <color name="primary">#2A2B40</color>
+    <color name="primary_dark">#2A2B40</color>
+    <color name="highlight">#3777C1</color>
+    <color name="accent">#F1C632</color>
+    <color name="background_main">#2A2B40</color>
+    <color name="dark">#242539</color>
+
+    <color name="icon_inactive">#757575</color>
+    <color name="icon_active">#BDBDBD</color>
+    <color name="separator">#9B99A6</color>
+
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_highlighted">#3777C1</color>
+    <color name="text_secondary">#9B99A6</color>
+    <color name="text_disabled">#B8B8B8</color>
+
+    <color name="material_drawer_background">@color/background_main</color>
+    <color name="material_drawer_primary_text">@color/material_drawer_dark_primary_icon</color>
+    <color name="material_drawer_primary_icon">@color/material_drawer_dark_primary_text</color>
+    <color name="material_drawer_dark_selected">#202020</color>
+
+
+    <color name="red">#F44336</color>
+    <color name="pink">#E91E63</color>
+    <color name="purple">#9C27B0</color>
+    <color name="deep_purple">#673AB7</color>
+    <color name="indigo">#3F51B5</color>
+    <color name="blue">#2196F3</color>
+    <color name="light_blue">#03A9F4</color>
+    <color name="cyan">#00BCD4</color>
+    <color name="teal">#009688</color>
+    <color name="green">#4CAF50</color>
+    <color name="light_green">#8BC34A</color>
+    <color name="amber">#FF9800</color>
+    <color name="orange">#FF5722</color>
+    <color name="brown">#795548</color>
+    <color name="grey">#9E9E9E</color>
+    <color name="blue_grey">#607D8B</color>
+
+    <array name="categoryColors">
+        <item>@color/red</item>
+        <item>@color/pink</item>
+        <item>@color/purple</item>
+        <item>@color/deep_purple</item>
+        <item>@color/indigo</item>
+        <item>@color/blue</item>
+        <item>@color/light_blue</item>
+        <item>@color/cyan</item>
+        <item>@color/teal</item>
+        <item>@color/green</item>
+        <item>@color/light_green</item>
+        <item>@color/amber</item>
+        <item>@color/orange</item>
+        <item>@color/brown</item>
+        <item>@color/grey</item>
+        <item>@color/blue_grey</item>
+    </array>
+</resources>

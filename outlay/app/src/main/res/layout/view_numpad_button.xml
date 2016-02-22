@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:padding="@dimen/spacing_very_small"
+        android:layout_centerInParent="true"
+        android:id="@+id/textValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_rippled"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:textColor="@color/accent"
+        android:textSize="@dimen/text_number" />
+</merge>

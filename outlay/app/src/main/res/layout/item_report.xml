@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/reportContainer"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:layout_marginBottom="@dimen/spacing_tiny">
+
+    <com.outlay.view.progress.ProgressLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:emptyColor="@android:color/transparent" />
+
+    <com.github.johnkil.print.PrintView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/spacing_default"
+        android:layout_marginRight="@dimen/spacing_default"
+        app:iconColor="@android:color/white"
+        app:iconSize="@dimen/report_category_icon" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/icon"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="sans-serif-light"
+        android:padding="@dimen/spacing_default"
+        android:textStyle="bold" />
+
+</RelativeLayout>

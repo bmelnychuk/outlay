@@ -1,0 +1,56 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+ext {
+    configuration = [
+            package             : "com.outlay",
+            buildToolsVersion   : "23.0.2",
+            compileVersion      : 23,
+            minSdk              : 17,
+            targetSdk           : 23,
+            version_code        : 2,
+            version_name        : "1.1",
+    ]
+
+    libraries = [
+            supportVersion      : "23.1.1",
+            dagger              : "2.0.2",
+            rxjava              : "1.1.0",
+            rxandroid           : "1.1.0",
+            butterknife         : "7.0.1",
+            javax_annotation    : "10.0-b28",
+            circleimageview     : "2.0.0",
+            picasso             : "2.5.2",
+            greenDao            : "2.0.0",
+    ]
+}
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'me.tatarka:gradle-retrolambda:3.1.0'
+        classpath 'com.android.databinding:dataBinder:1.0-rc4'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven {
+            url  "http://dl.bintray.com/dasar/maven"
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

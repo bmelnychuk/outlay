@@ -1,0 +1,57 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.Material.Custom" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
+
+        <item name="android:actionModeBackground">@color/primary_dark</item>
+        <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
+        <!-- DISABLE MULTITOUCH -->
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:splitMotionEvents">false</item>
+
+        <!-- CUSTOM CONTROLS -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
+        <item name="android:textViewStyle">@style/Widget.Custom.TextView</item>
+    </style>
+
+    <style name="Widget.Custom.TextView" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="DarkToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
+    <style name="DatePicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/primary</item>
+    </style>
+
+    <style name="DrawerHeaderLabel">
+        <item name="android:textSize">@dimen/text_big</item>
+        <item name="android:paddingBottom">@dimen/spacing_small</item>
+        <item name="android:paddingTop">@dimen/spacing_small</item>
+        <item name="android:paddingLeft">@dimen/spacing_default</item>
+        <item name="android:paddingRight">@dimen/spacing_default</item>
+    </style>
+
+    <style name="CustomEditText" parent="@android:style/Widget.EditText">
+        <item name="met_floatingLabel">highlight</item>
+        <item name="met_textColorHint">@color/text_secondary</item>
+        <item name="met_textColor">#ffffff</item>
+        <item name="met_baseColor">#ffffff</item>
+        <item name="met_primaryColor">@color/accent</item>
+    </style>
+
+</resources>

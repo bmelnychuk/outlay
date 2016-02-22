@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_main">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/DarkToolbarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginLeft="@dimen/spacing_default"
+        android:layout_marginRight="@dimen/spacing_default"
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/categoryInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:textColor="@color/text_primary"
+            android:id="@+id/categoryName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_category_name" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <uz.shift.colorpicker.LineColorPicker
+        android:layout_margin="@dimen/spacing_default"
+        android:layout_below="@+id/categoryInputLayout"
+        android:id="@+id/colorPicker"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        app:colors="@array/categoryColors"
+        app:orientation="horizontal"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/iconsGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/colorPicker"
+        android:layout_marginLeft="@dimen/spacing_default"
+        android:layout_marginRight="@dimen/spacing_default"
+        android:scrollbars="none" />
+</RelativeLayout>

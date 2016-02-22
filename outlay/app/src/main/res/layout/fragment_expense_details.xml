@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_main">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/DarkToolbarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:paddingLeft="@dimen/spacing_default"
+        android:paddingRight="@dimen/spacing_default">
+
+        <com.github.johnkil.print.PrintView
+            android:id="@+id/categoryIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/categoryTitle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignTop="@+id/categoryTitle"
+            android:layout_marginRight="@dimen/spacing_default"
+            app:iconCode="@integer/ic_squares"
+            app:iconFont="fonts/font-outlay.ttf"
+            app:iconColor="@color/icon_inactive"
+            app:iconSize="@dimen/report_category_icon" />
+
+        <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+            android:id="@+id/categoryTitle"
+            style="@style/CustomEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/categoryIcon"
+            android:hint="@string/label_category"
+            android:textColor="@color/text_primary"
+            app:met_floatingLabel="highlight" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/amountInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/categoryTitle">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_amount"
+                android:inputType="numberDecimal"
+                android:textColor="@color/text_primary" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/dateInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/amountInputLayout">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:editable="false"
+                android:hint="@string/label_date"
+                android:textColor="@color/text_primary" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/noteInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dateInputLayout">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/note"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/label_note"
+                android:textColor="@color/text_primary" />
+
+        </android.support.design.widget.TextInputLayout>
+    </RelativeLayout>
+</RelativeLayout>

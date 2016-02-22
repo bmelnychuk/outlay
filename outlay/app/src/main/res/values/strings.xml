@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">Outlay</string>
+    <string name="menu_item_categories">Categories</string>
+    <string name="menu_item_feedback">Feedback</string>
+    <string name="menu_item_about">About</string>
+
+    <string name="info_expense_created">You just spent %1$.2f on %2$s</string>
+
+    <string name="error_no_email_clients">No emails client installed</string>
+    <string name="error_category_name_empty">Category can not be empty</string>
+    <string name="error_category_name_invalid">Invalid category name</string>
+    <string name="error_amount_invalid">Invalid amount</string>
+    <string name="error_category_icon">Icon was not selected</string>
+
+    <string name="label_send_email">Send email</string>
+    <string name="label_undo">Undo</string>
+    <string name="label_day">Day</string>
+    <string name="label_week">Week</string>
+    <string name="label_month">Month</string>
+    <string name="label_category_name">Category name</string>
+    <string name="label_amount">Amount</string>
+    <string name="label_date">Date</string>
+    <string name="label_note">Note</string>
+    <string name="label_today">Today</string>
+    <string name="label_spent_today">Spent today</string>
+    <string name="label_this_week">This week</string>
+    <string name="label_this_month">This month</string>
+    <string name="label_spent_the_most">Spent the most on</string>
+    <string name="label_no_expenses">No expenses here</string>
+    <string name="label_save">Save</string>
+    <string name="label_delete">Delete</string>
+    <string name="label_summary">Summary</string>
+    <string name="label_expenses_list">Expenses List</string>
+
+    <string name="caption_about">About</string>
+    <string name="caption_categories">Categories</string>
+    <string name="caption_edit_category">Edit Category</string>
+    <string name="caption_new_category">New Category</string>
+    <string name="caption_edit_expense">Edit Expense</string>
+    <string name="caption_new_expense">New Expense</string>
+    <string name="caption_expenses">Expenses</string>
+    <string name="label_category">Category</string>
+
+    <string name="text_about"><![CDATA[
+        <p>Outlay makes tracking your expenses so easy and simple.
+        Fewest taps are necessary to create an expense. Customize your categories with colors, icons, order.
+        Reports with charts give overview of exactly where your money is going each day, week or month.</p>
+
+        <p>App covers all of my current needs, but there are a lot of possible improvements, so feel free to request features and share your feedback.
+        As its open-source you can tune it as you like.</p>
+
+        <p>* Inspired by <a href="https://itunes.apple.com/us/app/expenses-ok-excellent-expense/id932322041">OK Expenses</a></p>
+        ]]>
+    </string>
+    <string name="text_github_url">http://github.com/bmelnychuk/outlay</string>
+
+    <string name="category_car">Car</string>
+    <string name="category_house">House</string>
+    <string name="category_sport">Sport</string>
+    <string name="category_travel">Travel</string>
+    <string name="category_clothes">Clothes</string>
+    <string name="category_grocery">Grocery</string>
+    <string name="category_games">Games</string>
+    <string name="category_tickets">Tickets</string>
+
+</resources>
