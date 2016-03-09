@@ -4,6 +4,7 @@ outlay
 
 
 Proeject to demonstrate you very simple usage of:
+------------
 
 - Dagger 2
 - greenDao (+ custom queries)
@@ -12,6 +13,7 @@ Proeject to demonstrate you very simple usage of:
 - Basics of MVP (it's rather for understanding for beginers)
 - Material Design tools
 - Iconic font usage
+
 
 
 
