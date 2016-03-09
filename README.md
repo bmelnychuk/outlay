@@ -3,7 +3,7 @@ outlay
 [![Outlay on Google Play Store](http://style.anu.edu.au/_anu/images/icons/icon-google-play-small.png)](https://play.google.com/store/apps/details?id=com.outlay)
 
 
-Proeject to demonstrate you very simple usage of:
+Proeject to demonstrate very simple usage of:
 ------------
 
 - Dagger 2
