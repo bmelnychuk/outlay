@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.outlay.App;
 import com.outlay.R;
 import com.outlay.adapter.CategoriesDraggableGridAdapter;
-import com.outlay.dao.Category;
+import com.outlay.domain.model.Category;
 import com.outlay.presenter.CategoriesPresenter;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Page;

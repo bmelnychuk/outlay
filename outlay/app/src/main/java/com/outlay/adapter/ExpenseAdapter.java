@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.github.johnkil.print.PrintView;
 import com.outlay.R;
 import com.outlay.dao.Expense;
-import com.outlay.utils.DateUtils;
+import com.outlay.core.utils.DateUtils;
 import com.outlay.utils.FormatUtils;
 import com.outlay.utils.IconUtils;
 

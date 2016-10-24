@@ -12,6 +12,11 @@ public final class IconUtils {
         printView.setIconColor(category.getColor());
     }
 
+    public static void loadCategoryIcon(com.outlay.domain.model.Category category, PrintView printView) {
+        loadCategoryIcon(category.getIcon(), printView);
+        printView.setIconColor(category.getColor());
+    }
+
     public static void loadCategoryIcon(String icon, PrintView printView) {
         printView.setIconFont("fonts/font-outlay.ttf");
         printView.setIconCodeRes(ResourceUtils.getIntegerResource(printView.getContext(), icon));

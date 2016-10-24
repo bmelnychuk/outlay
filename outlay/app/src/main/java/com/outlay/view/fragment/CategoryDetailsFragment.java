@@ -18,7 +18,7 @@ import android.widget.EditText;
 import com.outlay.App;
 import com.outlay.R;
 import com.outlay.adapter.IconsGridAdapter;
-import com.outlay.dao.Category;
+import com.outlay.domain.model.Category;
 import com.outlay.helper.TextWatcherAdapter;
 import com.outlay.model.Icon;
 import com.outlay.presenter.CategoryDetailsPresenter;
@@ -137,9 +137,9 @@ public class CategoryDetailsFragment extends BaseFragment {
 
     @Override
     public void onDestroy() {
-        if(category.getId() != null) {
-            category.refresh();
-        }
+//        if(category.getId() != null) {
+//            category.refresh();
+//        }
         super.onDestroy();
     }
 

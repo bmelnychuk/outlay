@@ -20,7 +20,7 @@ import com.outlay.dao.Category;
 import com.outlay.dao.Expense;
 import com.outlay.helper.TextWatcherAdapter;
 import com.outlay.presenter.ExpensesDetailsPresenter;
-import com.outlay.utils.DateUtils;
+import com.outlay.core.utils.DateUtils;
 import com.outlay.utils.FormatUtils;
 import com.outlay.utils.IconUtils;
 import com.outlay.utils.ResourceUtils;

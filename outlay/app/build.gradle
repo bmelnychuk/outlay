@@ -62,11 +62,11 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':domain')
 
     //Google
-    apt "com.google.dagger:dagger-compiler:${libs.dagger}"
-    compile "com.google.dagger:dagger-compiler:${libs.dagger}"
-    provided "javax.annotation:jsr250-api:1.0"
+    compile 'com.google.dagger:dagger:2.7'
+    apt 'com.google.dagger:dagger-compiler:2.7'
 
     //Support
     compile "com.android.support:support-v13:${libs.supportVersion}"
@@ -93,7 +93,6 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.0'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
 
-    compile 'joda-time:joda-time:2.9.2'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }

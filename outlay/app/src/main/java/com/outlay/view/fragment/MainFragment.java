@@ -22,22 +22,21 @@ import android.widget.TextView;
 import com.outlay.App;
 import com.outlay.R;
 import com.outlay.adapter.CategoriesGridAdapter;
-import com.outlay.dao.Category;
-import com.outlay.dao.Expense;
+import com.outlay.domain.model.DateSummary;
 import com.outlay.helper.TextWatcherAdapter;
 import com.outlay.model.Summary;
 import com.outlay.presenter.MainFragmentPresenter;
-import com.outlay.utils.DateUtils;
+import com.outlay.core.utils.DateUtils;
 import com.outlay.utils.DeviceUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Page;
 import com.outlay.view.activity.BaseActivity;
-import com.outlay.view.alert.Alert;
 import com.outlay.view.dialog.DatePickerFragment;
 import com.outlay.view.numpad.NumpadEditable;
 import com.outlay.view.numpad.NumpadView;
 import com.outlay.view.numpad.SimpleNumpadValidator;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -147,9 +146,9 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
         adapter = new CategoriesGridAdapter(new CategoriesGridAdapter.Style(categoriesGridHeight / 2));
         adapter.setOnCategoryClickListener(c -> {
             if (validator.valid(amountText.getText().toString())) {
-                Expense e = new Expense();
+                com.outlay.domain.model.Expense e = new com.outlay.domain.model.Expense();
                 e.setCategory(c);
-                e.setAmount(Double.valueOf(amountText.getText().toString()));
+                e.setAmount(new BigDecimal(amountText.getText().toString()));
                 e.setReportedAt(selectedDate);
                 presenter.insertExpense(e);
                 presenter.loadSummary(new Date());
@@ -157,13 +156,13 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
 
                 String message = getString(R.string.info_expense_created);
                 message = String.format(message, e.getAmount(), e.getCategory().getTitle());
-                Alert.info(getRootView(), message,
-                    v -> {
-                        e.delete();
-                        presenter.loadSummary(new Date());
-                        amountText.setText(String.valueOf(e.getAmount()));
-                    }
-                );
+//                Alert.info(getRootView(), message,
+//                    v -> {
+//                        e.delete();
+//                        presenter.loadSummary(new Date());
+//                        amountText.setText(String.valueOf(e.getAmount()));
+//                    }
+//                );
             } else {
                 validator.onInvalidInput(amountText.getText().toString());
             }
@@ -245,11 +244,11 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
         amountText.startAnimation(shakeAnimation);
     }
 
-    public void displaySummary(Summary summary) {
-        ((BaseActivity) getActivity()).updateDrawerData(summary);
+    public void displaySummary(DateSummary dateSummary) {
+        ((BaseActivity) getActivity()).updateDrawerData(dateSummary);
     }
 
-    public void displayCategories(List<Category> categoryList) {
+    public void displayCategories(List<com.outlay.domain.model.Category> categoryList) {
         adapter.setItems(categoryList);
     }
 }

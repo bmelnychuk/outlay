@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class PreferencesManager {
+import com.outlay.core.data.AppPreferences;
+
+public class PreferencesManager implements AppPreferences {
     private static final String PREF_FIRST_RUN = "_firstRun";
 
     private Context context;
@@ -56,5 +58,10 @@ public class PreferencesManager {
 
     public boolean isFirstRun() {
         return getBoolean(PREF_FIRST_RUN, true);
+    }
+
+    @Override
+    public void setFirstRun(boolean firstRun) {
+        putFirstRun(firstRun);
     }
 }

@@ -16,10 +16,10 @@ import android.view.ViewGroup;
 import com.outlay.App;
 import com.outlay.R;
 import com.outlay.adapter.ReportAdapter;
+import com.outlay.domain.model.Report;
 import com.outlay.helper.OnTabSelectedListenerAdapter;
-import com.outlay.model.Report;
 import com.outlay.presenter.ReportPresenter;
-import com.outlay.utils.DateUtils;
+import com.outlay.core.utils.DateUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.dialog.DatePickerFragment;
 

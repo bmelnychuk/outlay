@@ -8,7 +8,7 @@ import com.outlay.dao.DaoSession;
 import com.outlay.dao.Expense;
 import com.outlay.dao.ExpenseDao;
 import com.outlay.model.Summary;
-import com.outlay.utils.DateUtils;
+import com.outlay.core.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,7 +48,7 @@ public class OutlayDatabaseApi {
     }
 
     public long insertCategory(Category category) {
-        return categoryDao.insert(category);
+        return categoryDao.insertOrReplace(category);
     }
 
     public void deleteCategory(Category category) {
@@ -68,8 +68,9 @@ public class OutlayDatabaseApi {
         expenseDao.delete(e);
     }
 
-    public long insertExpense(Expense expense) {
-        return expenseDao.insert(expense);
+    public Expense insertExpense(Expense expense) {
+        expenseDao.insert(expense);
+        return expense;
     }
 
     public void deleteExpensesByCategory(Category category) {
@@ -79,7 +80,7 @@ public class OutlayDatabaseApi {
 
     public Observable<List<Category>> insertCategories(List<Category> categories) {
         return Observable.create(subscriber -> {
-            categoryDao.insertInTx(categories);
+            categoryDao.insertOrReplaceInTx(categories);
             subscriber.onNext(categories);
             subscriber.onCompleted();
         });
@@ -99,20 +100,24 @@ public class OutlayDatabaseApi {
 
     public Observable<List<Expense>> getExpenses(Date startDate, Date endDate, Long categoryId) {
         if (categoryId == null) {
-            return Observable.defer(() -> Observable.just(
-                            expenseDao.queryBuilder().where(
-                                    ExpenseDao.Properties.ReportedAt.ge(startDate),
-                                    ExpenseDao.Properties.ReportedAt.le(endDate)
-                            ).list())
-            );
+            return Observable.create(subscriber -> {
+                List<Expense> expenses = expenseDao.queryBuilder().where(
+                        ExpenseDao.Properties.ReportedAt.ge(startDate),
+                        ExpenseDao.Properties.ReportedAt.le(endDate)
+                ).list();
+                subscriber.onNext(expenses);
+                subscriber.onCompleted();
+            });
         } else {
-            return Observable.defer(() -> Observable.just(
-                            expenseDao.queryBuilder().where(
-                                    ExpenseDao.Properties.ReportedAt.ge(startDate),
-                                    ExpenseDao.Properties.ReportedAt.le(endDate),
-                                    ExpenseDao.Properties.CategoryId.eq(categoryId)
-                            ).list())
-            );
+            return Observable.create(subscriber -> {
+                List<Expense> expenses = expenseDao.queryBuilder().where(
+                        ExpenseDao.Properties.ReportedAt.ge(startDate),
+                        ExpenseDao.Properties.ReportedAt.le(endDate),
+                        ExpenseDao.Properties.CategoryId.eq(categoryId)
+                ).list();
+                subscriber.onNext(expenses);
+                subscriber.onCompleted();
+            });
         }
     }
 

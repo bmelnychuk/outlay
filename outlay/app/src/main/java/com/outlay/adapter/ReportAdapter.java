@@ -16,11 +16,12 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.outlay.R;
-import com.outlay.model.Report;
+import com.outlay.domain.model.Report;
 import com.outlay.utils.FormatUtils;
 import com.outlay.utils.IconUtils;
 import com.outlay.view.progress.ProgressLayout;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,12 +84,12 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (holder instanceof ReportViewHolder) {
             ReportViewHolder reportHolder = (ReportViewHolder) holder;
             Report currentReport = reports.get(position - 1);
-            reportHolder.amountText.setText(FormatUtils.formatAmount(currentReport.getAmount()));
-            reportHolder.titleText.setText(currentReport.getTitle());
-            IconUtils.loadCategoryIcon(currentReport.getIcon(), reportHolder.icon);
+            reportHolder.amountText.setText(FormatUtils.formatAmount(currentReport.getTotalAmount()));
+            reportHolder.titleText.setText(currentReport.getCategory().getTitle());
+            IconUtils.loadCategoryIcon(currentReport.getCategory().getIcon(), reportHolder.icon);
             reportHolder.progressLayout.setMaxProgress((int) (maxProgress * 10));
-            reportHolder.progressLayout.setCurrentProgress((int) (currentReport.getAmount() * 10));
-            reportHolder.icon.setIconColor(currentReport.getColor());
+            reportHolder.progressLayout.setCurrentProgress(currentReport.getTotalAmount().multiply(new BigDecimal(10)).intValue());
+            reportHolder.icon.setIconColor(currentReport.getCategory().getColor());
             reportHolder.reportContainer.setOnClickListener(v -> {
                 if (onItemClickListener != null) {
                     onItemClickListener.onItemClicked(currentReport);
@@ -168,10 +169,10 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         double sum = 0;
         for (int i = 0; i < reports.size(); i++) {
             Report r = reports.get(i);
-            sum += r.getAmount();
-            entries.add(new Entry((int) (r.getAmount() * 1000), i));
-            labels.add(r.getTitle());
-            colors.add(r.getColor());
+            sum += r.getTotalAmount().doubleValue();
+            entries.add(new Entry((int) (r.getTotalAmount().doubleValue() * 1000), i));
+            labels.add(r.getCategory().getTitle());
+            colors.add(r.getCategory().getColor());
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Outlay");
@@ -180,7 +181,7 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         dataSet.setColors(colors);
 
         PieData data = new PieData(labels, dataSet);
-        data.setValueFormatter((value, entry, dataSetIndex, viewPortHandler) -> FormatUtils.formatAmount((double)value / 1000));
+        data.setValueFormatter((value, entry, dataSetIndex, viewPortHandler) -> FormatUtils.formatAmount((double) value / 1000));
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.WHITE);
         chart.setData(data);
@@ -192,8 +193,8 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private double getMaxProgress() {
         double max = -1;
         for (Report r : reports) {
-            if (max < r.getAmount()) {
-                max = r.getAmount();
+            if (max < r.getTotalAmount().doubleValue()) {
+                max = r.getTotalAmount().doubleValue();
             }
         }
         return max;

@@ -18,7 +18,7 @@ import com.outlay.adapter.ExpenseAdapter;
 import com.outlay.dao.Category;
 import com.outlay.dao.Expense;
 import com.outlay.presenter.ExpensesListPresenter;
-import com.outlay.utils.DateUtils;
+import com.outlay.core.utils.DateUtils;
 import com.outlay.utils.IconUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Page;

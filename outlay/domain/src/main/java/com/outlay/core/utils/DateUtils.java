@@ -1,4 +1,4 @@
-package com.outlay.utils;
+package com.outlay.core.utils;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
@@ -88,5 +88,13 @@ public final class DateUtils {
     public static Date getDayEnd(Date date) {
         LocalTime time = new LocalTime().withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59);
         return LocalDate.fromDateFields(date).toDateTime(time).toDate();
+    }
+
+    public static Date getMin(Date date1, Date date2) {
+        return new DateTime(date1).isAfter(new DateTime(date2)) ? date2 : date1;
+    }
+
+    public static Date getMax(Date date1, Date date2) {
+        return new DateTime(date1).isAfter(new DateTime(date2)) ? date1 : date2;
     }
 }

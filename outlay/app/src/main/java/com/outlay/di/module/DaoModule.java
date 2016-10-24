@@ -3,10 +3,15 @@ package com.outlay.di.module;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.outlay.api.OutlayDatabaseApi;
 import com.outlay.dao.CategoryDao;
 import com.outlay.dao.DaoMaster;
 import com.outlay.dao.DaoSession;
 import com.outlay.dao.ExpenseDao;
+import com.outlay.domain.repository.CategoryRepository;
+import com.outlay.domain.repository.ExpenseRepository;
+import com.outlay.impl.CategoryRepositoryImpl;
+import com.outlay.impl.ExpenseRepositoryImpl;
 
 import javax.inject.Singleton;
 
@@ -54,5 +59,23 @@ public class DaoModule {
     @Singleton
     public ExpenseDao provideExpenseDaoDao(DaoSession session) {
         return session.getExpenseDao();
+    }
+
+    @Provides
+    @Singleton
+    public CategoryRepository provideCategoryRepository(
+            OutlayDatabaseApi outlayDatabaseApi,
+            Application application
+    ) {
+        return new CategoryRepositoryImpl(outlayDatabaseApi, application);
+    }
+
+    @Provides
+    @Singleton
+    public ExpenseRepository provideExpenseRepository(
+            OutlayDatabaseApi outlayDatabaseApi,
+            Application application
+    ) {
+        return new ExpenseRepositoryImpl(outlayDatabaseApi, application);
     }
 }

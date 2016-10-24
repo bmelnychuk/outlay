@@ -18,7 +18,8 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.outlay.Constants;
 import com.outlay.R;
-import com.outlay.dao.Category;
+import com.outlay.domain.model.Category;
+import com.outlay.domain.model.DateSummary;
 import com.outlay.model.Summary;
 import com.outlay.utils.IconUtils;
 import com.outlay.view.alert.Alert;
@@ -113,7 +114,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void updateDrawerData(Summary summary) {
+    public void updateDrawerData(DateSummary summary) {
         if (headerView != null) {
             TextView dateAmount = (TextView) headerView.findViewById(R.id.dateAmount);
             TextView weekAmount = (TextView) headerView.findViewById(R.id.weekAmount);
