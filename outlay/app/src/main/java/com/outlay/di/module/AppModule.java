@@ -1,7 +1,6 @@
 package com.outlay.di.module;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.outlay.App;
 import com.outlay.core.data.AppPreferences;
@@ -9,7 +8,7 @@ import com.outlay.core.executor.PostExecutionThread;
 import com.outlay.core.executor.ThreadExecutor;
 import com.outlay.executor.JobExecutor;
 import com.outlay.executor.UIThread;
-import com.outlay.preferences.PreferencesManager;
+import com.outlay.impl.AndroidPreferencesManager;
 
 import javax.inject.Singleton;
 
@@ -35,8 +34,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    PreferencesManager providePreferencesManager() {
-        return new PreferencesManager(mApplication);
+    AndroidPreferencesManager providePreferencesManager() {
+        return new AndroidPreferencesManager(mApplication);
     }
 
     @Provides
@@ -54,6 +53,6 @@ public class AppModule {
     @Provides
     @Singleton
     AppPreferences provideAppPreferences() {
-        return new PreferencesManager(mApplication);
+        return new AndroidPreferencesManager(mApplication);
     }
 }

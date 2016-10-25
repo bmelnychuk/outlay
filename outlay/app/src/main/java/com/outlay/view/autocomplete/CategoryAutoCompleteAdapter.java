@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.github.johnkil.print.PrintView;
 import com.outlay.R;
-import com.outlay.dao.Category;
+import com.outlay.domain.model.Category;
 import com.outlay.utils.IconUtils;
 
 import java.util.ArrayList;

@@ -16,11 +16,12 @@ import android.widget.EditText;
 import com.github.johnkil.print.PrintView;
 import com.outlay.App;
 import com.outlay.R;
-import com.outlay.dao.Category;
-import com.outlay.dao.Expense;
-import com.outlay.helper.TextWatcherAdapter;
-import com.outlay.presenter.ExpensesDetailsPresenter;
 import com.outlay.core.utils.DateUtils;
+import com.outlay.domain.model.Category;
+import com.outlay.domain.model.Expense;
+import com.outlay.view.helper.TextWatcherAdapter;
+import com.outlay.mvp.presenter.ExpensesDetailsPresenter;
+import com.outlay.mvp.view.ExpenseDetailsView;
 import com.outlay.utils.FormatUtils;
 import com.outlay.utils.IconUtils;
 import com.outlay.utils.ResourceUtils;
@@ -28,6 +29,7 @@ import com.outlay.view.autocomplete.CategoryAutoCompleteAdapter;
 import com.outlay.view.dialog.DatePickerFragment;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +42,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
  */
-public class ExpensesDetailsFragment extends BaseFragment {
+public class ExpensesDetailsFragment extends BaseFragment implements ExpenseDetailsView {
 
     public static final String ARG_EXPENSE_ID = "_argExpenseId";
     public static final String ARG_DATE = "_argDate";
@@ -114,7 +116,6 @@ public class ExpensesDetailsFragment extends BaseFragment {
                 break;
             case R.id.action_delete:
                 presenter.deleteExpense(getExpense());
-                expense.setId(null);
                 getActivity().onBackPressed();
                 break;
         }
@@ -145,7 +146,7 @@ public class ExpensesDetailsFragment extends BaseFragment {
             presenter.loadExpense(expenseId);
         } else {
             getActivity().setTitle(getString(R.string.caption_new_expense));
-            displayExpense(new Expense());
+            showExpense(new Expense());
         }
         amount.addTextChangedListener(new TextWatcherAdapter() {
             @Override
@@ -167,11 +168,13 @@ public class ExpensesDetailsFragment extends BaseFragment {
         datePickerFragment.show(getChildFragmentManager(), "datePicker");
     }
 
-    public void setCategories(List<Category> categories) {
+    @Override
+    public void showCategories(List<Category> categories) {
         autoCompleteAdapter.setItems(categories);
     }
 
-    public void displayExpense(Expense e) {
+    @Override
+    public void showExpense(Expense e) {
         this.expense = e;
         if (e.getId() != null) {
             selectedCategory = e.getCategory();
@@ -191,7 +194,7 @@ public class ExpensesDetailsFragment extends BaseFragment {
             expense.setCategory(selectedCategory);
         }
         if (!TextUtils.isEmpty(amount.getText().toString())) {
-            expense.setAmount(Double.valueOf(amount.getText().toString()));
+            expense.setAmount(new BigDecimal(amount.getText().toString()));
         }
         expense.setNote(note.getText().toString());
         return expense;
@@ -219,13 +222,5 @@ public class ExpensesDetailsFragment extends BaseFragment {
         }
 
         return result;
-    }
-
-    @Override
-    public void onDestroy() {
-        if (expense.getId() != null) {
-            expense.refresh();
-        }
-        super.onDestroy();
     }
 }

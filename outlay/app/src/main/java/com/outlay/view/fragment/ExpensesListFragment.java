@@ -14,11 +14,13 @@ import android.widget.TextView;
 import com.github.johnkil.print.PrintView;
 import com.outlay.App;
 import com.outlay.R;
-import com.outlay.adapter.ExpenseAdapter;
-import com.outlay.dao.Category;
-import com.outlay.dao.Expense;
-import com.outlay.presenter.ExpensesListPresenter;
+import com.outlay.view.adapter.ExpenseAdapter;
 import com.outlay.core.utils.DateUtils;
+import com.outlay.domain.model.Category;
+import com.outlay.domain.model.Expense;
+import com.outlay.domain.model.Report;
+import com.outlay.mvp.presenter.ExpensesListPresenter;
+import com.outlay.mvp.view.ExpensesView;
 import com.outlay.utils.IconUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Page;
@@ -34,7 +36,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
  */
-public class ExpensesListFragment extends BaseFragment {
+public class ExpensesListFragment extends BaseFragment implements ExpensesView {
     public static final String ARG_CATEGORY_ID = "_argCategoryId";
     public static final String ARG_DATE_FROM = "_argDateFrom";
     public static final String ARG_DATE_TO = "_argDateTo";
@@ -107,15 +109,6 @@ public class ExpensesListFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
         fab.setImageDrawable(ResourceUtils.getMaterialToolbarIcon(getActivity(), R.string.ic_material_add));
         fab.setOnClickListener(v -> Page.goToExpenseDetails(getActivity(), null));
-
-        if(categoryId != null) {
-            Category category = presenter.getCategoryById(categoryId);
-            IconUtils.loadCategoryIcon(category, filterCategoryIcon);
-            filterCategoryName.setText(category.getTitle());
-        } else {
-            filterCategoryName.setVisibility(View.GONE);
-            filterCategoryIcon.setVisibility(View.GONE);
-        }
         filterDateLabel.setText(getDateLabel());
     }
 
@@ -125,7 +118,7 @@ public class ExpensesListFragment extends BaseFragment {
         presenter.loadExpenses(dateFrom, dateTo, categoryId);
     }
 
-    public void displayExpenses(List<Expense> expenses) {
+    private void displayExpenses(List<Expense> expenses) {
         if (expenses.isEmpty()) {
             noResults.setVisibility(View.VISIBLE);
         } else {
@@ -134,11 +127,27 @@ public class ExpensesListFragment extends BaseFragment {
         }
     }
 
+    private void displayCategory(Category category) {
+        if (category != null) {
+            IconUtils.loadCategoryIcon(category, filterCategoryIcon);
+            filterCategoryName.setText(category.getTitle());
+        } else {
+            filterCategoryName.setVisibility(View.GONE);
+            filterCategoryIcon.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void showReport(Report report) {
+        displayExpenses(report.getExpenses());
+        displayCategory(report.getCategory());
+    }
+
     private String getDateLabel() {
         String dateFromStr = DateUtils.toShortString(dateFrom);
         String dateToStr = DateUtils.toShortString(dateTo);
         String result = dateFromStr;
-        if(!dateFromStr.equals(dateToStr)) {
+        if (!dateFromStr.equals(dateToStr)) {
             result += " - " + dateToStr;
         }
         return result;

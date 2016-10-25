@@ -15,12 +15,14 @@ import android.view.ViewGroup;
 
 import com.outlay.App;
 import com.outlay.R;
-import com.outlay.adapter.ReportAdapter;
-import com.outlay.domain.model.Report;
-import com.outlay.helper.OnTabSelectedListenerAdapter;
-import com.outlay.presenter.ReportPresenter;
+import com.outlay.view.adapter.ReportAdapter;
 import com.outlay.core.utils.DateUtils;
+import com.outlay.domain.model.Report;
+import com.outlay.view.helper.OnTabSelectedListenerAdapter;
+import com.outlay.mvp.presenter.ReportPresenter;
+import com.outlay.mvp.view.StatisticView;
 import com.outlay.utils.ResourceUtils;
+import com.outlay.view.Page;
 import com.outlay.view.dialog.DatePickerFragment;
 
 import java.util.Calendar;
@@ -35,7 +37,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
  */
-public class ReportFragment extends BaseFragment {
+public class ReportFragment extends BaseFragment implements StatisticView {
     public static final String ARG_DATE = "_argDate";
 
     public static final int PERIOD_DAY = 0;
@@ -108,7 +110,7 @@ public class ReportFragment extends BaseFragment {
                 datePickerFragment.show(getChildFragmentManager(), "datePicker");
                 break;
             case R.id.action_list:
-                presenter.goToExpensesList(selectedDate, selectedPeriod);
+                goToExpensesList(selectedDate, selectedPeriod);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -136,10 +138,11 @@ public class ReportFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
         presenter.loadReport(selectedDate, selectedPeriod);
 
-        adapter.setOnItemClickListener(report -> presenter.goToExpensesList(selectedDate, selectedPeriod, report.getCategory().getId()));
+        adapter.setOnItemClickListener(report -> goToExpensesList(selectedDate, selectedPeriod, report.getCategory().getId()));
     }
 
-    public void displayReports(List<Report> reportList) {
+    @Override
+    public void showReports(List<Report> reportList) {
         if (reportList.isEmpty()) {
             noResults.setVisibility(View.VISIBLE);
         } else {
@@ -164,5 +167,31 @@ public class ReportFragment extends BaseFragment {
                 setTitle(DateUtils.toShortString(startDate) + " - " + DateUtils.toShortString(endDate));
                 break;
         }
+    }
+
+    public void goToExpensesList(Date date, int selectedPeriod) {
+        this.goToExpensesList(date, selectedPeriod, null);
+    }
+
+    public void goToExpensesList(Date date, int selectedPeriod, Long category) {
+        date = DateUtils.fillCurrentTime(date);
+        Date startDate = date;
+        Date endDate = date;
+
+        switch (selectedPeriod) {
+            case ReportFragment.PERIOD_DAY:
+                startDate = DateUtils.getDayStart(date);
+                endDate = DateUtils.getDayEnd(date);
+                break;
+            case ReportFragment.PERIOD_WEEK:
+                startDate = DateUtils.getWeekStart(date);
+                endDate = DateUtils.getWeekEnd(date);
+                break;
+            case ReportFragment.PERIOD_MONTH:
+                startDate = DateUtils.getMonthStart(date);
+                endDate = DateUtils.getMonthEnd(date);
+                break;
+        }
+        Page.goToExpensesList(getActivity(), startDate, endDate, category);
     }
 }

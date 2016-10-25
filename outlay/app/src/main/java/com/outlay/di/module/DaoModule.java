@@ -3,15 +3,18 @@ package com.outlay.di.module;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.outlay.api.OutlayDatabaseApi;
-import com.outlay.dao.CategoryDao;
-import com.outlay.dao.DaoMaster;
-import com.outlay.dao.DaoSession;
-import com.outlay.dao.ExpenseDao;
+import com.outlay.data.source.CategoryDataSource;
+import com.outlay.data.source.ExpenseDataSource;
+import com.outlay.database.dao.CategoryDao;
+import com.outlay.database.dao.DaoMaster;
+import com.outlay.database.dao.DaoSession;
+import com.outlay.database.dao.ExpenseDao;
+import com.outlay.database.source.CategoryDatabaseSource;
+import com.outlay.database.source.ExpenseDatabaseSource;
 import com.outlay.domain.repository.CategoryRepository;
 import com.outlay.domain.repository.ExpenseRepository;
 import com.outlay.impl.CategoryRepositoryImpl;
-import com.outlay.impl.ExpenseRepositoryImpl;
+import com.outlay.data.repository.ExpenseRepositoryImpl;
 
 import javax.inject.Singleton;
 
@@ -63,19 +66,33 @@ public class DaoModule {
 
     @Provides
     @Singleton
+    public ExpenseDataSource provideExpenseDataSource(ExpenseDao expenseDao) {
+        return new ExpenseDatabaseSource(expenseDao);
+    }
+
+    @Provides
+    @Singleton
+    public CategoryDataSource provideCategoryDataSource(
+            CategoryDao categoryDao,
+            ExpenseDao expenseDao
+    ) {
+        return new CategoryDatabaseSource(categoryDao, expenseDao);
+    }
+
+    @Provides
+    @Singleton
     public CategoryRepository provideCategoryRepository(
-            OutlayDatabaseApi outlayDatabaseApi,
+            CategoryDataSource categoryDataSource,
             Application application
     ) {
-        return new CategoryRepositoryImpl(outlayDatabaseApi, application);
+        return new CategoryRepositoryImpl(categoryDataSource, application);
     }
 
     @Provides
     @Singleton
     public ExpenseRepository provideExpenseRepository(
-            OutlayDatabaseApi outlayDatabaseApi,
-            Application application
+            ExpenseDataSource expenseDataSource
     ) {
-        return new ExpenseRepositoryImpl(outlayDatabaseApi, application);
+        return new ExpenseRepositoryImpl(expenseDataSource);
     }
 }

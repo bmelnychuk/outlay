@@ -17,11 +17,12 @@ import android.widget.EditText;
 
 import com.outlay.App;
 import com.outlay.R;
-import com.outlay.adapter.IconsGridAdapter;
+import com.outlay.view.adapter.IconsGridAdapter;
 import com.outlay.domain.model.Category;
-import com.outlay.helper.TextWatcherAdapter;
-import com.outlay.model.Icon;
-import com.outlay.presenter.CategoryDetailsPresenter;
+import com.outlay.view.helper.TextWatcherAdapter;
+import com.outlay.mvp.presenter.CategoryDetailsPresenter;
+import com.outlay.mvp.view.CategoryDetailsView;
+import com.outlay.utils.IconUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.alert.Alert;
 
@@ -36,7 +37,7 @@ import uz.shift.colorpicker.LineColorPicker;
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
  */
-public class CategoryDetailsFragment extends BaseFragment {
+public class CategoryDetailsFragment extends BaseFragment implements CategoryDetailsView {
     public static final String ARG_CATEGORY_PARAM = "_argCategoryId";
 
     @Bind(R.id.toolbar)
@@ -97,13 +98,10 @@ public class CategoryDetailsFragment extends BaseFragment {
                 Category category = getCategory();
                 if (validateCategory(category)) {
                     presenter.updateCategory(getCategory());
-                    getActivity().onBackPressed();
                 }
                 break;
             case R.id.action_delete:
                 presenter.deleteCategory(getCategory());
-                this.category.setId(null);
-                getActivity().onBackPressed();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -114,7 +112,7 @@ public class CategoryDetailsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
         iconsGrid.setLayoutManager(gridLayoutManager);
-        adapter = new IconsGridAdapter(Icon.getAll());
+        adapter = new IconsGridAdapter(IconUtils.getAll());
         iconsGrid.setAdapter(adapter);
         colorPicker.setOnColorChangedListener(i -> adapter.setActiveColor(i));
 
@@ -124,7 +122,7 @@ public class CategoryDetailsFragment extends BaseFragment {
             presenter.loadCategory(categoryId);
         } else {
             getActivity().setTitle(getString(R.string.caption_edit_category));
-            displayCategory(new Category());
+            showCategory(new Category());
         }
 
         categoryName.addTextChangedListener(new TextWatcherAdapter() {
@@ -136,14 +134,7 @@ public class CategoryDetailsFragment extends BaseFragment {
     }
 
     @Override
-    public void onDestroy() {
-//        if(category.getId() != null) {
-//            category.refresh();
-//        }
-        super.onDestroy();
-    }
-
-    public void displayCategory(Category category) {
+    public void showCategory(Category category) {
         this.category = category;
 
         if (category.getId() == null) {
@@ -156,6 +147,11 @@ public class CategoryDetailsFragment extends BaseFragment {
             adapter.setActiveItem(category.getIcon(), category.getColor());
             categoryName.setText(category.getTitle());
         }
+    }
+
+    @Override
+    public void finish() {
+        getActivity().onBackPressed();
     }
 
     public Category getCategory() {
@@ -172,7 +168,7 @@ public class CategoryDetailsFragment extends BaseFragment {
             categoryInputLayout.setError(getString(R.string.error_category_name_empty));
             categoryName.requestFocus();
             result = false;
-        } else if(TextUtils.isEmpty(category.getIcon())) {
+        } else if (TextUtils.isEmpty(category.getIcon())) {
             Alert.error(getRootView(), getString(R.string.error_category_icon));
             result = false;
         }

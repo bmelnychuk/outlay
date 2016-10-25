@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 
 import com.outlay.R;
-import com.outlay.api.OutlayDatabaseApi;
+import com.outlay.data.source.CategoryDataSource;
 import com.outlay.domain.model.Category;
 import com.outlay.domain.repository.CategoryRepository;
 
@@ -20,15 +20,15 @@ import rx.Observable;
  */
 
 public class CategoryRepositoryImpl implements CategoryRepository {
-    private OutlayDatabaseApi outlayDatabaseApi;
     private Context context;
+    private CategoryDataSource databaseSource;
 
     @Inject
     public CategoryRepositoryImpl(
-            OutlayDatabaseApi outlayDatabaseApi,
+            CategoryDataSource databaseSource,
             Context context
     ) {
-        this.outlayDatabaseApi = outlayDatabaseApi;
+        this.databaseSource = databaseSource;
         this.context = context;
     }
 
@@ -60,84 +60,26 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
     @Override
     public Observable<List<Category>> getAll() {
-        return outlayDatabaseApi.getCategories()
-                .map(categories -> {
-                    List<Category> result = new ArrayList<>();
-                    for (com.outlay.dao.Category c : categories) {
-                        Category category = new Category();
-                        category.setColor(c.getColor());
-                        category.setIcon(c.getIcon());
-                        category.setOrder(c.getOrder());
-                        category.setId(c.getId());
-                        category.setTitle(c.getTitle());
-                        result.add(category);
-                    }
-                    return result;
-                });
+        return databaseSource.getAll();
     }
 
     @Override
     public Observable<Category> getById(Long id) {
-        return Observable.create(subscriber -> {
-            com.outlay.dao.Category c = outlayDatabaseApi.getCategoryById(id);
-            Category category = new Category();
-            category.setColor(c.getColor());
-            category.setIcon(c.getIcon());
-            category.setOrder(c.getOrder());
-            category.setId(c.getId());
-            category.setTitle(c.getTitle());
-
-            subscriber.onNext(category);
-            subscriber.onCompleted();
-        });
+        return databaseSource.getById(id);
     }
 
     @Override
     public Observable<List<Category>> saveAll(List<Category> categories) {
-        List<com.outlay.dao.Category> toInsert = new ArrayList<>();
-        for (Category c : categories) {
-            com.outlay.dao.Category category = new com.outlay.dao.Category();
-            category.setColor(c.getColor());
-            category.setIcon(c.getIcon());
-            category.setOrder(c.getOrder());
-            category.setId(c.getId());
-            category.setTitle(c.getTitle());
-            toInsert.add(category);
-        }
-
-        return outlayDatabaseApi.insertCategories(toInsert)
-                .map(storedCategories -> {
-                    List<Category> result = new ArrayList<>();
-                    for (com.outlay.dao.Category c : storedCategories) {
-                        Category category = new Category();
-                        category.setColor(c.getColor());
-                        category.setIcon(c.getIcon());
-                        category.setOrder(c.getOrder());
-                        category.setId(c.getId());
-                        category.setTitle(c.getTitle());
-                        result.add(category);
-                    }
-                    return result;
-                });
+        return databaseSource.saveAll(categories);
     }
 
     @Override
     public Observable<Category> save(Category category) {
-        return Observable.create(subscriber -> {
-            com.outlay.dao.Category daoCategory = CategoryAdapter.fromCategory(category);
-            outlayDatabaseApi.insertCategory(daoCategory);
-            subscriber.onNext(CategoryAdapter.toCategory(daoCategory));
-            subscriber.onCompleted();
-        });
+        return databaseSource.save(category);
     }
 
     @Override
     public Observable<Category> remove(Category category) {
-        return Observable.create(subscriber -> {
-            com.outlay.dao.Category daoCategory = CategoryAdapter.fromCategory(category);
-            outlayDatabaseApi.deleteCategory(daoCategory);
-            subscriber.onNext(CategoryAdapter.toCategory(daoCategory));
-            subscriber.onCompleted();
-        });
+        return databaseSource.remove(category);
     }
 }

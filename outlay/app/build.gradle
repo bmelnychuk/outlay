@@ -63,6 +63,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':domain')
+    compile project(':database')
 
     //Google
     compile 'com.google.dagger:dagger:2.7'
@@ -78,9 +79,6 @@ dependencies {
     //Rx
     compile "io.reactivex:rxjava:${libs.rxjava}"
     compile "io.reactivex:rxandroid:${libs.rxandroid}"
-
-    //greenRobot
-    compile "de.greenrobot:greendao:${libs.greenDao}"
 
     //UI
     compile('com.mikepenz:materialdrawer:4.6.4@aar') {

@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.os.Bundle;
 
 import com.outlay.R;
-import com.outlay.model.Report;
 import com.outlay.view.activity.SingleFragmentActivity;
 import com.outlay.view.fragment.CategoryDetailsFragment;
 import com.outlay.view.fragment.ExpensesDetailsFragment;

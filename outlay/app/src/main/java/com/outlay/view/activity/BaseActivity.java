@@ -20,7 +20,7 @@ import com.outlay.Constants;
 import com.outlay.R;
 import com.outlay.domain.model.Category;
 import com.outlay.domain.model.DateSummary;
-import com.outlay.model.Summary;
+import com.outlay.utils.FormatUtils;
 import com.outlay.utils.IconUtils;
 import com.outlay.view.alert.Alert;
 import com.outlay.view.fragment.AboutFragment;
@@ -120,9 +120,9 @@ public class BaseActivity extends AppCompatActivity {
             TextView weekAmount = (TextView) headerView.findViewById(R.id.weekAmount);
             TextView monthAmount = (TextView) headerView.findViewById(R.id.monthAmount);
 
-            dateAmount.setText(String.valueOf(summary.getDayAmount()));
-            weekAmount.setText(String.valueOf(summary.getWeekAmount()));
-            monthAmount.setText(String.valueOf(summary.getMonthAmount()));
+            dateAmount.setText(FormatUtils.formatAmount(summary.getDayAmount()));
+            weekAmount.setText(FormatUtils.formatAmount(summary.getWeekAmount()));
+            monthAmount.setText(FormatUtils.formatAmount(summary.getMonthAmount()));
 
             LinearLayout categoriesContainer = (LinearLayout) headerView.findViewById(R.id.mostSpentCategories);
             categoriesContainer.removeAllViews();

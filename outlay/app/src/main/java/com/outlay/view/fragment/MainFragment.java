@@ -21,17 +21,20 @@ import android.widget.TextView;
 
 import com.outlay.App;
 import com.outlay.R;
-import com.outlay.adapter.CategoriesGridAdapter;
-import com.outlay.domain.model.DateSummary;
-import com.outlay.helper.TextWatcherAdapter;
-import com.outlay.model.Summary;
-import com.outlay.presenter.MainFragmentPresenter;
 import com.outlay.core.utils.DateUtils;
+import com.outlay.domain.model.DateSummary;
+import com.outlay.domain.model.Expense;
+import com.outlay.mvp.presenter.EnterExpensePresenter;
+import com.outlay.mvp.view.EnterExpenseView;
 import com.outlay.utils.DeviceUtils;
+import com.outlay.utils.FormatUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Page;
 import com.outlay.view.activity.BaseActivity;
+import com.outlay.view.adapter.CategoriesGridAdapter;
+import com.outlay.view.alert.Alert;
 import com.outlay.view.dialog.DatePickerFragment;
+import com.outlay.view.helper.TextWatcherAdapter;
 import com.outlay.view.numpad.NumpadEditable;
 import com.outlay.view.numpad.NumpadView;
 import com.outlay.view.numpad.SimpleNumpadValidator;
@@ -46,7 +49,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetChangedListener {
+public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetChangedListener, EnterExpenseView {
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.2f;
     private static final int ALPHA_ANIMATIONS_DURATION = 200;
 
@@ -79,7 +82,7 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
     CoordinatorLayout coordinatorLayout;
 
     @Inject
-    MainFragmentPresenter presenter;
+    EnterExpensePresenter presenter;
 
     private CategoriesGridAdapter adapter;
     private boolean mIsTheTitleContainerVisible = false;
@@ -151,18 +154,7 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
                 e.setAmount(new BigDecimal(amountText.getText().toString()));
                 e.setReportedAt(selectedDate);
                 presenter.insertExpense(e);
-                presenter.loadSummary(new Date());
-                amountText.setText("");
-
-                String message = getString(R.string.info_expense_created);
-                message = String.format(message, e.getAmount(), e.getCategory().getTitle());
-//                Alert.info(getRootView(), message,
-//                    v -> {
-//                        e.delete();
-//                        presenter.loadSummary(new Date());
-//                        amountText.setText(String.valueOf(e.getAmount()));
-//                    }
-//                );
+                cleanAmountInput();
             } else {
                 validator.onInvalidInput(amountText.getText().toString());
             }
@@ -185,7 +177,7 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
     @Override
     public void onResume() {
         super.onResume();
-        amountText.setText("");
+        cleanAmountInput();
         presenter.loadCategories();
         presenter.loadSummary(new Date());
     }
@@ -244,11 +236,34 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
         amountText.startAnimation(shakeAnimation);
     }
 
-    public void displaySummary(DateSummary dateSummary) {
+    @Override
+    public void showDateSummary(DateSummary dateSummary) {
         ((BaseActivity) getActivity()).updateDrawerData(dateSummary);
     }
 
-    public void displayCategories(List<com.outlay.domain.model.Category> categoryList) {
+    @Override
+    public void setAmount(BigDecimal amount) {
+        amountText.setText(FormatUtils.formatAmount(amount));
+    }
+
+    @Override
+    public void alertExpenseSuccess(Expense e) {
+        String message = getString(R.string.info_expense_created);
+        message = String.format(message, e.getAmount(), e.getCategory().getTitle());
+        Alert.info(getRootView(), message,
+                v -> {
+                    presenter.deleteExpense(e);
+                    amountText.setText(FormatUtils.formatAmount(e.getAmount()));
+                }
+        );
+    }
+
+    @Override
+    public void showCategories(List<com.outlay.domain.model.Category> categoryList) {
         adapter.setItems(categoryList);
+    }
+
+    private void cleanAmountInput() {
+        amountText.setText("");
     }
 }

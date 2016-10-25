@@ -13,9 +13,10 @@ import android.view.ViewGroup;
 
 import com.outlay.App;
 import com.outlay.R;
-import com.outlay.adapter.CategoriesDraggableGridAdapter;
+import com.outlay.view.adapter.CategoriesDraggableGridAdapter;
 import com.outlay.domain.model.Category;
-import com.outlay.presenter.CategoriesPresenter;
+import com.outlay.mvp.presenter.CategoriesPresenter;
+import com.outlay.mvp.view.CategoriesView;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Page;
 import com.outlay.view.helper.itemtouch.OnDragListener;
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
  */
-public class CategoriesFragment extends BaseFragment implements OnDragListener {
+public class CategoriesFragment extends BaseFragment implements OnDragListener, CategoriesView {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -106,7 +107,8 @@ public class CategoriesFragment extends BaseFragment implements OnDragListener {
         presenter.updateCategories(items);
     }
 
-    public void displayCategories(List<Category> categoryList) {
+    @Override
+    public void showCategories(List<Category> categoryList) {
         adapter.setItems(categoryList);
     }
 }
