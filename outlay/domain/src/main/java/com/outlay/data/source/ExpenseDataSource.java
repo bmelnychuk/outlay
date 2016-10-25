@@ -14,7 +14,7 @@ import rx.Observable;
 public interface ExpenseDataSource {
     Observable<Expense> saveExpense(Expense expense);
     Observable<List<Expense>> getExpenses(Date startDate, Date endDate);
-    Observable<List<Expense>> getExpenses(Date startDate, Date endDate, Long categoryId);
-    Observable<Expense> getById(Long expenseId);
+    Observable<List<Expense>> getExpenses(Date startDate, Date endDate, String categoryId);
+    Observable<Expense> getById(String expenseId);
     Observable<Expense> remove(Expense expense);
 }

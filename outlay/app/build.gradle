@@ -90,9 +90,15 @@ dependencies {
     compile(group: 'uz.shift', name: 'colorpicker', version: '0.5', ext: 'aar')
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.0'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile 'com.github.clans:fab:1.6.4'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
 
+    compile 'com.google.firebase:firebase-core:9.8.0'
+    compile 'com.google.firebase:firebase-auth:9.8.0'
+    compile 'com.google.firebase:firebase-database:9.8.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

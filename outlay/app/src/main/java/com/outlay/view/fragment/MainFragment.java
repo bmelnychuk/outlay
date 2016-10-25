@@ -29,7 +29,7 @@ import com.outlay.mvp.view.EnterExpenseView;
 import com.outlay.utils.DeviceUtils;
 import com.outlay.utils.FormatUtils;
 import com.outlay.utils.ResourceUtils;
-import com.outlay.view.Page;
+import com.outlay.view.Navigator;
 import com.outlay.view.activity.BaseActivity;
 import com.outlay.view.adapter.CategoriesGridAdapter;
 import com.outlay.view.alert.Alert;
@@ -98,7 +98,7 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getComponent(getActivity()).inject(this);
+        App.getUserComponent(getActivity()).inject(this);
         presenter.attachView(this);
     }
 
@@ -194,7 +194,7 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_summary:
-                Page.goToReport(getActivity(), selectedDate);
+                Navigator.goToReport(getActivity(), selectedDate);
                 break;
         }
         return super.onOptionsItemSelected(item);

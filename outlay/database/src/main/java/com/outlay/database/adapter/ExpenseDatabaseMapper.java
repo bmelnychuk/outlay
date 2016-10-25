@@ -21,7 +21,7 @@ public class ExpenseDatabaseMapper {
 
     public Expense toExpense(com.outlay.database.dao.Expense dbExpense) {
         Expense result = new Expense();
-        result.setId(dbExpense.getId());
+        result.setId(dbExpense.getId().toString());
         result.setAmount(new BigDecimal(dbExpense.getAmount().toString()));
         result.setNote(dbExpense.getNote());
         result.setReportedAt(dbExpense.getReportedAt());
@@ -34,9 +34,11 @@ public class ExpenseDatabaseMapper {
 
     public com.outlay.database.dao.Expense fromExpense(Expense expense) {
         com.outlay.database.dao.Expense dbExpense = new com.outlay.database.dao.Expense();
-        dbExpense.setId(expense.getId());
+        dbExpense.setId(expense.getId() == null ? null : Long.valueOf(expense.getId()));
         dbExpense.setAmount(expense.getAmount().doubleValue());
-        dbExpense.setCategoryId(expense.getCategory().getId());
+        dbExpense.setCategoryId(
+                expense.getCategory().getId() == null ? null : Long.valueOf(expense.getCategory().getId())
+        );
         dbExpense.setNote(expense.getNote());
         dbExpense.setReportedAt(expense.getReportedAt());
 

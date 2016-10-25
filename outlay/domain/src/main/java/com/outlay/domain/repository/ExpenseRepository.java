@@ -16,9 +16,9 @@ public interface ExpenseRepository {
 
     Observable<Expense> remove(Expense expense);
 
-    Observable<Expense> getById(Long expenseId);
+    Observable<Expense> getById(String expenseId);
 
     Observable<List<Expense>> getExpenses(Date startDate, Date endDate);
 
-    Observable<List<Expense>> getExpenses(Date startDate, Date endDate, Long categoryId);
+    Observable<List<Expense>> getExpenses(Date startDate, Date endDate, String categoryId);
 }

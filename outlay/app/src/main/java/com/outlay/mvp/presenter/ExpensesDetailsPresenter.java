@@ -35,7 +35,7 @@ public class ExpensesDetailsPresenter extends MvpPresenter<ExpenseDetailsView> {
         this.deleteExpenseUseCase = deleteExpenseUseCase;
     }
 
-    public void loadExpense(Long expenseId) {
+    public void loadExpense(String expenseId) {
         getExpenseUseCase.execute(expenseId, new DefaultSubscriber<Expense>() {
             @Override
             public void onNext(Expense expense) {

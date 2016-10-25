@@ -6,7 +6,6 @@ import com.outlay.domain.interactor.LoadReportUseCase;
 import com.outlay.domain.model.ExpensePeriod;
 import com.outlay.domain.model.Report;
 import com.outlay.mvp.view.StatisticView;
-import com.outlay.view.Page;
 import com.outlay.view.fragment.ReportFragment;
 
 import java.util.ArrayList;

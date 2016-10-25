@@ -36,7 +36,7 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
     }
 
     @Override
-    public Observable<Expense> getById(Long expenseId) {
+    public Observable<Expense> getById(String expenseId) {
         return expenseDataSource.getById(expenseId);
     }
 
@@ -52,7 +52,7 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
     public Observable<List<Expense>> getExpenses(
             Date startDate,
             Date endDate,
-            Long categoryId
+            String categoryId
     ) {
         return expenseDataSource.getExpenses(startDate, endDate, categoryId);
     }

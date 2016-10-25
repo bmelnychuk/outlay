@@ -13,7 +13,7 @@ import rx.Observable;
 public interface CategoryDataSource {
     Observable<List<Category>> getAll();
 
-    Observable<Category> getById(Long id);
+    Observable<Category> getById(String id);
 
     Observable<List<Category>> saveAll(List<Category> categories);
 

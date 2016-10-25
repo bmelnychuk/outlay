@@ -10,16 +10,20 @@
         android:theme="@style/Theme.Material.Custom">
         <activity
             android:name=".view.activity.MainActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".view.activity.SingleFragmentActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".view.activity.SingleFragmentActivity"
-            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

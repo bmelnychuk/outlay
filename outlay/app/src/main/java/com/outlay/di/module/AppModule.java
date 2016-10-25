@@ -1,6 +1,6 @@
 package com.outlay.di.module;
 
-import android.app.Application;
+import android.content.Context;
 
 import com.outlay.App;
 import com.outlay.core.data.AppPreferences;
@@ -28,14 +28,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Application provideAppContext() {
+    Context provideAppContext() {
         return mApplication;
-    }
-
-    @Provides
-    @Singleton
-    AndroidPreferencesManager providePreferencesManager() {
-        return new AndroidPreferencesManager(mApplication);
     }
 
     @Provides

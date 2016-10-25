@@ -1,12 +1,14 @@
-package com.outlay.di;
+package com.outlay.di.component;
 
-import android.app.Application;
+import android.content.Context;
 
 import com.outlay.di.module.AppModule;
 import com.outlay.di.module.DaoModule;
+import com.outlay.di.module.UserModule;
+import com.outlay.view.activity.LoginActivity;
 import com.outlay.view.activity.MainActivity;
-import com.outlay.view.fragment.CategoryDetailsFragment;
 import com.outlay.view.fragment.CategoriesFragment;
+import com.outlay.view.fragment.CategoryDetailsFragment;
 import com.outlay.view.fragment.ExpensesDetailsFragment;
 import com.outlay.view.fragment.ExpensesListFragment;
 import com.outlay.view.fragment.MainFragment;
@@ -22,13 +24,11 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class, DaoModule.class})
 public interface AppComponent {
-    void inject(MainActivity activity);
-    void inject(CategoriesFragment fragment);
-    void inject(CategoryDetailsFragment fragment);
-    void inject(MainFragment fragment);
-    void inject(ReportFragment fragment);
-    void inject(ExpensesListFragment fragment);
-    void inject(ExpensesDetailsFragment fragment);
+    UserComponent plus(UserModule userModule);
 
-    Application getApplication();
+    void inject(LoginActivity loginActivity);
+
+    Context getApplication();
+
+
 }

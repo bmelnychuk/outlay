@@ -22,13 +22,16 @@ import rx.Observable;
 public class CategoryRepositoryImpl implements CategoryRepository {
     private Context context;
     private CategoryDataSource databaseSource;
+    private CategoryDataSource firebaseSource;
 
     @Inject
     public CategoryRepositoryImpl(
             CategoryDataSource databaseSource,
+            CategoryDataSource firebaseSource,
             Context context
     ) {
         this.databaseSource = databaseSource;
+        this.firebaseSource = firebaseSource;
         this.context = context;
     }
 
@@ -60,26 +63,26 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
     @Override
     public Observable<List<Category>> getAll() {
-        return databaseSource.getAll();
+        return firebaseSource.getAll();
     }
 
     @Override
-    public Observable<Category> getById(Long id) {
-        return databaseSource.getById(id);
+    public Observable<Category> getById(String id) {
+        return firebaseSource.getById(id);
     }
 
     @Override
     public Observable<List<Category>> saveAll(List<Category> categories) {
-        return databaseSource.saveAll(categories);
+        return firebaseSource.saveAll(categories);
     }
 
     @Override
     public Observable<Category> save(Category category) {
-        return databaseSource.save(category);
+        return firebaseSource.save(category);
     }
 
     @Override
     public Observable<Category> remove(Category category) {
-        return databaseSource.remove(category);
+        return firebaseSource.remove(category);
     }
 }

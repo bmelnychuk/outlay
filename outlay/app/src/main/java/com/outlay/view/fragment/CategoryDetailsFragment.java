@@ -64,7 +64,7 @@ public class CategoryDetailsFragment extends BaseFragment implements CategoryDet
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getComponent(getActivity()).inject(this);
+        App.getUserComponent(getActivity()).inject(this);
         presenter.attachView(this);
     }
 
@@ -117,7 +117,7 @@ public class CategoryDetailsFragment extends BaseFragment implements CategoryDet
         colorPicker.setOnColorChangedListener(i -> adapter.setActiveColor(i));
 
         if (getArguments().containsKey(ARG_CATEGORY_PARAM)) {
-            Long categoryId = getArguments().getLong(ARG_CATEGORY_PARAM);
+            String categoryId = getArguments().getString(ARG_CATEGORY_PARAM);
             getActivity().setTitle(getString(R.string.caption_edit_category));
             presenter.loadCategory(categoryId);
         } else {

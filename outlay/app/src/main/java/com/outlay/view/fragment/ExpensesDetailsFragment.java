@@ -78,7 +78,7 @@ public class ExpensesDetailsFragment extends BaseFragment implements ExpenseDeta
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getComponent(getActivity()).inject(this);
+        App.getUserComponent(getActivity()).inject(this);
         presenter.attachView(this);
         defaultDate = new Date(getArguments().getLong(ARG_DATE, new Date().getTime()));
     }
@@ -141,7 +141,7 @@ public class ExpensesDetailsFragment extends BaseFragment implements ExpenseDeta
         dateEdit.setOnClickListener(v -> showDatePickerDialog());
 
         if (getArguments().containsKey(ARG_EXPENSE_ID)) {
-            Long expenseId = getArguments().getLong(ARG_EXPENSE_ID);
+            String expenseId = getArguments().getString(ARG_EXPENSE_ID);
             getActivity().setTitle(getString(R.string.caption_edit_expense));
             presenter.loadExpense(expenseId);
         } else {

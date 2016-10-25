@@ -9,13 +9,13 @@ import java.util.Date;
 public class ExpensePeriod {
     private Date startDate;
     private Date endDate;
-    private Long categoryId;
+    private String categoryId;
 
     public ExpensePeriod(Date startDate, Date endDate) {
         this(startDate, endDate, null);
     }
 
-    public ExpensePeriod(Date startDate, Date endDate, Long categoryId) {
+    public ExpensePeriod(Date startDate, Date endDate, String categoryId) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.categoryId = categoryId;
@@ -39,11 +39,11 @@ public class ExpensePeriod {
         return this;
     }
 
-    public Long getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public ExpensePeriod setCategoryId(Long categoryId) {
+    public ExpensePeriod setCategoryId(String categoryId) {
         this.categoryId = categoryId;
         return this;
     }

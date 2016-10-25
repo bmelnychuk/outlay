@@ -28,7 +28,7 @@ public class CategoryDetailsPresenter extends MvpPresenter<CategoryDetailsView> 
         this.getCategoryUseCase = getCategoryUseCase;
     }
 
-    public void loadCategory(Long id) {
+    public void loadCategory(String id) {
         getCategoryUseCase.execute(id, new DefaultSubscriber<Category>() {
             @Override
             public void onNext(Category category) {
@@ -50,7 +50,7 @@ public class CategoryDetailsPresenter extends MvpPresenter<CategoryDetailsView> 
     public void deleteCategory(Category category) {
         deleteCategoryUseCase.execute(category, new DefaultSubscriber<Category>() {
             @Override
-            public void onNext(Category category) {
+            public void onCompleted() {
                 getView().finish();
             }
         });

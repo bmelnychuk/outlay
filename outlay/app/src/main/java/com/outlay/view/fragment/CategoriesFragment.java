@@ -18,7 +18,7 @@ import com.outlay.domain.model.Category;
 import com.outlay.mvp.presenter.CategoriesPresenter;
 import com.outlay.mvp.view.CategoriesView;
 import com.outlay.utils.ResourceUtils;
-import com.outlay.view.Page;
+import com.outlay.view.Navigator;
 import com.outlay.view.helper.itemtouch.OnDragListener;
 import com.outlay.view.helper.itemtouch.SimpleItemTouchHelperCallback;
 
@@ -52,7 +52,7 @@ public class CategoriesFragment extends BaseFragment implements OnDragListener, 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getComponent(getActivity()).inject(this);
+        App.getUserComponent(getActivity()).inject(this);
         presenter.attachView(this);
     }
 
@@ -76,7 +76,7 @@ public class CategoriesFragment extends BaseFragment implements OnDragListener, 
 
         adapter = new CategoriesDraggableGridAdapter();
         adapter.setDragListener(this);
-        adapter.setOnCategoryClickListener(c -> Page.goToCategoryDetails(getActivity(), c.getId()));
+        adapter.setOnCategoryClickListener(c -> Navigator.goToCategoryDetails(getActivity(), c.getId()));
         categoriesGrid.setAdapter(adapter);
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
@@ -84,7 +84,7 @@ public class CategoriesFragment extends BaseFragment implements OnDragListener, 
         mItemTouchHelper.attachToRecyclerView(categoriesGrid);
 
         fab.setImageDrawable(ResourceUtils.getMaterialToolbarIcon(getActivity(), R.string.ic_material_add));
-        fab.setOnClickListener(v -> Page.goToCategoryDetails(getActivity(), null));
+        fab.setOnClickListener(v -> Navigator.goToCategoryDetails(getActivity(), null));
     }
 
     @Override

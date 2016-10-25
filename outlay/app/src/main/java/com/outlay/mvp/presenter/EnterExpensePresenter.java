@@ -69,7 +69,7 @@ public class EnterExpensePresenter extends MvpPresenter<EnterExpenseView> {
     public void deleteExpense(Expense expense) {
         deleteExpenseUseCase.execute(expense, new DefaultSubscriber<Expense>() {
             @Override
-            public void onNext(Expense expense) {
+            public void onCompleted() {
                 loadSummary(new Date());
             }
         });

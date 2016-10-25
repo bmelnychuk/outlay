@@ -8,17 +8,17 @@ import java.util.Date;
  */
 
 public class Expense {
-    private Long id;
+    private String id;
     private String note;
     private BigDecimal amount;
     private Date reportedAt;
     private Category category;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public Expense setId(Long id) {
+    public Expense setId(String id) {
         this.id = id;
         return this;
     }

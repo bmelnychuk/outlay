@@ -9,6 +9,8 @@ import com.outlay.domain.model.Expense;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import de.greenrobot.dao.query.DeleteQuery;
 import rx.Observable;
 
@@ -21,6 +23,7 @@ public class CategoryDatabaseSource implements CategoryDataSource {
     private ExpenseDao expenseDao;
     private CategoryDatabaseMapper categoryMapper;
 
+    @Inject
     public CategoryDatabaseSource(
             CategoryDao categoryDao,
             ExpenseDao expenseDao
@@ -45,10 +48,10 @@ public class CategoryDatabaseSource implements CategoryDataSource {
     }
 
     @Override
-    public Observable<Category> getById(Long id) {
+    public Observable<Category> getById(String id) {
         return Observable.create(subscriber -> {
             try {
-                com.outlay.database.dao.Category c = categoryDao.load(id);
+                com.outlay.database.dao.Category c = categoryDao.load(Long.valueOf(id));
                 Category category = categoryMapper.toCategory(c);
                 subscriber.onNext(category);
                 subscriber.onCompleted();
@@ -95,8 +98,7 @@ public class CategoryDatabaseSource implements CategoryDataSource {
                         .buildDelete();
                 deleteQuery.executeDeleteWithoutDetachingEntities();
 
-                categoryDao.deleteByKey(category.getId());
-                subscriber.onNext(category);
+                categoryDao.deleteByKey(Long.valueOf(category.getId()));
                 subscriber.onCompleted();
             } catch (Exception e) {
                 subscriber.onError(e);

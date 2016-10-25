@@ -15,7 +15,7 @@ public class CategoryDatabaseMapper {
         category.setColor(daoCategory.getColor());
         category.setIcon(daoCategory.getIcon());
         category.setOrder(daoCategory.getOrder());
-        category.setId(daoCategory.getId());
+        category.setId(daoCategory.getId().toString());
         category.setTitle(daoCategory.getTitle());
 
         return category;
@@ -26,7 +26,7 @@ public class CategoryDatabaseMapper {
         daoCategory.setColor(category.getColor());
         daoCategory.setIcon(category.getIcon());
         daoCategory.setOrder(category.getOrder());
-        daoCategory.setId(category.getId());
+        daoCategory.setId(category.getId() == null ? null : Long.valueOf(category.getId()));
         daoCategory.setTitle(category.getTitle());
 
         return daoCategory;

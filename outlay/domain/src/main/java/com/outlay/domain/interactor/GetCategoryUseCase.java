@@ -13,7 +13,7 @@ import rx.Observable;
  * Created by bmelnychuk on 10/24/16.
  */
 
-public class GetCategoryUseCase extends UseCase<Long, Category> {
+public class GetCategoryUseCase extends UseCase<String, Category> {
     private CategoryRepository categoryRepository;
 
     @Inject
@@ -27,7 +27,7 @@ public class GetCategoryUseCase extends UseCase<Long, Category> {
     }
 
     @Override
-    protected Observable<Category> buildUseCaseObservable(Long categoryId) {
+    protected Observable<Category> buildUseCaseObservable(String categoryId) {
         return categoryRepository.getById(categoryId);
     }
 }

@@ -15,7 +15,7 @@ public interface CategoryRepository {
 
     Observable<List<Category>> getAll();
 
-    Observable<Category> getById(Long id);
+    Observable<Category> getById(String id);
 
     Observable<List<Category>> saveAll(List<Category> categories);
 

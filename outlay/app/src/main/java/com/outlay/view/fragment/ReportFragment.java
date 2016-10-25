@@ -22,7 +22,7 @@ import com.outlay.view.helper.OnTabSelectedListenerAdapter;
 import com.outlay.mvp.presenter.ReportPresenter;
 import com.outlay.mvp.view.StatisticView;
 import com.outlay.utils.ResourceUtils;
-import com.outlay.view.Page;
+import com.outlay.view.Navigator;
 import com.outlay.view.dialog.DatePickerFragment;
 
 import java.util.Calendar;
@@ -66,7 +66,7 @@ public class ReportFragment extends BaseFragment implements StatisticView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getComponent(getActivity()).inject(this);
+        App.getUserComponent(getActivity()).inject(this);
         presenter.attachView(this);
         selectedDate = new Date(getArguments().getLong(ARG_DATE, new Date().getTime()));
     }
@@ -173,7 +173,7 @@ public class ReportFragment extends BaseFragment implements StatisticView {
         this.goToExpensesList(date, selectedPeriod, null);
     }
 
-    public void goToExpensesList(Date date, int selectedPeriod, Long category) {
+    public void goToExpensesList(Date date, int selectedPeriod, String category) {
         date = DateUtils.fillCurrentTime(date);
         Date startDate = date;
         Date endDate = date;
@@ -192,6 +192,6 @@ public class ReportFragment extends BaseFragment implements StatisticView {
                 endDate = DateUtils.getMonthEnd(date);
                 break;
         }
-        Page.goToExpensesList(getActivity(), startDate, endDate, category);
+        Navigator.goToExpensesList(getActivity(), startDate, endDate, category);
     }
 }

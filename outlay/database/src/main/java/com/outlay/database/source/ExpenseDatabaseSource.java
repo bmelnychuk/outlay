@@ -9,6 +9,8 @@ import com.outlay.domain.model.Expense;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 /**
@@ -20,6 +22,7 @@ public class ExpenseDatabaseSource implements ExpenseDataSource {
     private ExpenseDatabaseMapper mapper;
     private CategoryDatabaseMapper categoryDatabaseMapper;
 
+    @Inject
     public ExpenseDatabaseSource(ExpenseDao expenseDao) {
         this.expenseDao = expenseDao;
         this.categoryDatabaseMapper = new CategoryDatabaseMapper();
@@ -42,7 +45,7 @@ public class ExpenseDatabaseSource implements ExpenseDataSource {
     }
 
     @Override
-    public Observable<List<Expense>> getExpenses(Date startDate, Date endDate, Long categoryId) {
+    public Observable<List<Expense>> getExpenses(Date startDate, Date endDate, String categoryId) {
         return Observable.create(subscriber -> {
             try {
                 List<com.outlay.database.dao.Expense> dbExpenses = loadExpenses(
@@ -60,10 +63,10 @@ public class ExpenseDatabaseSource implements ExpenseDataSource {
     }
 
     @Override
-    public Observable<Expense> getById(Long expenseId) {
+    public Observable<Expense> getById(String expenseId) {
         return Observable.create(subscriber -> {
             try {
-                com.outlay.database.dao.Expense e = expenseDao.load(expenseId);
+                com.outlay.database.dao.Expense e = expenseDao.load(Long.valueOf(expenseId));
                 Expense category = mapper.toExpense(e);
                 subscriber.onNext(category);
                 subscriber.onCompleted();
@@ -79,7 +82,6 @@ public class ExpenseDatabaseSource implements ExpenseDataSource {
             try {
                 com.outlay.database.dao.Expense daoExpense = mapper.fromExpense(expense);
                 expenseDao.delete(daoExpense);
-                subscriber.onNext(expense);
                 subscriber.onCompleted();
             } catch (Exception e) {
                 subscriber.onError(e);
@@ -95,7 +97,7 @@ public class ExpenseDatabaseSource implements ExpenseDataSource {
     private List<com.outlay.database.dao.Expense> loadExpenses(
             Date startDate,
             Date endDate,
-            Long categoryId
+            String categoryId
     ) {
         if (categoryId == null) {
             List<com.outlay.database.dao.Expense> expenses = expenseDao.queryBuilder().where(
@@ -107,7 +109,7 @@ public class ExpenseDatabaseSource implements ExpenseDataSource {
             List<com.outlay.database.dao.Expense> expenses = expenseDao.queryBuilder().where(
                     ExpenseDao.Properties.ReportedAt.ge(startDate),
                     ExpenseDao.Properties.ReportedAt.le(endDate),
-                    ExpenseDao.Properties.CategoryId.eq(categoryId)
+                    ExpenseDao.Properties.CategoryId.eq(Long.valueOf(categoryId))
             ).list();
             return expenses;
         }

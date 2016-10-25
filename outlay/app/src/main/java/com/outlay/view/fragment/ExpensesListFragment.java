@@ -23,7 +23,7 @@ import com.outlay.mvp.presenter.ExpensesListPresenter;
 import com.outlay.mvp.view.ExpensesView;
 import com.outlay.utils.IconUtils;
 import com.outlay.utils.ResourceUtils;
-import com.outlay.view.Page;
+import com.outlay.view.Navigator;
 
 import java.util.Date;
 import java.util.List;
@@ -69,12 +69,12 @@ public class ExpensesListFragment extends BaseFragment implements ExpensesView {
     private ExpenseAdapter adapter;
     private Date dateFrom;
     private Date dateTo;
-    private Long categoryId;
+    private String categoryId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getComponent(getActivity()).inject(this);
+        App.getUserComponent(getActivity()).inject(this);
         presenter.attachView(this);
 
         long dateFromMillis = getArguments().getLong(ARG_DATE_FROM);
@@ -83,7 +83,7 @@ public class ExpensesListFragment extends BaseFragment implements ExpensesView {
         dateFrom = new Date(dateFromMillis);
         dateTo = new Date(dateToMillis);
         if (getArguments().containsKey(ARG_CATEGORY_ID)) {
-            categoryId = getArguments().getLong(ARG_CATEGORY_ID);
+            categoryId = getArguments().getString(ARG_CATEGORY_ID);
         }
     }
 
@@ -105,10 +105,10 @@ public class ExpensesListFragment extends BaseFragment implements ExpensesView {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         adapter = new ExpenseAdapter();
-        adapter.setOnExpenseClickListener(expense -> Page.goToExpenseDetails(getActivity(), expense.getId()));
+        adapter.setOnExpenseClickListener(expense -> Navigator.goToExpenseDetails(getActivity(), expense.getId()));
         recyclerView.setAdapter(adapter);
         fab.setImageDrawable(ResourceUtils.getMaterialToolbarIcon(getActivity(), R.string.ic_material_add));
-        fab.setOnClickListener(v -> Page.goToExpenseDetails(getActivity(), null));
+        fab.setOnClickListener(v -> Navigator.goToExpenseDetails(getActivity(), null));
         filterDateLabel.setText(getDateLabel());
     }
 

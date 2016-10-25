@@ -54,4 +54,8 @@
         <item name="met_primaryColor">@color/accent</item>
     </style>
 
+    <style name="MyOverlayTheme" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">@color/highlight</item>
+    </style>
+
 </resources>

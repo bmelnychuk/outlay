@@ -2,9 +2,11 @@ package com.outlay.view;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.outlay.R;
+import com.outlay.view.activity.MainActivity;
 import com.outlay.view.activity.SingleFragmentActivity;
 import com.outlay.view.fragment.CategoryDetailsFragment;
 import com.outlay.view.fragment.ExpensesDetailsFragment;
@@ -16,13 +18,18 @@ import java.util.Date;
 /**
  * Created by Bogdan Melnychuk on 1/24/16.
  */
-public final class Page {
-    public static void goToCategoryDetails(Activity activityFrom, Long categoryId) {
+public final class Navigator {
+    public static void goToCategoryDetails(Activity activityFrom, String categoryId) {
         Bundle b = new Bundle();
         if (categoryId != null) {
-            b.putLong(CategoryDetailsFragment.ARG_CATEGORY_PARAM, categoryId);
+            b.putString(CategoryDetailsFragment.ARG_CATEGORY_PARAM, categoryId);
         }
         changeFragment(activityFrom, CategoryDetailsFragment.class, b);
+    }
+
+    public static void goToMainScreen(Activity activityFrom) {
+        Intent intent = new Intent(activityFrom, MainActivity.class);
+        activityFrom.startActivity(intent);
     }
 
     public static void goToReport(Activity activityFrom, Date date) {
@@ -31,10 +38,10 @@ public final class Page {
         SingleFragmentActivity.start(activityFrom, ReportFragment.class, b);
     }
 
-    public static void goToExpensesList(Activity activityFrom, Date dateFrom, Date dateTo, Long categoryId) {
+    public static void goToExpensesList(Activity activityFrom, Date dateFrom, Date dateTo, String categoryId) {
         Bundle b = new Bundle();
         if(categoryId != null) {
-            b.putLong(ExpensesListFragment.ARG_CATEGORY_ID, categoryId);
+            b.putString(ExpensesListFragment.ARG_CATEGORY_ID, categoryId);
         }
         if (dateFrom != null) {
             b.putLong(ExpensesListFragment.ARG_DATE_FROM, dateFrom.getTime());
@@ -45,10 +52,10 @@ public final class Page {
         changeFragment(activityFrom, ExpensesListFragment.class, b);
     }
 
-    public static void goToExpenseDetails(Activity activityFrom, Long expenseId) {
+    public static void goToExpenseDetails(Activity activityFrom, String expenseId) {
         Bundle b = new Bundle();
         if(expenseId != null) {
-            b.putLong(ExpensesDetailsFragment.ARG_EXPENSE_ID, expenseId);
+            b.putString(ExpensesDetailsFragment.ARG_EXPENSE_ID, expenseId);
         }
         changeFragment(activityFrom, ExpensesDetailsFragment.class, b);
     }

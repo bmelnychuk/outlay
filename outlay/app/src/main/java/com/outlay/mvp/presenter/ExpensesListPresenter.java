@@ -23,7 +23,7 @@ public class ExpensesListPresenter extends MvpPresenter<ExpensesView> {
         this.loadReportUseCase = loadReportUseCase;
     }
 
-    public void loadExpenses(Date dateFrom, Date dateTo, Long categoryId) {
+    public void loadExpenses(Date dateFrom, Date dateTo, String categoryId) {
         ExpensePeriod period = new ExpensePeriod(dateFrom, dateTo, categoryId);
         loadReportUseCase.execute(period, new DefaultSubscriber<Report>() {
             @Override

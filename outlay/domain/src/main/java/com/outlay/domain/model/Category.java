@@ -5,17 +5,17 @@ package com.outlay.domain.model;
  */
 
 public class Category {
-    private Long id;
+    private String id;
     private String title;
     private String icon;
     private int order;
     private int color;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public Category setId(Long id) {
+    public Category setId(String id) {
         this.id = id;
         return this;
     }
