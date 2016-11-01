@@ -7,7 +7,8 @@ import android.preference.PreferenceManager;
 import com.outlay.core.data.AppPreferences;
 
 public class AndroidPreferencesManager implements AppPreferences {
-    private static final String PREF_FIRST_RUN = "_firstRun";
+    private static final String PREF_FIRST_RUN = "_firstRun_v2";
+    private static final String PREF_SESSION_ID = "_sessionId";
 
     private Context context;
 
@@ -63,5 +64,15 @@ public class AndroidPreferencesManager implements AppPreferences {
     @Override
     public void setFirstRun(boolean firstRun) {
         putFirstRun(firstRun);
+    }
+
+    @Override
+    public String getSessionId() {
+        return getString(PREF_SESSION_ID);
+    }
+
+    @Override
+    public void setSessionId(String sessionId) {
+        putString(PREF_SESSION_ID, sessionId);
     }
 }

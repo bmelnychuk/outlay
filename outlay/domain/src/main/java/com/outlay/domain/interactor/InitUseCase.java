@@ -1,12 +1,10 @@
 package com.outlay.domain.interactor;
 
-import com.outlay.core.data.AppPreferences;
 import com.outlay.core.executor.PostExecutionThread;
 import com.outlay.core.executor.ThreadExecutor;
-import com.outlay.domain.model.Category;
+import com.outlay.data.sync.CategoryDataSync;
+import com.outlay.data.sync.ExpenseDataSync;
 import com.outlay.domain.repository.CategoryRepository;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -16,32 +14,30 @@ import rx.Observable;
  * Created by bmelnychuk on 10/24/16.
  */
 
-public class InitUseCase extends UseCase<Void, List<Category>> {
+public class InitUseCase extends UseCase<Void, Void> {
+    private CategoryDataSync categoryDataSync;
+    private ExpenseDataSync expenseDataSync;
     private CategoryRepository categoryRepository;
-    private AppPreferences appPreferences;
 
     @Inject
     public InitUseCase(
             ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread,
-            CategoryRepository categoryRepository,
-            AppPreferences appPreferences
+            CategoryDataSync categoryDataSync,
+            ExpenseDataSync expenseDataSync,
+            CategoryRepository categoryRepository
     ) {
         super(threadExecutor, postExecutionThread);
+        this.categoryDataSync = categoryDataSync;
+        this.expenseDataSync = expenseDataSync;
         this.categoryRepository = categoryRepository;
-        this.appPreferences = appPreferences;
     }
 
     @Override
-    protected Observable<List<Category>> buildUseCaseObservable(Void aVoid) {
-        if (appPreferences.isFirstRun()) {
-            return categoryRepository.getDefault()
-                    .switchMap(categories -> {
-                        appPreferences.setFirstRun(false);
-                        return categoryRepository.updateAll(categories);
-                    });
-        } else {
-            return categoryRepository.getAll();
-        }
+    protected Observable<Void> buildUseCaseObservable(Void aVoid) {
+        return Observable.zip(categoryDataSync.sync(), expenseDataSync.sync(), (categories, expenses) -> {
+            categoryRepository.clearCache();
+            return null;
+        });
     }
 }

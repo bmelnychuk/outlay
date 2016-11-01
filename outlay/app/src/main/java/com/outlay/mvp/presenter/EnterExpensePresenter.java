@@ -1,7 +1,9 @@
 package com.outlay.mvp.presenter;
 
+import com.outlay.core.data.AppPreferences;
 import com.outlay.core.executor.DefaultSubscriber;
 import com.outlay.domain.interactor.DeleteExpenseUseCase;
+import com.outlay.domain.interactor.GetCategoriesUseCase;
 import com.outlay.domain.interactor.GetDateSummary;
 import com.outlay.domain.interactor.InitUseCase;
 import com.outlay.domain.interactor.SaveExpenseUseCase;
@@ -18,26 +20,41 @@ import javax.inject.Inject;
  * Created by Bogdan Melnychuk on 1/25/16.
  */
 public class EnterExpensePresenter extends MvpPresenter<EnterExpenseView> {
-    private InitUseCase initUseCase;
+    private GetCategoriesUseCase getCategoriesUseCase;
     private SaveExpenseUseCase createExpenseUseCase;
     private GetDateSummary getDateSummaryUseCase;
     private DeleteExpenseUseCase deleteExpenseUseCase;
+    private InitUseCase initUseCase;
+    private AppPreferences appPreferences;
 
     @Inject
     public EnterExpensePresenter(
-            InitUseCase initUseCase,
+            GetCategoriesUseCase getCategoriesUseCase,
             SaveExpenseUseCase createExpenseUseCase,
             GetDateSummary getDateSummaryUseCase,
-            DeleteExpenseUseCase deleteExpenseUseCase
+            DeleteExpenseUseCase deleteExpenseUseCase,
+            InitUseCase initUseCase,
+            AppPreferences appPreferences
     ) {
-        this.initUseCase = initUseCase;
+        this.getCategoriesUseCase = getCategoriesUseCase;
         this.createExpenseUseCase = createExpenseUseCase;
         this.getDateSummaryUseCase = getDateSummaryUseCase;
         this.deleteExpenseUseCase = deleteExpenseUseCase;
+        this.initUseCase = initUseCase;
+        this.appPreferences = appPreferences;
+    }
+
+    public void init() {
+        initUseCase.execute(new DefaultSubscriber() {
+            @Override
+            public void onCompleted() {
+                loadCategories();
+            }
+        });
     }
 
     public void loadCategories() {
-        initUseCase.execute(new DefaultSubscriber<List<com.outlay.domain.model.Category>>() {
+        getCategoriesUseCase.execute(new DefaultSubscriber<List<com.outlay.domain.model.Category>>() {
             @Override
             public void onNext(List<com.outlay.domain.model.Category> categories) {
                 getView().showCategories(categories);

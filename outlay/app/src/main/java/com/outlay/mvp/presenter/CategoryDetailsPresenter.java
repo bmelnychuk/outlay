@@ -40,7 +40,7 @@ public class CategoryDetailsPresenter extends MvpPresenter<CategoryDetailsView> 
     public void updateCategory(Category category) {
         updateCategoryUseCase.execute(category, new DefaultSubscriber<Category>() {
             @Override
-            public void onNext(Category category) {
+            public void onCompleted() {
                 getView().finish();
             }
         });

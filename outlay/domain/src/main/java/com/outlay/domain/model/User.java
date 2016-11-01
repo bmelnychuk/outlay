@@ -7,6 +7,7 @@ package com.outlay.domain.model;
 public class User {
     private String id;
     private String email;
+    private String token;
 
     public String getId() {
         return id;
@@ -24,5 +25,14 @@ public class User {
     public User setEmail(String email) {
         this.email = email;
         return this;
+    }
+
+    @Deprecated
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

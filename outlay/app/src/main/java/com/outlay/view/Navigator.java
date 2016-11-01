@@ -11,6 +11,7 @@ import com.outlay.view.activity.SingleFragmentActivity;
 import com.outlay.view.fragment.CategoryDetailsFragment;
 import com.outlay.view.fragment.ExpensesDetailsFragment;
 import com.outlay.view.fragment.ExpensesListFragment;
+import com.outlay.view.fragment.MainFragment;
 import com.outlay.view.fragment.ReportFragment;
 
 import java.util.Date;
@@ -27,8 +28,11 @@ public final class Navigator {
         changeFragment(activityFrom, CategoryDetailsFragment.class, b);
     }
 
-    public static void goToMainScreen(Activity activityFrom) {
+    public static void goToMainScreen(Activity activityFrom, String action) {
+        Bundle b = new Bundle();
+        b.putString(MainFragment.ACTION, action);
         Intent intent = new Intent(activityFrom, MainActivity.class);
+        intent.putExtras(b);
         activityFrom.startActivity(intent);
     }
 

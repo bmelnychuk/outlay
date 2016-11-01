@@ -2,6 +2,7 @@ package com.outlay.di.component;
 
 import com.outlay.di.module.UserModule;
 import com.outlay.di.scope.UserScope;
+import com.outlay.view.activity.MainActivity;
 import com.outlay.view.fragment.CategoriesFragment;
 import com.outlay.view.fragment.CategoryDetailsFragment;
 import com.outlay.view.fragment.ExpensesDetailsFragment;
@@ -29,4 +30,6 @@ public interface UserComponent {
     void inject(ExpensesListFragment fragment);
 
     void inject(ExpensesDetailsFragment fragment);
+
+    void inject(MainActivity mainActivity);
 }

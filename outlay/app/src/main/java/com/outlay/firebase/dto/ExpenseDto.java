@@ -9,7 +9,7 @@ public class ExpenseDto {
     private String note;
     private String amount;
     private Long reportedAt;
-    private CategoryDto category;
+    private String categoryId;
 
     public String getId() {
         return id;
@@ -43,11 +43,11 @@ public class ExpenseDto {
         this.reportedAt = reportedAt;
     }
 
-    public CategoryDto getCategory() {
-        return category;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(CategoryDto category) {
-        this.category = category;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 }

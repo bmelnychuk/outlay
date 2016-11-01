@@ -1,9 +1,8 @@
 package com.outlay.mvp.presenter;
 
-import android.app.Activity;
-import android.content.Context;
-
-import com.outlay.App;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.outlay.core.data.AppPreferences;
 import com.outlay.core.executor.DefaultSubscriber;
 import com.outlay.domain.interactor.ResetPasswordUseCase;
 import com.outlay.domain.interactor.UserSignInUseCase;
@@ -11,7 +10,6 @@ import com.outlay.domain.interactor.UserSignUpUseCase;
 import com.outlay.domain.model.Credentials;
 import com.outlay.domain.model.User;
 import com.outlay.mvp.view.AuthView;
-import com.outlay.view.Navigator;
 
 import javax.inject.Inject;
 
@@ -23,28 +21,28 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
     private UserSignInUseCase userSignInUseCase;
     private UserSignUpUseCase userSignUpUseCase;
     private ResetPasswordUseCase resetPasswordUseCase;
+    private AppPreferences appPreferences;
 
     @Inject
     public AuthPresenter(
             UserSignInUseCase userSignInUseCase,
             UserSignUpUseCase userSignUpUseCase,
-            ResetPasswordUseCase resetPasswordUseCase
+            ResetPasswordUseCase resetPasswordUseCase,
+            AppPreferences appPreferences
     ) {
         this.userSignInUseCase = userSignInUseCase;
         this.userSignUpUseCase = userSignUpUseCase;
         this.resetPasswordUseCase = resetPasswordUseCase;
+        this.appPreferences = appPreferences;
     }
 
-    public void signIn(String email, String password, Activity context) {
+    public void signIn(String email, String password) {
         Credentials credentials = new Credentials(email, password);
         getView().setProgress(true);
         userSignInUseCase.execute(credentials, new DefaultSubscriber<User>() {
             @Override
             public void onNext(User user) {
-                ((App) context.getApplicationContext()).createUserComponent(user);
-                getView().setProgress(false);
-                Navigator.goToMainScreen(context);
-                context.finish();
+                onAuthSuccess(user);
             }
 
             @Override
@@ -57,16 +55,17 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
         });
     }
 
-    public void signUp(String email, String password, Activity context) {
+    public void signInGuest() {
+        onAuthSuccess(null);
+    }
+
+    public void signUp(String email, String password) {
         Credentials credentials = new Credentials(email, password);
         getView().setProgress(true);
         userSignUpUseCase.execute(credentials, new DefaultSubscriber<User>() {
             @Override
             public void onNext(User user) {
-                ((App) context.getApplicationContext()).createUserComponent(user);
-                getView().setProgress(false);
-                Navigator.goToMainScreen(context);
-                context.finish();
+                onAuthSuccess(user);
             }
 
             @Override
@@ -76,6 +75,28 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
                 getView().error(e.getLocalizedMessage());
             }
         });
+    }
+
+    public void onCreate() {
+        //String sessionId = appPreferences.getSessionId();
+
+        if (!appPreferences.isFirstRun()) {
+            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            if (firebaseUser != null) {
+                User user = new User();
+                user.setId(firebaseUser.getUid());
+                user.setEmail(firebaseUser.getEmail());
+                getView().onSuccess(user);
+            } else {
+                getView().onSuccess(null);
+            }
+        }
+    }
+
+    private void onAuthSuccess(User user) {
+        appPreferences.setFirstRun(false);
+        getView().setProgress(false);
+        getView().onSuccess(user);
     }
 
     public void resetPassword(String email) {

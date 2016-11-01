@@ -20,4 +20,6 @@ public interface CategoryDataSource {
     Observable<Category> save(Category category);
 
     Observable<Category> remove(Category category);
+
+    Observable<Void> clear();
 }

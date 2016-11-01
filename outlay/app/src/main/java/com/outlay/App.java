@@ -10,6 +10,7 @@ import com.outlay.di.component.DaggerAppComponent;
 import com.outlay.di.component.UserComponent;
 import com.outlay.di.module.AppModule;
 import com.outlay.di.module.DaoModule;
+import com.outlay.di.module.NetworkModule;
 import com.outlay.di.module.UserModule;
 import com.outlay.domain.model.User;
 import com.outlay.impl.AndroidLogger;
@@ -45,6 +46,7 @@ public class App extends Application {
     private void initializeInjector() {
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
+                .networkModule(new NetworkModule())
                 .daoModule(new DaoModule())
                 .build();
     }

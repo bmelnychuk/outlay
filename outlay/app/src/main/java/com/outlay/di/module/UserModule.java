@@ -1,18 +1,22 @@
 package com.outlay.di.module;
 
-import android.content.Context;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.outlay.data.repository.ExpenseRepositoryImpl;
+import com.outlay.data.sync.CategoryDataSync;
+import com.outlay.data.sync.ExpenseDataSync;
 import com.outlay.database.source.CategoryDatabaseSource;
+import com.outlay.database.source.ExpenseDatabaseSource;
 import com.outlay.di.scope.UserScope;
+import com.outlay.domain.model.Category;
 import com.outlay.domain.model.User;
 import com.outlay.domain.repository.CategoryRepository;
 import com.outlay.domain.repository.ExpenseRepository;
 import com.outlay.firebase.CategoryFirebaseSource;
 import com.outlay.firebase.ExpenseFirebaseSource;
 import com.outlay.impl.CategoryRepositoryImpl;
+
+import java.util.List;
 
 import dagger.Module;
 import dagger.Provides;
@@ -41,21 +45,16 @@ public class UserModule {
     public CategoryFirebaseSource provideFirebaseCategoryDataSource(
             DatabaseReference databaseReference
     ) {
-        if (user == null) {
-            return null;
-        }
         return new CategoryFirebaseSource(user, databaseReference);
     }
 
     @Provides
     @UserScope
     public ExpenseFirebaseSource provideExpenseFirebaseSource(
-            DatabaseReference databaseReference
+            DatabaseReference databaseReference,
+            CategoryFirebaseSource categoryFirebaseSource
     ) {
-        if (user == null) {
-            return null;
-        }
-        return new ExpenseFirebaseSource(user, databaseReference);
+        return new ExpenseFirebaseSource(user, databaseReference, categoryFirebaseSource);
     }
 
     @Provides
@@ -63,16 +62,38 @@ public class UserModule {
     public CategoryRepository provideCategoryRepository(
             CategoryDatabaseSource databaseSource,
             CategoryFirebaseSource firebaseSource,
-            Context application
+            List<Category> defaultCategories
     ) {
-        return new CategoryRepositoryImpl(databaseSource, firebaseSource, application);
+        return new CategoryRepositoryImpl(
+                databaseSource,
+                user == null ? null : firebaseSource
+        );
     }
 
     @Provides
     @UserScope
     public ExpenseRepository provideExpenseRepository(
-            ExpenseFirebaseSource expenseDataSource
+            ExpenseFirebaseSource expenseDataSource,
+            ExpenseDatabaseSource databaseSource
     ) {
-        return new ExpenseRepositoryImpl(expenseDataSource);
+        return new ExpenseRepositoryImpl(databaseSource, user == null ? null : expenseDataSource);
+    }
+
+    @Provides
+    @UserScope
+    public CategoryDataSync provideCategoryDataSync(
+            CategoryDatabaseSource databaseSource,
+            CategoryFirebaseSource firebaseSource
+    ) {
+        return new CategoryDataSync(databaseSource, firebaseSource);
+    }
+
+    @Provides
+    @UserScope
+    public ExpenseDataSync provideExpenseDataSync(
+            ExpenseFirebaseSource expenseDataSource,
+            ExpenseDatabaseSource databaseSource
+    ) {
+        return new ExpenseDataSync(databaseSource, expenseDataSource);
     }
 }

@@ -11,8 +11,6 @@ import rx.Observable;
  */
 
 public interface CategoryRepository {
-    Observable<List<Category>> getDefault();
-
     Observable<List<Category>> getAll();
 
     Observable<Category> getById(String id);
@@ -22,4 +20,6 @@ public interface CategoryRepository {
     Observable<Category> save(Category category);
 
     Observable<Category> remove(Category category);
+
+    void clearCache();
 }

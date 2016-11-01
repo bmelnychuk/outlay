@@ -1,7 +1,8 @@
 package com.outlay.firebase.dto.adapter;
 
-import com.outlay.domain.model.Expense;
 import com.outlay.firebase.dto.ExpenseDto;
+import com.outlay.domain.model.Category;
+import com.outlay.domain.model.Expense;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -13,11 +14,6 @@ import java.util.List;
  */
 
 public class ExpenseAdapter {
-    private CategoryAdapter categoryAdapter;
-
-    public ExpenseAdapter() {
-        this.categoryAdapter = new CategoryAdapter();
-    }
 
     public Expense toExpense(ExpenseDto expenseDto) {
         Expense expense = new Expense();
@@ -26,7 +22,9 @@ public class ExpenseAdapter {
         expense.setId(expenseDto.getId());
         expense.setReportedAt(new Date(expenseDto.getReportedAt()));
 
-        expense.setCategory(categoryAdapter.toCategory(expenseDto.getCategory()));
+        Category category = new Category();
+        category.setId(expenseDto.getCategoryId());
+        expense.setCategory(category);
 
         return expense;
     }
@@ -37,7 +35,7 @@ public class ExpenseAdapter {
         expenseDto.setAmount(expense.getAmount().toString());
         expenseDto.setId(expense.getId());
         expenseDto.setReportedAt(expense.getReportedAt().getTime());
-        expenseDto.setCategory(categoryAdapter.fromCategory(expense.getCategory()));
+        expenseDto.setCategoryId(expense.getCategory().getId());
 
         return expenseDto;
     }

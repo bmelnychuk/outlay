@@ -3,6 +3,8 @@ package com.outlay.firebase;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.outlay.domain.model.User;
 
 import javax.inject.Inject;
@@ -20,6 +22,23 @@ public class FirebaseRxWrapper {
     public FirebaseRxWrapper() {
         //TODO shoud I provide as param
         this.firebaseAuth = FirebaseAuth.getInstance();
+    }
+
+    public Observable<String> getUserToken(FirebaseUser firebaseUser) {
+        return Observable.create(subscriber -> {
+            Task<GetTokenResult> task = firebaseUser.getToken(true);
+
+            task.addOnCompleteListener(resultTask -> {
+                if (task.isSuccessful()) {
+                    String token = task.getResult().getToken();
+                    subscriber.onNext(token);
+                    subscriber.onCompleted();
+                } else {
+                    Exception e = task.getException();
+                    subscriber.onError(e);
+                }
+            });
+        });
     }
 
     public Observable<AuthResult> signUp(String email, String password) {

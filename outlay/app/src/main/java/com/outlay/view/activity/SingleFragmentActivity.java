@@ -49,9 +49,4 @@ public class SingleFragmentActivity extends BaseActivity {
             super.onBackPressed();
         }
     }
-
-    @Override
-    public boolean hasDrawer() {
-        return false;
-    }
 }

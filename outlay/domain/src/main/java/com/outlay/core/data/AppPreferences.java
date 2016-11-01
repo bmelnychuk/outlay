@@ -7,4 +7,6 @@ package com.outlay.core.data;
 public interface AppPreferences {
     boolean isFirstRun();
     void setFirstRun(boolean firstRun);
+    String getSessionId();
+    void setSessionId(String sessionId);
 }

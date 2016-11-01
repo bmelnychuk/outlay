@@ -38,9 +38,12 @@ public class CategoryFirebaseSource implements CategoryDataSource {
             DatabaseReference databaseReference
     ) {
         this.currentUser = currentUser;
-        //TODO as param?
         mDatabase = databaseReference;
         adapter = new CategoryAdapter();
+
+        if (currentUser != null) {
+            mDatabase.child("users").child(currentUser.getId()).keepSynced(true);
+        }
     }
 
     @Override
@@ -93,13 +96,13 @@ public class CategoryFirebaseSource implements CategoryDataSource {
     public Observable<List<Category>> updateAll(List<Category> categories) {
         return Observable.create(subscriber -> {
             List<CategoryDto> categoryDtos = adapter.fromCategories(categories);
-            Map<String, CategoryDto> categoryDtoMap = new HashMap<>();
+            Map<String, Object> categoryDtoMap = new HashMap<>();
             for (CategoryDto categoryDto : categoryDtos) {
                 categoryDtoMap.put(categoryDto.getId(), categoryDto);
             }
             Task<Void> task = mDatabase.child("users").child(currentUser.getId())
                     .child("categories")
-                    .setValue(categoryDtoMap);
+                    .updateChildren(categoryDtoMap);
             task.addOnCompleteListener(resultTask -> {
                 if (task.isSuccessful()) {
                     subscriber.onNext(categories);
@@ -114,11 +117,11 @@ public class CategoryFirebaseSource implements CategoryDataSource {
 
     @Override
     public Observable<Category> save(Category category) {
-        return Observable.create(subscriber -> {
+        Observable<Category> saveCategory = Observable.create(subscriber -> {
             CategoryDto categoryDto = adapter.fromCategory(category);
 
             String key = category.getId();
-            if(TextUtils.isEmpty(key)) {
+            if (TextUtils.isEmpty(key)) {
                 key = mDatabase.child("users").child(currentUser.getId()).child("categories").push().getKey();
                 categoryDto.setId(key);
                 category.setId(key);
@@ -137,6 +140,7 @@ public class CategoryFirebaseSource implements CategoryDataSource {
                 }
             });
         });
+        return saveCategory;
     }
 
     @Override
@@ -158,4 +162,10 @@ public class CategoryFirebaseSource implements CategoryDataSource {
             });
         });
     }
+
+    @Override
+    public Observable<Void> clear() {
+        throw new UnsupportedOperationException();
+    }
+
 }

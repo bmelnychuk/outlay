@@ -24,23 +24,32 @@ public class OutlayAuthImpl implements OutlayAuth {
     @Override
     public Observable<User> signIn(Credentials credentials) {
         return firebaseWrapper.signIn(credentials.getEmail(), credentials.getPassword())
-                .map(authResult -> {
-                    User result = new User();
-                    result.setEmail(authResult.getUser().getEmail());
-                    result.setId(authResult.getUser().getUid());
-                    return result;
-                });
+                .map(authResult -> authResult.getUser())
+                .switchMap(
+                        firebaseUser -> firebaseWrapper.getUserToken(firebaseUser)
+                                .map(token -> {
+                                    User result = new User();
+                                    result.setToken(token);
+                                    result.setEmail(firebaseUser.getEmail());
+                                    result.setId(firebaseUser.getUid());
+                                    return result;
+                                })
+                );
     }
 
     @Override
     public Observable<User> signUp(Credentials credentials) {
         return firebaseWrapper.signUp(credentials.getEmail(), credentials.getPassword())
-                .map(authResult -> {
-                    User result = new User();
-                    result.setEmail(authResult.getUser().getEmail());
-                    result.setId(authResult.getUser().getUid());
-                    return result;
-                });
+                .map(authResult -> authResult.getUser())
+                .switchMap(
+                        firebaseUser -> firebaseWrapper.getUserToken(firebaseUser)
+                                .map(token -> {
+                                    User result = new User();
+                                    result.setEmail(firebaseUser.getEmail());
+                                    result.setId(firebaseUser.getUid());
+                                    return result;
+                                })
+                );
     }
 
     @Override

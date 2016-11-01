@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.outlay.di.module.AppModule;
 import com.outlay.di.module.DaoModule;
+import com.outlay.di.module.NetworkModule;
 import com.outlay.di.module.UserModule;
 import com.outlay.view.activity.LoginActivity;
 import com.outlay.view.activity.MainActivity;
@@ -22,7 +23,7 @@ import dagger.Component;
  * Created by Bogdan Melnychuk on 12/17/15.
  */
 @Singleton
-@Component(modules = {AppModule.class, DaoModule.class})
+@Component(modules = {AppModule.class, DaoModule.class, NetworkModule.class})
 public interface AppComponent {
     UserComponent plus(UserModule userModule);
 

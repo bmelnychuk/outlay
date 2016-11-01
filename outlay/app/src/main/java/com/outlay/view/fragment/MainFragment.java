@@ -30,7 +30,7 @@ import com.outlay.utils.DeviceUtils;
 import com.outlay.utils.FormatUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Navigator;
-import com.outlay.view.activity.BaseActivity;
+import com.outlay.view.activity.MainActivity;
 import com.outlay.view.adapter.CategoriesGridAdapter;
 import com.outlay.view.alert.Alert;
 import com.outlay.view.dialog.DatePickerFragment;
@@ -52,6 +52,7 @@ import butterknife.ButterKnife;
 public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetChangedListener, EnterExpenseView {
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.2f;
     private static final int ALPHA_ANIMATIONS_DURATION = 200;
+    public static final String ACTION = "_actoin";
 
     @Nullable
     @Bind(R.id.toolbar)
@@ -108,7 +109,7 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
         View view = inflater.inflate(R.layout.fragment_main, null, false);
         ButterKnife.bind(this, view);
         enableToolbar(toolbar);
-        ((BaseActivity) getActivity()).setupDrawer(toolbar);
+        ((MainActivity) getActivity()).setupDrawer(toolbar);
         return view;
     }
 
@@ -172,6 +173,11 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
             datePickerFragment.show(getChildFragmentManager(), "datePicker");
         });
         setHasOptionsMenu(true);
+
+
+        if (getArguments().containsKey(ACTION) && getArguments().getString(ACTION) != null) {
+            presenter.init();
+        }
     }
 
     @Override
@@ -238,7 +244,7 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
 
     @Override
     public void showDateSummary(DateSummary dateSummary) {
-        ((BaseActivity) getActivity()).updateDrawerData(dateSummary);
+        ((MainActivity) getActivity()).updateDrawerData(dateSummary);
     }
 
     @Override

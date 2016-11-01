@@ -5,7 +5,6 @@ import com.outlay.database.adapter.CategoryDatabaseMapper;
 import com.outlay.database.dao.CategoryDao;
 import com.outlay.database.dao.ExpenseDao;
 import com.outlay.domain.model.Category;
-import com.outlay.domain.model.Expense;
 
 import java.util.List;
 
@@ -80,6 +79,9 @@ public class CategoryDatabaseSource implements CategoryDataSource {
         return Observable.create(subscriber -> {
             try {
                 com.outlay.database.dao.Category daoCategory = categoryMapper.fromCategory(category);
+                if (daoCategory.getId() == null) {
+                    daoCategory.setId(System.currentTimeMillis());
+                }
                 categoryDao.insertOrReplace(daoCategory);
                 subscriber.onNext(categoryMapper.toCategory(daoCategory));
                 subscriber.onCompleted();
@@ -99,6 +101,18 @@ public class CategoryDatabaseSource implements CategoryDataSource {
                 deleteQuery.executeDeleteWithoutDetachingEntities();
 
                 categoryDao.deleteByKey(Long.valueOf(category.getId()));
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                subscriber.onError(e);
+            }
+        });
+    }
+
+    @Override
+    public Observable<Void> clear() {
+        return Observable.create(subscriber -> {
+            try {
+                categoryDao.deleteAll();
                 subscriber.onCompleted();
             } catch (Exception e) {
                 subscriber.onError(e);
