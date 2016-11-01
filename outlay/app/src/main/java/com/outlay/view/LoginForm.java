@@ -82,13 +82,13 @@ public class LoginForm extends RelativeLayout {
 
         signInButton.setOnClickListener(v -> {
             if (signInListener != null) {
-                signInListener.onSubmit("melnychuk.bogdan@gmail.com", "q1w2e3r4t5", v);
+                signInListener.onSubmit("melnychuk.bogdan@gmail.com", "11111", v);
             }
         });
 
         signUpButton.setOnClickListener(v -> {
             if (signUpListener != null) {
-                signUpListener.onSubmit("melnychuk.bogdan@gmail.com", "q1w2e3r4t5", v);
+                signUpListener.onSubmit("melnychuk.bogdan@gmail.com", "11111", v);
             }
         });
 

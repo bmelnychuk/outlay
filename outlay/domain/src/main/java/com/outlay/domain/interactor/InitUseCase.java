@@ -38,7 +38,7 @@ public class InitUseCase extends UseCase<Void, List<Category>> {
             return categoryRepository.getDefault()
                     .switchMap(categories -> {
                         appPreferences.setFirstRun(false);
-                        return categoryRepository.saveAll(categories);
+                        return categoryRepository.updateAll(categories);
                     });
         } else {
             return categoryRepository.getAll();

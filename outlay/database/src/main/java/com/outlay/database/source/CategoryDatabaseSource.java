@@ -62,7 +62,7 @@ public class CategoryDatabaseSource implements CategoryDataSource {
     }
 
     @Override
-    public Observable<List<Category>> saveAll(List<Category> categories) {
+    public Observable<List<Category>> updateAll(List<Category> categories) {
         return Observable.create(subscriber -> {
             try {
                 List<com.outlay.database.dao.Category> dbCategories = categoryMapper.fromCategories(categories);

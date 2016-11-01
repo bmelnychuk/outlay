@@ -90,7 +90,7 @@ public class CategoryFirebaseSource implements CategoryDataSource {
     }
 
     @Override
-    public Observable<List<Category>> saveAll(List<Category> categories) {
+    public Observable<List<Category>> updateAll(List<Category> categories) {
         return Observable.create(subscriber -> {
             List<CategoryDto> categoryDtos = adapter.fromCategories(categories);
             Map<String, CategoryDto> categoryDtoMap = new HashMap<>();
@@ -102,6 +102,7 @@ public class CategoryFirebaseSource implements CategoryDataSource {
                     .setValue(categoryDtoMap);
             task.addOnCompleteListener(resultTask -> {
                 if (task.isSuccessful()) {
+                    subscriber.onNext(categories);
                     subscriber.onCompleted();
                 } else {
                     Exception e = task.getException();
@@ -144,10 +145,11 @@ public class CategoryFirebaseSource implements CategoryDataSource {
             CategoryDto categoryDto = adapter.fromCategory(category);
 
             Task<Void> task = mDatabase.child("users").child(currentUser.getId())
-                    .child("categories").child(categoryDto.getId().toString())
+                    .child("categories").child(categoryDto.getId())
                     .removeValue();
             task.addOnCompleteListener(resultTask -> {
                 if (task.isSuccessful()) {
+                    subscriber.onNext(category);
                     subscriber.onCompleted();
                 } else {
                     Exception e = task.getException();

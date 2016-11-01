@@ -72,8 +72,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public Observable<List<Category>> saveAll(List<Category> categories) {
-        return firebaseSource.saveAll(categories);
+    public Observable<List<Category>> updateAll(List<Category> categories) {
+        return firebaseSource.updateAll(categories);
     }
 
     @Override

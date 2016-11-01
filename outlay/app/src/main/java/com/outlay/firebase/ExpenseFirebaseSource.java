@@ -69,7 +69,7 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
 
     @Override
     public Observable<List<Expense>> getExpenses(Date startDate, Date endDate, String categoryId) {
-        return Observable.create(subscriber -> {
+        Observable<List<Expense>> listObservable = Observable.create(subscriber -> {
             mDatabase.child("users").child(currentUser.getId()).child("expenses")
                     .orderByChild("reportedAt")
                     .startAt(startDate.getTime()).endAt(endDate.getTime())
@@ -91,6 +91,10 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
                         }
                     });
         });
+
+
+
+        return listObservable;
     }
 
     @Override
@@ -100,7 +104,7 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
 
     @Override
     public Observable<Expense> getById(String expenseId) {
-        return Observable.create(subscriber -> {
+        Observable<Expense> expenseObservable = Observable.create(subscriber -> {
             mDatabase.child("users").child(currentUser.getId()).child("expenses").child(expenseId)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -116,6 +120,8 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
                         }
                     });
         });
+
+        return expenseObservable;
     }
 
     @Override
