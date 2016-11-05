@@ -1,5 +1,7 @@
 package com.outlay.impl;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.outlay.domain.model.Credentials;
 import com.outlay.domain.model.User;
 import com.outlay.domain.repository.OutlayAuth;
@@ -23,33 +25,48 @@ public class OutlayAuthImpl implements OutlayAuth {
 
     @Override
     public Observable<User> signIn(Credentials credentials) {
-        return firebaseWrapper.signIn(credentials.getEmail(), credentials.getPassword())
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        return firebaseWrapper.signIn(credentials.getEmail(), credentials.getPassword(), firebaseUser)
                 .map(authResult -> authResult.getUser())
-                .switchMap(
-                        firebaseUser -> firebaseWrapper.getUserToken(firebaseUser)
-                                .map(token -> {
-                                    User result = new User();
-                                    result.setToken(token);
-                                    result.setEmail(firebaseUser.getEmail());
-                                    result.setId(firebaseUser.getUid());
-                                    return result;
-                                })
-                );
+                .map(authUser -> {
+                    User result = new User();
+                    result.setEmail(authUser.getEmail());
+                    result.setId(authUser.getUid());
+                    return result;
+                });
     }
 
     @Override
     public Observable<User> signUp(Credentials credentials) {
         return firebaseWrapper.signUp(credentials.getEmail(), credentials.getPassword())
                 .map(authResult -> authResult.getUser())
-                .switchMap(
-                        firebaseUser -> firebaseWrapper.getUserToken(firebaseUser)
-                                .map(token -> {
-                                    User result = new User();
-                                    result.setEmail(firebaseUser.getEmail());
-                                    result.setId(firebaseUser.getUid());
-                                    return result;
-                                })
-                );
+                .map(firebaseUser -> {
+                    User result = new User();
+                    result.setEmail(firebaseUser.getEmail());
+                    result.setId(firebaseUser.getUid());
+                    return result;
+                });
+    }
+
+    @Override
+    public Observable<User> signInAnonymously() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null && currentUser.isAnonymous()) {
+            User result = new User();
+            result.setEmail(currentUser.getEmail());
+            result.setId(currentUser.getUid());
+            return Observable.just(result);
+        } else {
+            return firebaseWrapper.signInAnonymously()
+                    .map(authResult -> authResult.getUser())
+                    .map(firebaseUser -> {
+                        User result = new User();
+                        result.setEmail(firebaseUser.getEmail());
+                        result.setId(firebaseUser.getUid());
+                        return result;
+                    });
+        }
     }
 
     @Override

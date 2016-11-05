@@ -56,7 +56,20 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
     }
 
     public void signInGuest() {
-        onAuthSuccess(null);
+        userSignInUseCase.execute(new DefaultSubscriber<User>() {
+            @Override
+            public void onNext(User user) {
+                onAuthSuccess(user);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                getView().setProgress(false);
+                getView().error(e.getLocalizedMessage());
+
+            }
+        });
     }
 
     public void signUp(String email, String password) {
@@ -78,8 +91,6 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
     }
 
     public void onCreate() {
-        //String sessionId = appPreferences.getSessionId();
-
         if (!appPreferences.isFirstRun()) {
             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             if (firebaseUser != null) {

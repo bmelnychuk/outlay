@@ -29,6 +29,10 @@ public class UserSignInUseCase extends UseCase<Credentials, User> {
 
     @Override
     protected Observable<User> buildUseCaseObservable(Credentials credentials) {
-        return outlayAuth.signIn(credentials);
+        if (credentials != null) {
+            return outlayAuth.signIn(credentials);
+        } else {
+            return outlayAuth.signInAnonymously();
+        }
     }
 }

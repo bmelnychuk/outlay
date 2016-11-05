@@ -12,5 +12,6 @@ import rx.Observable;
 public interface OutlayAuth {
     Observable<User> signIn(Credentials credentials);
     Observable<User> signUp(Credentials credentials);
+    Observable<User> signInAnonymously();
     Observable<Void> resetPassword(User user);
 }

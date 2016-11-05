@@ -77,8 +77,8 @@ public class MainActivity extends BaseActivity implements MainView {
 
         PrimaryDrawerItem inOutItem = new PrimaryDrawerItem()
                 .withIdentifier(ITEM_LOGOUT)
-                .withName(firebaseUser != null ? R.string.menu_item_signout : R.string.menu_item_signin)
-                .withIcon(firebaseUser != null ? MaterialDesignIconic.Icon.gmi_square_right : MaterialDesignIconic.Icon.gmi_account);
+                .withName(firebaseUser.isAnonymous() ? R.string.menu_item_signin : R.string.menu_item_signout)
+                .withIcon(firebaseUser.isAnonymous() ? MaterialDesignIconic.Icon.gmi_account : MaterialDesignIconic.Icon.gmi_square_right);
 
         mainDrawer = new DrawerBuilder()
                 .withToolbar(toolbar)
@@ -114,10 +114,10 @@ public class MainActivity extends BaseActivity implements MainView {
                                 SingleFragmentActivity.start(MainActivity.this, AboutFragment.class);
                                 break;
                             case ITEM_LOGOUT:
-                                if (firebaseUser != null) {
-                                    presenter.signOut();
-                                } else {
+                                if (firebaseUser.isAnonymous()) {
                                     presenter.signIn();
+                                } else {
+                                    presenter.signOut();
                                 }
                         }
 
