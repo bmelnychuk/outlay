@@ -35,7 +35,6 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final int TYPE_CHART = 0;
     private static final int TYPE_REPORT_ITEM = 1;
 
-
     private List<Report> reports;
     private double maxProgress;
     private ItemClickListener onItemClickListener;

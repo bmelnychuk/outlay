@@ -13,17 +13,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.outlay.App;
 import com.outlay.R;
-import com.outlay.view.adapter.ReportAdapter;
 import com.outlay.core.utils.DateUtils;
 import com.outlay.domain.model.Report;
-import com.outlay.view.helper.OnTabSelectedListenerAdapter;
 import com.outlay.mvp.presenter.ReportPresenter;
 import com.outlay.mvp.view.StatisticView;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Navigator;
+import com.outlay.view.adapter.ReportAdapter;
 import com.outlay.view.dialog.DatePickerFragment;
+import com.outlay.view.fragment.base.BaseMvpFragment;
+import com.outlay.view.helper.OnTabSelectedListenerAdapter;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -32,12 +32,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
  */
-public class ReportFragment extends BaseFragment implements StatisticView {
+public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresenter> implements StatisticView {
     public static final String ARG_DATE = "_argDate";
 
     public static final int PERIOD_DAY = 0;
@@ -64,10 +63,14 @@ public class ReportFragment extends BaseFragment implements StatisticView {
     private ReportAdapter adapter;
 
     @Override
+    public ReportPresenter getPresenter() {
+        return presenter;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getUserComponent(getActivity()).inject(this);
-        presenter.attachView(this);
+        getApp().getUserComponent().inject(this);
         selectedDate = new Date(getArguments().getLong(ARG_DATE, new Date().getTime()));
     }
 
@@ -75,16 +78,13 @@ public class ReportFragment extends BaseFragment implements StatisticView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_report, null, false);
-        ButterKnife.bind(this, view);
-        enableToolbar(toolbar);
-        setDisplayHomeAsUpEnabled(true);
-        updateTitle();
         return view;
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
         inflater.inflate(R.menu.menu_report, menu);
         MenuItem dateItem = menu.findItem(R.id.action_date);
         dateItem.setIcon(ResourceUtils.getMaterialToolbarIcon(getActivity(), R.string.ic_material_today));
@@ -118,6 +118,11 @@ public class ReportFragment extends BaseFragment implements StatisticView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        setToolbar(toolbar);
+        setDisplayHomeAsUpEnabled(true);
+        updateTitle();
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.label_day));

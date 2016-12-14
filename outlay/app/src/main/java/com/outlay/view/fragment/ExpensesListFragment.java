@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.johnkil.print.PrintView;
-import com.outlay.App;
 import com.outlay.R;
 import com.outlay.view.adapter.ExpenseAdapter;
 import com.outlay.core.utils.DateUtils;
@@ -24,6 +23,8 @@ import com.outlay.mvp.view.ExpensesView;
 import com.outlay.utils.IconUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Navigator;
+import com.outlay.view.fragment.base.BaseMvpFragment;
+import com.outlay.view.fragment.base.StaticContentFragment;
 
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
  */
-public class ExpensesListFragment extends BaseFragment implements ExpensesView {
+public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, ExpensesListPresenter> implements ExpensesView {
     public static final String ARG_CATEGORY_ID = "_argCategoryId";
     public static final String ARG_DATE_FROM = "_argDateFrom";
     public static final String ARG_DATE_TO = "_argDateTo";
@@ -72,10 +73,14 @@ public class ExpensesListFragment extends BaseFragment implements ExpensesView {
     private String categoryId;
 
     @Override
+    public ExpensesListPresenter getPresenter() {
+        return presenter;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getUserComponent(getActivity()).inject(this);
-        presenter.attachView(this);
+        getApp().getUserComponent().inject(this);
 
         long dateFromMillis = getArguments().getLong(ARG_DATE_FROM);
         long dateToMillis = getArguments().getLong(ARG_DATE_TO);
@@ -91,16 +96,17 @@ public class ExpensesListFragment extends BaseFragment implements ExpensesView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_expenses_list, null, false);
-        ButterKnife.bind(this, view);
-        enableToolbar(toolbar);
-        setDisplayHomeAsUpEnabled(true);
-        setTitle(getString(R.string.caption_expenses));
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        setToolbar(toolbar);
+        setDisplayHomeAsUpEnabled(true);
+        setTitle(getString(R.string.caption_expenses));
+
         recyclerView.setHasFixedSize(true);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);

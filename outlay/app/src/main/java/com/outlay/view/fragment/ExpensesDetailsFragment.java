@@ -14,11 +14,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.github.johnkil.print.PrintView;
-import com.outlay.App;
 import com.outlay.R;
 import com.outlay.core.utils.DateUtils;
 import com.outlay.domain.model.Category;
 import com.outlay.domain.model.Expense;
+import com.outlay.view.fragment.base.BaseMvpFragment;
+import com.outlay.view.fragment.base.StaticContentFragment;
 import com.outlay.view.helper.TextWatcherAdapter;
 import com.outlay.mvp.presenter.ExpensesDetailsPresenter;
 import com.outlay.mvp.view.ExpenseDetailsView;
@@ -42,7 +43,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
  */
-public class ExpensesDetailsFragment extends BaseFragment implements ExpenseDetailsView {
+public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView, ExpensesDetailsPresenter> implements ExpenseDetailsView {
 
     public static final String ARG_EXPENSE_ID = "_argExpenseId";
     public static final String ARG_DATE = "_argDate";
@@ -76,10 +77,14 @@ public class ExpensesDetailsFragment extends BaseFragment implements ExpenseDeta
     private Date defaultDate;
 
     @Override
+    public ExpensesDetailsPresenter getPresenter() {
+        return presenter;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getUserComponent(getActivity()).inject(this);
-        presenter.attachView(this);
+        getApp().getUserComponent().inject(this);
         defaultDate = new Date(getArguments().getLong(ARG_DATE, new Date().getTime()));
     }
 
@@ -88,7 +93,7 @@ public class ExpensesDetailsFragment extends BaseFragment implements ExpenseDeta
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_expense_details, null, false);
         ButterKnife.bind(this, view);
-        enableToolbar(toolbar);
+        setToolbar(toolbar);
         setDisplayHomeAsUpEnabled(true);
         return view;
     }

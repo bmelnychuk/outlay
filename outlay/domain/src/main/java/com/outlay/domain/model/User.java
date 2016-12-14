@@ -8,6 +8,7 @@ public class User {
     private String id;
     private String email;
     private String token;
+    private boolean anonymous;
 
     public String getId() {
         return id;
@@ -34,5 +35,13 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public boolean isAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(boolean anonymous) {
+        this.anonymous = anonymous;
     }
 }

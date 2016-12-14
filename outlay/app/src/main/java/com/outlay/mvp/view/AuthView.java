@@ -8,7 +8,7 @@ import com.outlay.domain.model.User;
 
 public interface AuthView extends MvpView {
     void setProgress(boolean running);
-    void error(String message);
+    void error(Throwable throwable);
     void info(String message);
     void onSuccess(User user);
 }

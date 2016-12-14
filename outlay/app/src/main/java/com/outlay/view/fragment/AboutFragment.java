@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.outlay.R;
+import com.outlay.view.fragment.base.StaticContentFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,7 +21,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
  */
-public class AboutFragment extends BaseFragment {
+public class AboutFragment extends StaticContentFragment {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -36,7 +37,7 @@ public class AboutFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about, null, false);
         ButterKnife.bind(this, view);
-        enableToolbar(toolbar);
+        setToolbar(toolbar);
         setDisplayHomeAsUpEnabled(true);
         getActivity().setTitle(getString(R.string.caption_about));
         return view;

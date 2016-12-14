@@ -6,14 +6,9 @@ import com.outlay.di.module.AppModule;
 import com.outlay.di.module.DaoModule;
 import com.outlay.di.module.NetworkModule;
 import com.outlay.di.module.UserModule;
+import com.outlay.view.activity.base.StaticContentActivity;
 import com.outlay.view.activity.LoginActivity;
-import com.outlay.view.activity.MainActivity;
-import com.outlay.view.fragment.CategoriesFragment;
-import com.outlay.view.fragment.CategoryDetailsFragment;
-import com.outlay.view.fragment.ExpensesDetailsFragment;
-import com.outlay.view.fragment.ExpensesListFragment;
-import com.outlay.view.fragment.MainFragment;
-import com.outlay.view.fragment.ReportFragment;
+import com.outlay.view.fragment.LoginFragment;
 
 import javax.inject.Singleton;
 
@@ -26,10 +21,9 @@ import dagger.Component;
 @Component(modules = {AppModule.class, DaoModule.class, NetworkModule.class})
 public interface AppComponent {
     UserComponent plus(UserModule userModule);
-
-    void inject(LoginActivity loginActivity);
-
     Context getApplication();
 
-
+    void inject(LoginActivity loginActivity);
+    void inject(StaticContentActivity staticContentActivity);
+    void inject(LoginFragment loginFragment);
 }

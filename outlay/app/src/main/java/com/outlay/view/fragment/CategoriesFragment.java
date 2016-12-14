@@ -3,6 +3,7 @@ package com.outlay.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.outlay.App;
 import com.outlay.R;
 import com.outlay.view.adapter.CategoriesDraggableGridAdapter;
 import com.outlay.domain.model.Category;
@@ -19,6 +19,8 @@ import com.outlay.mvp.presenter.CategoriesPresenter;
 import com.outlay.mvp.view.CategoriesView;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Navigator;
+import com.outlay.view.fragment.base.BaseMvpFragment;
+import com.outlay.view.fragment.base.StaticContentFragment;
 import com.outlay.view.helper.itemtouch.OnDragListener;
 import com.outlay.view.helper.itemtouch.SimpleItemTouchHelperCallback;
 
@@ -32,7 +34,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
  */
-public class CategoriesFragment extends BaseFragment implements OnDragListener, CategoriesView {
+public class CategoriesFragment extends BaseMvpFragment<CategoriesView, CategoriesPresenter> implements OnDragListener, CategoriesView {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -50,26 +52,30 @@ public class CategoriesFragment extends BaseFragment implements OnDragListener, 
     private CategoriesDraggableGridAdapter adapter;
 
     @Override
+    public CategoriesPresenter getPresenter() {
+        return presenter;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getUserComponent(getActivity()).inject(this);
-        presenter.attachView(this);
+        getApp().getUserComponent().inject(this);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_categories, null, false);
-        ButterKnife.bind(this, view);
-        enableToolbar(toolbar);
-        setDisplayHomeAsUpEnabled(true);
-        getActivity().setTitle(getString(R.string.caption_categories));
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        setToolbar(toolbar);
+        setDisplayHomeAsUpEnabled(true);
+        getActivity().setTitle(getString(R.string.caption_categories));
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
         categoriesGrid.setLayoutManager(gridLayoutManager);

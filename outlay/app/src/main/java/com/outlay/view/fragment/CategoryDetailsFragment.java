@@ -15,10 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.outlay.App;
 import com.outlay.R;
 import com.outlay.view.adapter.IconsGridAdapter;
 import com.outlay.domain.model.Category;
+import com.outlay.view.fragment.base.BaseMvpFragment;
+import com.outlay.view.fragment.base.StaticContentFragment;
 import com.outlay.view.helper.TextWatcherAdapter;
 import com.outlay.mvp.presenter.CategoryDetailsPresenter;
 import com.outlay.mvp.view.CategoryDetailsView;
@@ -37,7 +38,7 @@ import uz.shift.colorpicker.LineColorPicker;
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
  */
-public class CategoryDetailsFragment extends BaseFragment implements CategoryDetailsView {
+public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView, CategoryDetailsPresenter> implements CategoryDetailsView {
     public static final String ARG_CATEGORY_PARAM = "_argCategoryId";
 
     @Bind(R.id.toolbar)
@@ -62,20 +63,20 @@ public class CategoryDetailsFragment extends BaseFragment implements CategoryDet
     private Category category;
 
     @Override
+    public CategoryDetailsPresenter getPresenter() {
+        return presenter;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getUserComponent(getActivity()).inject(this);
-        presenter.attachView(this);
+        getApp().getUserComponent().inject(this);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category_details, null, false);
-        ButterKnife.bind(this, view);
-        enableToolbar(toolbar);
-        setDisplayHomeAsUpEnabled(true);
-
         return view;
     }
 
@@ -110,6 +111,9 @@ public class CategoryDetailsFragment extends BaseFragment implements CategoryDet
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setToolbar(toolbar);
+        setDisplayHomeAsUpEnabled(true);
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
         iconsGrid.setLayoutManager(gridLayoutManager);
         adapter = new IconsGridAdapter(IconUtils.getAll());
@@ -169,7 +173,7 @@ public class CategoryDetailsFragment extends BaseFragment implements CategoryDet
             categoryName.requestFocus();
             result = false;
         } else if (TextUtils.isEmpty(category.getIcon())) {
-            Alert.error(getRootView(), getString(R.string.error_category_icon));
+            Alert.error(getBaseActivity().getRootView(), getString(R.string.error_category_icon));
             result = false;
         }
 

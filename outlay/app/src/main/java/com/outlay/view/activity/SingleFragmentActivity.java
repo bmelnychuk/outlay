@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.outlay.R;
+import com.outlay.view.activity.base.StaticContentActivity;
 
 
-public class SingleFragmentActivity extends BaseActivity {
+public class SingleFragmentActivity extends StaticContentActivity {
 
     public static void start(Context context, Class<?> fragmentClass, Bundle bundle) {
         Intent intent = new Intent(context, SingleFragmentActivity.class);

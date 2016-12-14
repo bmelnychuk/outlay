@@ -1,7 +1,6 @@
 package com.outlay;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.outlay.core.logger.LoggerFactory;
@@ -57,13 +56,5 @@ public class App extends Application {
 
     public UserComponent getUserComponent() {
         return userComponent;
-    }
-
-    public static AppComponent getComponent(Context context) {
-        return ((App) context.getApplicationContext()).getAppComponent();
-    }
-
-    public static UserComponent getUserComponent(Context context) {
-        return ((App) context.getApplicationContext()).getUserComponent();
     }
 }

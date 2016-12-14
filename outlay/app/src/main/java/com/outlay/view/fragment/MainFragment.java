@@ -19,21 +19,22 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.outlay.App;
 import com.outlay.R;
 import com.outlay.core.utils.DateUtils;
 import com.outlay.domain.model.DateSummary;
 import com.outlay.domain.model.Expense;
+import com.outlay.domain.model.OutlaySession;
 import com.outlay.mvp.presenter.EnterExpensePresenter;
 import com.outlay.mvp.view.EnterExpenseView;
 import com.outlay.utils.DeviceUtils;
 import com.outlay.utils.FormatUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Navigator;
-import com.outlay.view.activity.MainActivity;
+import com.outlay.view.activity.base.DrawerActivity;
 import com.outlay.view.adapter.CategoriesGridAdapter;
 import com.outlay.view.alert.Alert;
 import com.outlay.view.dialog.DatePickerFragment;
+import com.outlay.view.fragment.base.BaseMvpFragment;
 import com.outlay.view.helper.TextWatcherAdapter;
 import com.outlay.view.numpad.NumpadEditable;
 import com.outlay.view.numpad.NumpadView;
@@ -49,10 +50,10 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetChangedListener, EnterExpenseView {
+public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpensePresenter> implements AppBarLayout.OnOffsetChangedListener, EnterExpenseView {
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.2f;
     private static final int ALPHA_ANIMATIONS_DURATION = 200;
-    public static final String ACTION = "_actoin";
+    public static final String ACTION = "_action";
 
     @Nullable
     @Bind(R.id.toolbar)
@@ -97,9 +98,14 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
     };
 
     @Override
+    public EnterExpensePresenter getPresenter() {
+        return presenter;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getUserComponent(getActivity()).inject(this);
+        getApp().getUserComponent().inject(this);
         presenter.attachView(this);
     }
 
@@ -107,15 +113,16 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, null, false);
-        ButterKnife.bind(this, view);
-        enableToolbar(toolbar);
-        ((MainActivity) getActivity()).setupDrawer(toolbar);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ButterKnife.bind(this, view);
+        setToolbar(toolbar);
+        ((DrawerActivity) getActivity()).setupDrawer(toolbar, OutlaySession.getCurrentUser());
 
         appbar.addOnOffsetChangedListener(this);
         startAlphaAnimation(toolbarContainer, 0, View.INVISIBLE);
@@ -244,7 +251,7 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
 
     @Override
     public void showDateSummary(DateSummary dateSummary) {
-        ((MainActivity) getActivity()).updateDrawerData(dateSummary);
+        //((MainActivity) getActivity()).updateDrawerData(dateSummary);
     }
 
     @Override
@@ -256,7 +263,7 @@ public class MainFragment extends BaseFragment implements AppBarLayout.OnOffsetC
     public void alertExpenseSuccess(Expense e) {
         String message = getString(R.string.info_expense_created);
         message = String.format(message, e.getAmount(), e.getCategory().getTitle());
-        Alert.info(getRootView(), message,
+        Alert.info(getBaseActivity().getRootView(), message,
                 v -> {
                     presenter.deleteExpense(e);
                     amountText.setText(FormatUtils.formatAmount(e.getAmount()));

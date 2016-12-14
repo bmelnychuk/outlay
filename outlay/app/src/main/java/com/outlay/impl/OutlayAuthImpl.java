@@ -25,9 +25,7 @@ public class OutlayAuthImpl implements OutlayAuth {
 
     @Override
     public Observable<User> signIn(Credentials credentials) {
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        return firebaseWrapper.signIn(credentials.getEmail(), credentials.getPassword(), firebaseUser)
+        return firebaseWrapper.signIn(credentials.getEmail(), credentials.getPassword())
                 .map(authResult -> authResult.getUser())
                 .map(authUser -> {
                     User result = new User();

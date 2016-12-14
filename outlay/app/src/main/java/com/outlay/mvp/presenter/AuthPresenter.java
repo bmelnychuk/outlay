@@ -8,6 +8,7 @@ import com.outlay.domain.interactor.ResetPasswordUseCase;
 import com.outlay.domain.interactor.UserSignInUseCase;
 import com.outlay.domain.interactor.UserSignUpUseCase;
 import com.outlay.domain.model.Credentials;
+import com.outlay.domain.model.OutlaySession;
 import com.outlay.domain.model.User;
 import com.outlay.mvp.view.AuthView;
 
@@ -49,7 +50,7 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
             public void onError(Throwable e) {
                 super.onError(e);
                 getView().setProgress(false);
-                getView().error(e.getLocalizedMessage());
+                getView().error(e);
 
             }
         });
@@ -66,7 +67,7 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
             public void onError(Throwable e) {
                 super.onError(e);
                 getView().setProgress(false);
-                getView().error(e.getLocalizedMessage());
+                getView().error(e);
 
             }
         });
@@ -85,27 +86,28 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
             public void onError(Throwable e) {
                 super.onError(e);
                 getView().setProgress(false);
-                getView().error(e.getLocalizedMessage());
+                getView().error(e);
             }
         });
     }
 
     public void onCreate() {
-        if (!appPreferences.isFirstRun()) {
-            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-            if (firebaseUser != null) {
-                User user = new User();
-                user.setId(firebaseUser.getUid());
-                user.setEmail(firebaseUser.getEmail());
-                getView().onSuccess(user);
-            } else {
-                getView().onSuccess(null);
-            }
-        }
+//        if (!appPreferences.isFirstRun()) {
+//            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//            if (firebaseUser != null) {
+//                User user = new User();
+//                user.setId(firebaseUser.getUid());
+//                user.setEmail(firebaseUser.getEmail());
+//                getView().onSuccess(user);
+//            } else {
+//                getView().onSuccess(null);
+//            }
+//        }
     }
 
     private void onAuthSuccess(User user) {
         appPreferences.setFirstRun(false);
+        OutlaySession.setCurrentUser(user);
         getView().setProgress(false);
         getView().onSuccess(user);
     }
@@ -122,7 +124,7 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                getView().error("Problem while resetting your password");
+                getView().error(new Exception("Problem while resetting your password"));
             }
         });
     }

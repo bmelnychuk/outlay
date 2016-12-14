@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Build;
+import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
-import com.github.clans.fab.FloatingActionButton;
 import com.outlay.R;
 import com.outlay.view.helper.AnimationUtils;
 import com.outlay.view.helper.ViewHelper;
@@ -151,12 +151,6 @@ public class LoginForm extends RelativeLayout {
         int x = signUpForm.getRight();
         int y = signUpForm.getTop() + ViewHelper.dpToPx(56);
         return new Point(x, y);
-    }
-
-    public void setProgress(boolean running) {
-        fab.setIndeterminate(running);
-        fab.setClickable(!running);
-        signUpButton.setEnabled(!running);
     }
 
     public interface OnSubmitClickListener {
