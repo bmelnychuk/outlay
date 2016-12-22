@@ -62,14 +62,6 @@ public class DaoModule {
 
     @Provides
     @Singleton
-    public OutlayAuth provideOutlayAuth(
-            FirebaseRxWrapper firebaseRxWrapper
-    ) {
-        return new OutlayAuthImpl(firebaseRxWrapper);
-    }
-
-    @Provides
-    @Singleton
     public CategoryDatabaseSource providerLocalCategoryDataSource(
             CategoryDao categoryDao,
             ExpenseDao expenseDao

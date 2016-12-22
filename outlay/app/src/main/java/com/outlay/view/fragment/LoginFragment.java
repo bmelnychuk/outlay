@@ -82,7 +82,7 @@ public class LoginFragment extends BaseMvpFragment<AuthView, AuthPresenter> impl
     @Override
     public void onSuccess(User user) {
         getApp().createUserComponent(user);
-        Navigator.goToMainScreen(getActivity(), user == null ? null : action);
+        Navigator.goToMainScreen(getActivity());
         getActivity().finish();
     }
 }

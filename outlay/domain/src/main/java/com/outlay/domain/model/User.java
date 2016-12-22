@@ -5,6 +5,12 @@ package com.outlay.domain.model;
  */
 
 public class User {
+    public static final User ANONYMOUS = new User();
+
+    static {
+        ANONYMOUS.setAnonymous(true);
+    }
+
     private String id;
     private String email;
     private String token;

@@ -28,6 +28,11 @@ public final class Navigator {
         changeFragment(activityFrom, CategoryDetailsFragment.class, b);
     }
 
+    public static void goToMainScreen(Activity activityFrom) {
+        Intent intent = new Intent(activityFrom, MainActivity.class);
+        activityFrom.startActivity(intent);
+    }
+
     public static void goToMainScreen(Activity activityFrom, String action) {
         Bundle b = new Bundle();
         b.putString(MainFragment.ACTION, action);

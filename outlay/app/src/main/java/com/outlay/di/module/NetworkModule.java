@@ -2,7 +2,10 @@ package com.outlay.di.module;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.outlay.domain.repository.OutlayAuth;
+import com.outlay.firebase.FirebaseRxWrapper;
 import com.outlay.firebase.rest.Firebase;
+import com.outlay.impl.OutlayAuthImpl;
 
 import javax.inject.Singleton;
 
@@ -38,5 +41,13 @@ public class NetworkModule {
                 .client(client)
                 .build();
         return retrofit.create(Firebase.Api.class);
+    }
+
+    @Provides
+    @Singleton
+    public OutlayAuth provideOutlayAuth(
+            FirebaseRxWrapper firebaseRxWrapper
+    ) {
+        return new OutlayAuthImpl(firebaseRxWrapper);
     }
 }

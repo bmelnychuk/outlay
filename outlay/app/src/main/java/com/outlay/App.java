@@ -11,6 +11,7 @@ import com.outlay.di.module.AppModule;
 import com.outlay.di.module.DaoModule;
 import com.outlay.di.module.NetworkModule;
 import com.outlay.di.module.UserModule;
+import com.outlay.domain.model.OutlaySession;
 import com.outlay.domain.model.User;
 import com.outlay.impl.AndroidLogger;
 

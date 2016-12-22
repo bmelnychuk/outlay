@@ -28,9 +28,6 @@ public class UpdateCategoryUseCase extends UseCase<Category, Category> {
 
     @Override
     protected Observable<Category> buildUseCaseObservable(Category category) {
-        if (category.getId() == null) {
-            category.setOrder(Integer.MAX_VALUE);
-        }
         return categoryRepository.save(category);
     }
 }

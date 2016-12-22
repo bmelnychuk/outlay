@@ -9,6 +9,7 @@ import com.outlay.database.source.CategoryDatabaseSource;
 import com.outlay.database.source.ExpenseDatabaseSource;
 import com.outlay.di.scope.UserScope;
 import com.outlay.domain.model.Category;
+import com.outlay.domain.model.OutlaySession;
 import com.outlay.domain.model.User;
 import com.outlay.domain.repository.CategoryRepository;
 import com.outlay.domain.repository.ExpenseRepository;
@@ -30,6 +31,7 @@ public class UserModule {
     private User user;
 
     public UserModule(User user) {
+        OutlaySession.setCurrentUser(user);
         this.user = user;
     }
 
@@ -37,7 +39,11 @@ public class UserModule {
     @UserScope
     public DatabaseReference provideDatabseRef(
     ) {
-        return FirebaseDatabase.getInstance().getReference();
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        if (!user.isAnonymous()) {
+            database.child("users").child(user.getId()).keepSynced(true);
+        }
+        return database;
     }
 
     @Provides
@@ -61,12 +67,11 @@ public class UserModule {
     @UserScope
     public CategoryRepository provideCategoryRepository(
             CategoryDatabaseSource databaseSource,
-            CategoryFirebaseSource firebaseSource,
-            List<Category> defaultCategories
+            CategoryFirebaseSource firebaseSource
     ) {
         return new CategoryRepositoryImpl(
                 databaseSource,
-                user == null ? null : firebaseSource
+                firebaseSource
         );
     }
 
@@ -76,7 +81,10 @@ public class UserModule {
             ExpenseFirebaseSource expenseDataSource,
             ExpenseDatabaseSource databaseSource
     ) {
-        return new ExpenseRepositoryImpl(databaseSource, user == null ? null : expenseDataSource);
+        return new ExpenseRepositoryImpl(
+                databaseSource,
+                expenseDataSource
+        );
     }
 
     @Provides

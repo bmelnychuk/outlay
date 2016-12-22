@@ -57,20 +57,7 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
     }
 
     public void signInGuest() {
-        userSignInUseCase.execute(new DefaultSubscriber<User>() {
-            @Override
-            public void onNext(User user) {
-                onAuthSuccess(user);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                super.onError(e);
-                getView().setProgress(false);
-                getView().error(e);
-
-            }
-        });
+        onAuthSuccess(User.ANONYMOUS);
     }
 
     public void signUp(String email, String password) {
@@ -92,22 +79,21 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
     }
 
     public void onCreate() {
-//        if (!appPreferences.isFirstRun()) {
-//            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-//            if (firebaseUser != null) {
-//                User user = new User();
-//                user.setId(firebaseUser.getUid());
-//                user.setEmail(firebaseUser.getEmail());
-//                getView().onSuccess(user);
-//            } else {
-//                getView().onSuccess(null);
-//            }
-//        }
+        if (!appPreferences.isFirstRun()) {
+            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            if (firebaseUser != null) {
+                User user = new User();
+                user.setId(firebaseUser.getUid());
+                user.setEmail(firebaseUser.getEmail());
+                getView().onSuccess(user);
+            } else {
+                getView().onSuccess(User.ANONYMOUS);
+            }
+        }
     }
 
     private void onAuthSuccess(User user) {
         appPreferences.setFirstRun(false);
-        OutlaySession.setCurrentUser(user);
         getView().setProgress(false);
         getView().onSuccess(user);
     }

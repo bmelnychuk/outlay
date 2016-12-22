@@ -180,11 +180,6 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
             datePickerFragment.show(getChildFragmentManager(), "datePicker");
         });
         setHasOptionsMenu(true);
-
-
-        if (getArguments().containsKey(ACTION) && getArguments().getString(ACTION) != null) {
-            presenter.init();
-        }
     }
 
     @Override

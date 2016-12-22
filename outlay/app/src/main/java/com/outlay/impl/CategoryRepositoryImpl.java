@@ -23,10 +23,6 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
     private Map<String, Category> categoryMap;
 
-    private CategoryDataSource getDataSource() {
-        return firebaseSource == null ? databaseSource : firebaseSource;
-    }
-
     @Inject
     public CategoryRepositoryImpl(
             CategoryDataSource databaseSource,
@@ -36,22 +32,22 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         this.firebaseSource = firebaseSource;
     }
 
+    private CategoryDataSource getDataSource() {
+        return databaseSource == null ? firebaseSource : databaseSource;
+    }
+
     @Override
     public Observable<List<Category>> getAll() {
-        if (getCategoryMap() != null && !getCategoryMap().isEmpty()) {
-            return Observable.just(new ArrayList<>(getCategoryMap().values()));
+        if (categoryMap != null) {
+            return Observable.just(new ArrayList<>(categoryMap.values()));
         }
-        return getDataSource().getAll().doOnNext(categories -> {
-            for (Category c : categories) {
-                getCategoryMap().put(c.getId(), c);
-            }
-        });
+        return getDataSource().getAll().doOnNext(categories -> cacheCategories(categories));
     }
 
     @Override
     public Observable<Category> getById(String id) {
-        if (getCategoryMap() != null && !getCategoryMap().isEmpty()) {
-            return Observable.just(getCategoryMap().get(id));
+        if (categoryMap != null) {
+            return Observable.just(categoryMap.get(id));
         } else {
             return getDataSource().getById(id);
         }
@@ -59,19 +55,32 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
     @Override
     public Observable<List<Category>> updateAll(List<Category> categories) {
-        this.categoryMap = null;
+        clearCache();
         return getDataSource().updateAll(categories);
     }
 
     @Override
     public Observable<Category> save(Category category) {
-        this.categoryMap = null;
-        return getDataSource().save(category);
+        int order = -1;
+        if (categoryMap != null) {
+            order = categoryMap.size();
+            clearCache();
+        }
+
+        if (order != -1) {
+            category.setOrder(order);
+            return getDataSource().save(category);
+        } else {
+            return getAll().switchMap(categories -> {
+                category.setOrder(categories.size());
+                return getDataSource().save(category);
+            });
+        }
     }
 
     @Override
     public Observable<Category> remove(Category category) {
-        this.categoryMap = null;
+        clearCache();
         return getDataSource().remove(category);
     }
 
@@ -80,12 +89,19 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         this.categoryMap = null;
     }
 
-    private Map<String, Category> getCategoryMap() {
+
+    private void cacheCategories(List<Category> categories) {
+        if (categories != null) {
+            for (Category c : categories) {
+                cacheCategory(c);
+            }
+        }
+    }
+
+    private void cacheCategory(Category category) {
         if (this.categoryMap == null) {
             categoryMap = new LinkedHashMap<>();
         }
-        return categoryMap;
+        categoryMap.put(category.getId(), category);
     }
-
-
 }

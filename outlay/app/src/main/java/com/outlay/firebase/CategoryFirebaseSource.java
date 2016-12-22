@@ -3,6 +3,7 @@ package com.outlay.firebase;
 import android.text.TextUtils;
 
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
@@ -40,10 +42,6 @@ public class CategoryFirebaseSource implements CategoryDataSource {
         this.currentUser = currentUser;
         mDatabase = databaseReference;
         adapter = new CategoryAdapter();
-
-        if (currentUser != null) {
-            mDatabase.child("users").child(currentUser.getId()).keepSynced(true);
-        }
     }
 
     @Override
@@ -103,42 +101,57 @@ public class CategoryFirebaseSource implements CategoryDataSource {
             Task<Void> task = mDatabase.child("users").child(currentUser.getId())
                     .child("categories")
                     .updateChildren(categoryDtoMap);
-            task.addOnCompleteListener(resultTask -> {
-                if (task.isSuccessful()) {
-                    subscriber.onNext(categories);
-                    subscriber.onCompleted();
-                } else {
-                    Exception e = task.getException();
-                    subscriber.onError(e);
-                }
-            });
+            try {
+                Tasks.await(task);
+                subscriber.onNext(categories);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                subscriber.onError(e);
+            }
         });
     }
 
     @Override
     public Observable<Category> save(Category category) {
         Observable<Category> saveCategory = Observable.create(subscriber -> {
-            CategoryDto categoryDto = adapter.fromCategory(category);
-
             String key = category.getId();
             if (TextUtils.isEmpty(key)) {
                 key = mDatabase.child("users").child(currentUser.getId()).child("categories").push().getKey();
-                categoryDto.setId(key);
                 category.setId(key);
             }
+            CategoryDto categoryDto = adapter.fromCategory(category);
 
-            Task<Void> task = mDatabase.child("users").child(currentUser.getId())
-                    .child("categories").child(key)
-                    .setValue(categoryDto);
-            task.addOnCompleteListener(resultTask -> {
-                if (task.isSuccessful()) {
-                    subscriber.onNext(category);
-                    subscriber.onCompleted();
-                } else {
-                    Exception e = task.getException();
-                    subscriber.onError(e);
+            DatabaseReference dbRef = mDatabase
+                    .child("users")
+                    .child(currentUser.getId())
+                    .child("categories").child(key);
+
+            ValueEventListener listener = dbRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    CategoryDto categoryDto = dataSnapshot.getValue(CategoryDto.class);
+                    if (categoryDto != null) {
+                        subscriber.onNext(adapter.toCategory(categoryDto));
+                        subscriber.onCompleted();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    subscriber.onError(databaseError.toException());
                 }
             });
+
+            dbRef.setValue(categoryDto);
+
+
+//            try {
+//                Tasks.await(task);
+//                subscriber.onNext(category);
+//                subscriber.onCompleted();
+//            } catch (Exception e) {
+//                subscriber.onError(e);
+//            }
         });
         return saveCategory;
     }
@@ -151,15 +164,13 @@ public class CategoryFirebaseSource implements CategoryDataSource {
             Task<Void> task = mDatabase.child("users").child(currentUser.getId())
                     .child("categories").child(categoryDto.getId())
                     .removeValue();
-            task.addOnCompleteListener(resultTask -> {
-                if (task.isSuccessful()) {
-                    subscriber.onNext(category);
-                    subscriber.onCompleted();
-                } else {
-                    Exception e = task.getException();
-                    subscriber.onError(e);
-                }
-            });
+            try {
+                Tasks.await(task);
+                subscriber.onNext(category);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                subscriber.onError(e);
+            }
         });
     }
 
