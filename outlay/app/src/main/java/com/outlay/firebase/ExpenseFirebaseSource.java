@@ -2,7 +2,6 @@ package com.outlay.firebase;
 
 import android.text.TextUtils;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -81,18 +80,22 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
             for (ExpenseDto categoryDto : expenseDtos) {
                 expenseDtosMap.put(categoryDto.getId(), categoryDto);
             }
-            Task<Void> task = mDatabase.child("users").child(currentUser.getId())
-                    .child("expenses")
-                    .updateChildren(expenseDtosMap);
-            task.addOnCompleteListener(resultTask -> {
-                if (task.isSuccessful()) {
+
+            DatabaseReference databaseReference = mDatabase.child("users").child(currentUser.getId())
+                    .child("expenses");
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
                     subscriber.onNext(expenses);
                     subscriber.onCompleted();
-                } else {
-                    Exception e = task.getException();
-                    subscriber.onError(e);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    subscriber.onError(databaseError.toException());
                 }
             });
+            databaseReference.updateChildren(expenseDtosMap);
         });
     }
 
@@ -107,18 +110,21 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
 
             ExpenseDto expenseDto = adapter.fromExpense(expense);
 
-            Task<Void> task = mDatabase.child("users").child(currentUser.getId())
-                    .child("expenses").child(key)
-                    .setValue(expenseDto);
-            task.addOnCompleteListener(resultTask -> {
-                if (task.isSuccessful()) {
+            DatabaseReference databaseReference = mDatabase.child("users").child(currentUser.getId())
+                    .child("expenses").child(key);
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
                     subscriber.onNext(expense);
                     subscriber.onCompleted();
-                } else {
-                    Exception e = task.getException();
-                    subscriber.onError(e);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    subscriber.onError(databaseError.toException());
                 }
             });
+            databaseReference.setValue(expenseDto);
         });
     }
 
@@ -206,17 +212,22 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
     @Override
     public Observable<Expense> remove(Expense expense) {
         return Observable.create(subscriber -> {
-            Task<Void> task = mDatabase.child("users").child(currentUser.getId())
-                    .child("expenses").child(expense.getId())
-                    .removeValue();
-            task.addOnCompleteListener(resultTask -> {
-                if (task.isSuccessful()) {
+
+            DatabaseReference expenseRef = mDatabase.child("users").child(currentUser.getId())
+                    .child("expenses").child(expense.getId());
+            expenseRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    subscriber.onNext(expense);
                     subscriber.onCompleted();
-                } else {
-                    Exception e = task.getException();
-                    subscriber.onError(e);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    subscriber.onError(databaseError.toException());
                 }
             });
+            expenseRef.removeValue();
         });
     }
 

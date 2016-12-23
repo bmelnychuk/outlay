@@ -61,7 +61,7 @@
                     android:layout_marginTop="@dimen/spacing_default">
 
                     <EditText
-                        android:text="q1w2e3r4t5"
+                        android:text="111111"
                         android:id="@+id/signInPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -135,6 +135,7 @@
                     android:layout_marginTop="@dimen/spacing_default">
 
                     <EditText
+                        android:text="melnychuk.bogdan@gmail.com"
                         android:id="@+id/signUpEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -151,6 +152,7 @@
                     android:layout_marginTop="@dimen/spacing_default">
 
                     <EditText
+                        android:text="111111"
                         android:id="@+id/signUpPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -168,6 +170,7 @@
                     android:layout_marginTop="@dimen/spacing_default">
 
                     <EditText
+                        android:text="111111"
                         android:id="@+id/signUpRepeatPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

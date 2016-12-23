@@ -1,5 +1,7 @@
 package com.outlay.impl;
 
+import android.text.TextUtils;
+
 import com.outlay.data.source.CategoryDataSource;
 import com.outlay.domain.model.Category;
 import com.outlay.domain.repository.CategoryRepository;
@@ -33,7 +35,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     private CategoryDataSource getDataSource() {
-        return databaseSource == null ? firebaseSource : databaseSource;
+        return firebaseSource == null ? databaseSource : firebaseSource;
     }
 
     @Override
@@ -61,21 +63,12 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
     @Override
     public Observable<Category> save(Category category) {
-        int order = -1;
-        if (categoryMap != null) {
-            order = categoryMap.size();
-            clearCache();
-        }
-
-        if (order != -1) {
-            category.setOrder(order);
+        return getAll().switchMap(categories -> {
+            if(TextUtils.isEmpty(category.getId())) {
+                category.setOrder(categories.get(categories.size() - 1).getOrder() + 1);
+            }
             return getDataSource().save(category);
-        } else {
-            return getAll().switchMap(categories -> {
-                category.setOrder(categories.size());
-                return getDataSource().save(category);
-            });
-        }
+        }).doOnNext(stored -> clearCache());
     }
 
     @Override

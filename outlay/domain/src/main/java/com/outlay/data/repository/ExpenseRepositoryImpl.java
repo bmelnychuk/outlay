@@ -29,7 +29,7 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
     }
 
     private ExpenseDataSource getDataSource() {
-        return expenseDataSource == null ? expenseFirebaseSource : expenseDataSource;
+        return expenseFirebaseSource == null ? expenseDataSource : expenseFirebaseSource;
     }
 
     @Override

@@ -98,16 +98,21 @@ public class CategoryFirebaseSource implements CategoryDataSource {
             for (CategoryDto categoryDto : categoryDtos) {
                 categoryDtoMap.put(categoryDto.getId(), categoryDto);
             }
-            Task<Void> task = mDatabase.child("users").child(currentUser.getId())
-                    .child("categories")
-                    .updateChildren(categoryDtoMap);
-            try {
-                Tasks.await(task);
-                subscriber.onNext(categories);
-                subscriber.onCompleted();
-            } catch (Exception e) {
-                subscriber.onError(e);
-            }
+
+            DatabaseReference categoriesRef = mDatabase.child("users").child(currentUser.getId()).child("categories");
+            categoriesRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    subscriber.onNext(categories);
+                    subscriber.onCompleted();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    subscriber.onError(databaseError.toException());
+                }
+            });
+            categoriesRef.updateChildren(categoryDtoMap);
         });
     }
 
@@ -126,7 +131,7 @@ public class CategoryFirebaseSource implements CategoryDataSource {
                     .child(currentUser.getId())
                     .child("categories").child(key);
 
-            ValueEventListener listener = dbRef.addValueEventListener(new ValueEventListener() {
+            dbRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     CategoryDto categoryDto = dataSnapshot.getValue(CategoryDto.class);
@@ -143,15 +148,6 @@ public class CategoryFirebaseSource implements CategoryDataSource {
             });
 
             dbRef.setValue(categoryDto);
-
-
-//            try {
-//                Tasks.await(task);
-//                subscriber.onNext(category);
-//                subscriber.onCompleted();
-//            } catch (Exception e) {
-//                subscriber.onError(e);
-//            }
         });
         return saveCategory;
     }
@@ -161,16 +157,22 @@ public class CategoryFirebaseSource implements CategoryDataSource {
         return Observable.create(subscriber -> {
             CategoryDto categoryDto = adapter.fromCategory(category);
 
-            Task<Void> task = mDatabase.child("users").child(currentUser.getId())
-                    .child("categories").child(categoryDto.getId())
-                    .removeValue();
-            try {
-                Tasks.await(task);
-                subscriber.onNext(category);
-                subscriber.onCompleted();
-            } catch (Exception e) {
-                subscriber.onError(e);
-            }
+
+            DatabaseReference catReference = mDatabase.child("users").child(currentUser.getId())
+                    .child("categories").child(categoryDto.getId());
+            catReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    subscriber.onNext(adapter.toCategory(categoryDto));
+                    subscriber.onCompleted();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    subscriber.onError(databaseError.toException());
+                }
+            });
+            catReference.removeValue();
         });
     }
 
