@@ -137,7 +137,7 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
             if (startDate != null && endDate != null) {
                 query = expenses.orderByChild("reportedAt");
                 query = query.startAt(startDate.getTime(), "reportedAt").endAt(endDate.getTime(), "reportedAt");
-            }
+            } else
 
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -229,6 +229,11 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
             });
             expenseRef.removeValue();
         });
+    }
+
+    @Override
+    public Observable<Void> removeByCategory(String categoryId) {
+        return null;
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.outlay.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +19,6 @@ import com.outlay.mvp.view.CategoriesView;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Navigator;
 import com.outlay.view.fragment.base.BaseMvpFragment;
-import com.outlay.view.fragment.base.StaticContentFragment;
 import com.outlay.view.helper.itemtouch.OnDragListener;
 import com.outlay.view.helper.itemtouch.SimpleItemTouchHelperCallback;
 
@@ -29,7 +27,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
@@ -110,7 +107,7 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
         for (int i = 0; i < items.size(); i++) {
             items.get(i).setOrder(i);
         }
-        presenter.updateCategories(items);
+        presenter.refreshOrder(items);
     }
 
     @Override

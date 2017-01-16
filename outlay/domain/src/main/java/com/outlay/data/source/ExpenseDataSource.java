@@ -20,5 +20,6 @@ public interface ExpenseDataSource {
     Observable<List<Expense>> getExpenses(String categoryId);
     Observable<Expense> getById(String expenseId);
     Observable<Expense> remove(Expense expense);
+    Observable<Void> removeByCategory(String categoryId);
     Observable<Void> clear();
 }

@@ -43,7 +43,7 @@ public class CategoryFirebaseRestSource implements CategoryDataSource {
     }
 
     @Override
-    public Observable<List<Category>> updateAll(List<Category> categories) {
+    public Observable<List<Category>> updateOrder(List<Category> categories) {
         throw new UnsupportedOperationException();
     }
 

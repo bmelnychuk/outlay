@@ -68,6 +68,11 @@ public class ExpenseFirebaseRestSource implements ExpenseDataSource {
     }
 
     @Override
+    public Observable<Void> removeByCategory(String categoryId) {
+        return null;
+    }
+
+    @Override
     public Observable<Void> clear() {
         throw new UnsupportedOperationException();
     }

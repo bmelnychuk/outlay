@@ -30,7 +30,7 @@ public class CategoryDataSync extends DataSync<Category, SyncSource<Category>> {
 
         @Override
         public Observable<List<Category>> saveAll(List<Category> items) {
-            return categoryDataSource.updateAll(items);
+            return categoryDataSource.updateOrder(items);
         }
 
         @Override

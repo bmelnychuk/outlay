@@ -56,9 +56,9 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public Observable<List<Category>> updateAll(List<Category> categories) {
+    public Observable<List<Category>> updateOrder(List<Category> categories) {
         clearCache();
-        return getDataSource().updateAll(categories);
+        return getDataSource().updateOrder(categories);
     }
 
     @Override

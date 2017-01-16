@@ -15,7 +15,7 @@ public interface CategoryDataSource {
 
     Observable<Category> getById(String id);
 
-    Observable<List<Category>> updateAll(List<Category> categories);
+    Observable<List<Category>> updateOrder(List<Category> categories);
 
     Observable<Category> save(Category category);
 

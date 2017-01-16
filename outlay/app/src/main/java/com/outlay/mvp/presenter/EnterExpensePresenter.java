@@ -9,6 +9,7 @@ import com.outlay.domain.interactor.InitUseCase;
 import com.outlay.domain.interactor.SaveExpenseUseCase;
 import com.outlay.domain.model.DateSummary;
 import com.outlay.domain.model.Expense;
+import com.outlay.domain.repository.ExpenseRepository;
 import com.outlay.mvp.view.EnterExpenseView;
 
 import java.util.Date;
@@ -34,7 +35,8 @@ public class EnterExpensePresenter extends MvpPresenter<EnterExpenseView> {
             GetDateSummary getDateSummaryUseCase,
             DeleteExpenseUseCase deleteExpenseUseCase,
             InitUseCase initUseCase,
-            AppPreferences appPreferences
+            AppPreferences appPreferences,
+            ExpenseRepository repository
     ) {
         this.getCategoriesUseCase = getCategoriesUseCase;
         this.createExpenseUseCase = createExpenseUseCase;

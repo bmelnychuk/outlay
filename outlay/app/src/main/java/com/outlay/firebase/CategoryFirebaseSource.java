@@ -2,8 +2,6 @@ package com.outlay.firebase;
 
 import android.text.TextUtils;
 
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
@@ -72,13 +69,17 @@ public class CategoryFirebaseSource implements CategoryDataSource {
 
     @Override
     public Observable<Category> getById(String id) {
+        return getDtoById(id).map(categoryDto -> adapter.toCategory(categoryDto));
+    }
+
+    protected Observable<CategoryDto> getDtoById(String id) {
         return Observable.create(subscriber -> {
             mDatabase.child("users").child(currentUser.getId()).child("categories").child(id)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             CategoryDto categoryDto = dataSnapshot.getValue(CategoryDto.class);
-                            subscriber.onNext(adapter.toCategory(categoryDto));
+                            subscriber.onNext(categoryDto);
                             subscriber.onCompleted();
                         }
 
@@ -91,12 +92,11 @@ public class CategoryFirebaseSource implements CategoryDataSource {
     }
 
     @Override
-    public Observable<List<Category>> updateAll(List<Category> categories) {
+    public Observable<List<Category>> updateOrder(List<Category> categories) {
         return Observable.create(subscriber -> {
-            List<CategoryDto> categoryDtos = adapter.fromCategories(categories);
-            Map<String, Object> categoryDtoMap = new HashMap<>();
-            for (CategoryDto categoryDto : categoryDtos) {
-                categoryDtoMap.put(categoryDto.getId(), categoryDto);
+            Map<String, Object> childUpdates = new HashMap<>();
+            for (Category c : categories) {
+                childUpdates.put(c.getId() + "/order", c.getOrder());
             }
 
             DatabaseReference categoriesRef = mDatabase.child("users").child(currentUser.getId()).child("categories");
@@ -112,7 +112,7 @@ public class CategoryFirebaseSource implements CategoryDataSource {
                     subscriber.onError(databaseError.toException());
                 }
             });
-            categoriesRef.updateChildren(categoryDtoMap);
+            categoriesRef.updateChildren(childUpdates);
         });
     }
 
@@ -124,7 +124,14 @@ public class CategoryFirebaseSource implements CategoryDataSource {
                 key = mDatabase.child("users").child(currentUser.getId()).child("categories").push().getKey();
                 category.setId(key);
             }
-            CategoryDto categoryDto = adapter.fromCategory(category);
+
+            //TODO move this
+            Map<String, Object> childUpdates = new HashMap<>();
+            childUpdates.put("id", category.getId());
+            childUpdates.put("title", category.getTitle());
+            childUpdates.put("icon", category.getIcon());
+            childUpdates.put("color", category.getColor());
+            childUpdates.put("order", category.getOrder());
 
             DatabaseReference dbRef = mDatabase
                     .child("users")
@@ -147,23 +154,20 @@ public class CategoryFirebaseSource implements CategoryDataSource {
                 }
             });
 
-            dbRef.setValue(categoryDto);
+            dbRef.updateChildren(childUpdates);
         });
         return saveCategory;
     }
 
     @Override
     public Observable<Category> remove(Category category) {
-        return Observable.create(subscriber -> {
-            CategoryDto categoryDto = adapter.fromCategory(category);
-
-
+        final Observable<Category> deleteCategory = Observable.create(subscriber -> {
             DatabaseReference catReference = mDatabase.child("users").child(currentUser.getId())
-                    .child("categories").child(categoryDto.getId());
+                    .child("categories").child(category.getId());
             catReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    subscriber.onNext(adapter.toCategory(categoryDto));
+                    subscriber.onNext(category);
                     subscriber.onCompleted();
                 }
 
@@ -174,7 +178,10 @@ public class CategoryFirebaseSource implements CategoryDataSource {
             });
             catReference.removeValue();
         });
+
+        return deleteCategory;
     }
+
 
     @Override
     public Observable<Void> clear() {

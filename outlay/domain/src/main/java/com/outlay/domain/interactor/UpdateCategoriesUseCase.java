@@ -30,6 +30,6 @@ public class UpdateCategoriesUseCase extends UseCase<List<Category>, List<Catego
 
     @Override
     protected Observable<List<Category>> buildUseCaseObservable(List<Category> categories) {
-        return categoryRepository.updateAll(categories);
+        return categoryRepository.updateOrder(categories);
     }
 }

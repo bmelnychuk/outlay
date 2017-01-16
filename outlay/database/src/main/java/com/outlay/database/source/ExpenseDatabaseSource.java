@@ -125,6 +125,21 @@ public class ExpenseDatabaseSource implements ExpenseDataSource {
     }
 
     @Override
+    public Observable<Void> removeByCategory(String categoryId) {
+        return Observable.create(subscriber -> {
+            try {
+                expenseDao.queryBuilder()
+                        .where(ExpenseDao.Properties.CategoryId.eq(categoryId))
+                        .buildDelete()
+                        .executeDeleteWithoutDetachingEntities();
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                subscriber.onError(e);
+            }
+        });
+    }
+
+    @Override
     public Observable<Void> clear() {
         return Observable.create(subscriber -> {
             try {

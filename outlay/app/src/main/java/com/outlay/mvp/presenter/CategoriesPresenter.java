@@ -35,7 +35,7 @@ public class CategoriesPresenter extends MvpPresenter<CategoriesView> {
         });
     }
 
-    public void updateCategories(List<Category> categories) {
+    public void refreshOrder(List<Category> categories) {
         updateCategoriesUseCase.execute(categories, new DefaultSubscriber());
     }
 }
