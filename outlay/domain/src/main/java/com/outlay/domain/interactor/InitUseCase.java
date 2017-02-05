@@ -2,9 +2,9 @@ package com.outlay.domain.interactor;
 
 import com.outlay.core.executor.PostExecutionThread;
 import com.outlay.core.executor.ThreadExecutor;
-import com.outlay.data.sync.CategoryDataSync;
-import com.outlay.data.sync.ExpenseDataSync;
-import com.outlay.domain.repository.CategoryRepository;
+import com.outlay.data.sync.DataSync;
+import com.outlay.domain.model.Category;
+import com.outlay.domain.model.Expense;
 
 import javax.inject.Inject;
 
@@ -15,29 +15,23 @@ import rx.Observable;
  */
 
 public class InitUseCase extends UseCase<Void, Void> {
-    private CategoryDataSync categoryDataSync;
-    private ExpenseDataSync expenseDataSync;
-    private CategoryRepository categoryRepository;
+    private DataSync<Category> categoryDataSync;
+    private DataSync<Expense> expenseDataSync;
 
     @Inject
     public InitUseCase(
             ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread,
-            CategoryDataSync categoryDataSync,
-            ExpenseDataSync expenseDataSync,
-            CategoryRepository categoryRepository
+            DataSync<Category> categoryDataSync,
+            DataSync<Expense> expenseDataSync
     ) {
         super(threadExecutor, postExecutionThread);
         this.categoryDataSync = categoryDataSync;
         this.expenseDataSync = expenseDataSync;
-        this.categoryRepository = categoryRepository;
     }
 
     @Override
     protected Observable<Void> buildUseCaseObservable(Void aVoid) {
-        return Observable.zip(categoryDataSync.sync(), expenseDataSync.sync(), (categories, expenses) -> {
-            categoryRepository.clearCache();
-            return null;
-        });
+        return Observable.zip(categoryDataSync.synchronize(), expenseDataSync.synchronize(), (categories, expenses) -> null);
     }
 }

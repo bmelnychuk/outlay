@@ -2,19 +2,20 @@ package com.outlay.di.module;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.outlay.data.repository.CategoryRepositoryImpl;
 import com.outlay.data.repository.ExpenseRepositoryImpl;
-import com.outlay.data.sync.CategoryDataSync;
-import com.outlay.data.sync.ExpenseDataSync;
+import com.outlay.data.sync.DataSync;
 import com.outlay.database.source.CategoryDatabaseSource;
 import com.outlay.database.source.ExpenseDatabaseSource;
 import com.outlay.di.scope.UserScope;
+import com.outlay.domain.model.Category;
+import com.outlay.domain.model.Expense;
 import com.outlay.domain.model.OutlaySession;
 import com.outlay.domain.model.User;
 import com.outlay.domain.repository.CategoryRepository;
 import com.outlay.domain.repository.ExpenseRepository;
 import com.outlay.firebase.CategoryFirebaseSource;
 import com.outlay.firebase.ExpenseFirebaseSource;
-import com.outlay.data.repository.CategoryRepositoryImpl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -28,7 +29,6 @@ public class UserModule {
     private User user;
 
     public UserModule(User user) {
-        OutlaySession.setCurrentUser(user);
         this.user = user;
     }
 
@@ -86,19 +86,25 @@ public class UserModule {
 
     @Provides
     @UserScope
-    public CategoryDataSync provideCategoryDataSync(
-            CategoryDatabaseSource databaseSource,
-            CategoryFirebaseSource firebaseSource
+    public DataSync<Category> provideCategorySync(
+            CategoryFirebaseSource firebaseSource,
+            CategoryDatabaseSource databaseSource
     ) {
-        return new CategoryDataSync(databaseSource, firebaseSource);
+        return new DataSync(
+                databaseSource,
+                firebaseSource
+        );
     }
 
     @Provides
     @UserScope
-    public ExpenseDataSync provideExpenseDataSync(
-            ExpenseFirebaseSource expenseDataSource,
+    public DataSync<Expense> provideExpenseSync(
+            ExpenseFirebaseSource firebaseSource,
             ExpenseDatabaseSource databaseSource
     ) {
-        return new ExpenseDataSync(databaseSource, expenseDataSource);
+        return new DataSync<>(
+                databaseSource,
+                firebaseSource
+        );
     }
 }

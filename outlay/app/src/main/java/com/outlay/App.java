@@ -35,6 +35,7 @@ public class App extends Application {
     public UserComponent createUserComponent(User user) {
         if (userComponent == null) {
             userComponent = appComponent.plus(new UserModule(user));
+            OutlaySession.setCurrentUser(user);
         }
         return userComponent;
     }

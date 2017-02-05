@@ -24,6 +24,9 @@ import butterknife.ButterKnife;
  */
 
 public class LoginForm extends RelativeLayout {
+    public static final int MODE_SIGN_IN = 0;
+    public static final int MODE_SIGN_UP = 1;
+
     @Bind(R.id.signInForm)
     View signInForm;
 
@@ -140,6 +143,14 @@ public class LoginForm extends RelativeLayout {
 
     public void setOnPasswordForgetClick(OnPasswordForgetClick onPasswordForgetClick) {
         this.onPasswordForgetClick = onPasswordForgetClick;
+    }
+
+    public void setMode(int mode) {
+        signUpForm.setVisibility(mode == MODE_SIGN_UP ? VISIBLE : INVISIBLE);
+    }
+
+    public void setToggleModeButtonVisible(boolean visible) {
+        fab.setVisibility(visible ? VISIBLE : GONE);
     }
 
     private void toggleViewVisibility(View view) {

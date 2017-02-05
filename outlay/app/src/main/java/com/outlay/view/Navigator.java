@@ -13,6 +13,7 @@ import com.outlay.view.activity.SingleFragmentActivity;
 import com.outlay.view.fragment.CategoryDetailsFragment;
 import com.outlay.view.fragment.ExpensesDetailsFragment;
 import com.outlay.view.fragment.ExpensesListFragment;
+import com.outlay.view.fragment.LoginFragment;
 import com.outlay.view.fragment.MainFragment;
 import com.outlay.view.fragment.ReportFragment;
 
@@ -35,8 +36,11 @@ public final class Navigator {
         activityFrom.startActivity(intent);
     }
 
-    public static void goToLoginScreen(Activity activityFrom) {
+    public static void goToLoginScreen(Activity activityFrom, String action) {
+        Bundle b = new Bundle();
+        b.putString(LoginFragment.ARG_ACTION, action);
         Intent intent = new Intent(activityFrom, LoginActivity.class);
+        intent.putExtras(b);
         activityFrom.startActivity(intent);
         activityFrom.finish();
     }

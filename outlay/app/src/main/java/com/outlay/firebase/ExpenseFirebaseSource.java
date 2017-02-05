@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.outlay.core.utils.DateUtils;
 import com.outlay.data.source.CategoryDataSource;
 import com.outlay.data.source.ExpenseDataSource;
+import com.outlay.data.sync.SyncTo;
 import com.outlay.domain.model.Category;
 import com.outlay.domain.model.Expense;
 import com.outlay.domain.model.User;
@@ -30,7 +31,7 @@ import rx.Observable;
  * Created by bmelnychuk on 10/27/16.
  */
 
-public class ExpenseFirebaseSource implements ExpenseDataSource {
+public class ExpenseFirebaseSource implements ExpenseDataSource, SyncTo<Expense> {
     private DatabaseReference mDatabase;
     private CategoryDataSource categoryDataSource;
     private ExpenseAdapter adapter;
@@ -57,21 +58,13 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
                 expenseDtosMap.put(DateUtils.toYearMonthString(expense.getReportedWhen()) + "/" + dtoObj.getId(), dtoObj);
             }
 
-            DatabaseReference databaseReference = mDatabase.child("users").child(currentUser.getId())
+            DatabaseReference databaseReference = mDatabase.child("users")
+                    .child(currentUser.getId())
                     .child("expenses");
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    subscriber.onNext(expenses);
-                    subscriber.onCompleted();
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    subscriber.onError(databaseError.toException());
-                }
-            });
             databaseReference.updateChildren(expenseDtosMap);
+
+            subscriber.onNext(expenses);
+            subscriber.onCompleted();
         });
     }
 

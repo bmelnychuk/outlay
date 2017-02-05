@@ -20,6 +20,4 @@ public interface CategoryRepository {
     Observable<Category> save(Category category);
 
     Observable<Category> remove(Category category);
-
-    void clearCache();
 }

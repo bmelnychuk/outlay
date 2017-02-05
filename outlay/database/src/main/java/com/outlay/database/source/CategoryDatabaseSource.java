@@ -1,6 +1,7 @@
 package com.outlay.database.source;
 
 import com.outlay.data.source.CategoryDataSource;
+import com.outlay.data.sync.SyncFrom;
 import com.outlay.database.adapter.CategoryDatabaseMapper;
 import com.outlay.database.dao.CategoryDao;
 import com.outlay.database.dao.ExpenseDao;
@@ -17,7 +18,7 @@ import rx.Observable;
  * Created by bmelnychuk on 10/25/16.
  */
 
-public class CategoryDatabaseSource implements CategoryDataSource {
+public class CategoryDatabaseSource implements CategoryDataSource, SyncFrom<Category> {
     private CategoryDao categoryDao;
     private ExpenseDao expenseDao;
     private CategoryDatabaseMapper categoryMapper;
@@ -78,10 +79,11 @@ public class CategoryDatabaseSource implements CategoryDataSource {
     public Observable<Category> save(Category category) {
         return Observable.create(subscriber -> {
             try {
-                com.outlay.database.dao.Category daoCategory = categoryMapper.fromCategory(category);
-                if (daoCategory.getId() == null) {
-                    daoCategory.setId(System.currentTimeMillis());
+                if (category.getId() == null) {
+                    category.setId(String.valueOf(System.currentTimeMillis()));
                 }
+                com.outlay.database.dao.Category daoCategory = categoryMapper.fromCategory(category);
+
                 categoryDao.insertOrReplace(daoCategory);
                 subscriber.onNext(categoryMapper.toCategory(daoCategory));
                 subscriber.onCompleted();
@@ -107,17 +109,4 @@ public class CategoryDatabaseSource implements CategoryDataSource {
             }
         });
     }
-
-    @Override
-    public Observable<Void> clear() {
-        return Observable.create(subscriber -> {
-            try {
-                categoryDao.deleteAll();
-                subscriber.onCompleted();
-            } catch (Exception e) {
-                subscriber.onError(e);
-            }
-        });
-    }
-
 }

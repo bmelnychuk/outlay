@@ -18,6 +18,7 @@ public class LoginActivity extends StaticContentActivity {
 
     private void initializeActivity(Bundle savedInstanceState) {
         loginFragment = new LoginFragment();
+        loginFragment.setArguments(getIntent().getExtras());
         addFragment(R.id.fragment, loginFragment);
     }
 }

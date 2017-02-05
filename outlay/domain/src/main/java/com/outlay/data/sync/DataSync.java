@@ -1,23 +1,23 @@
 package com.outlay.data.sync;
 
+import java.util.List;
+
 import rx.Observable;
 
 /**
  * Created by bmelnychuk on 11/1/16.
  */
 
-public class DataSync<E, T extends SyncSource<E>> {
-    private T sourceFrom;
-    private T sourceTo;
+public class DataSync<T> {
+    private SyncFrom<T> syncFrom;
+    private SyncTo<T> syncTo;
 
-    public DataSync(T sourceFrom, T sourceTo) {
-        this.sourceFrom = sourceFrom;
-        this.sourceTo = sourceTo;
+    public DataSync(SyncFrom<T> syncFrom, SyncTo<T> syncTo) {
+        this.syncFrom = syncFrom;
+        this.syncTo = syncTo;
     }
 
-    public Observable<Void> sync() {
-        return sourceFrom.getAll()
-                .switchMap(data -> sourceTo.saveAll(data))
-                .switchMap(es -> sourceFrom.clear());
+    public Observable<List<T>> synchronize() {
+        return syncFrom.getAll().switchMap(categories -> syncTo.saveAll(categories));
     }
 }

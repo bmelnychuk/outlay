@@ -3,6 +3,7 @@ package com.outlay.data.repository;
 import com.outlay.core.utils.TextUtils;
 import com.outlay.data.source.CategoryDataSource;
 import com.outlay.domain.model.Category;
+import com.outlay.domain.model.OutlaySession;
 import com.outlay.domain.repository.CategoryRepository;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     private CategoryDataSource getDataSource() {
-        return firebaseSource == null ? databaseSource : firebaseSource;
+        return OutlaySession.getCurrentUser().isAnonymous() ? databaseSource : firebaseSource;
     }
 
     @Override
@@ -64,7 +65,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public Observable<Category> save(Category category) {
         return getAll().switchMap(categories -> {
             if (TextUtils.isEmpty(category.getId())) {
-                if(categories.isEmpty()) {
+                if (categories.isEmpty()) {
                     category.setOrder(0);
                 } else {
                     category.setOrder(categories.get(categories.size() - 1).getOrder() + 1);
@@ -80,8 +81,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         return getDataSource().remove(category);
     }
 
-    @Override
-    public void clearCache() {
+    private void clearCache() {
         this.categoryMap = null;
     }
 

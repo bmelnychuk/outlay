@@ -60,10 +60,10 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
         onAuthSuccess(User.ANONYMOUS);
     }
 
-    public void signUp(String email, String password) {
+    public void signUp(String email, String password, boolean sync) {
         Credentials credentials = new Credentials(email, password);
         getView().setProgress(true);
-        userSignUpUseCase.execute(credentials, new DefaultSubscriber<User>() {
+        userSignUpUseCase.execute(new UserSignUpUseCase.Input(credentials, sync), new DefaultSubscriber<User>() {
             @Override
             public void onNext(User user) {
                 onAuthSuccess(user);

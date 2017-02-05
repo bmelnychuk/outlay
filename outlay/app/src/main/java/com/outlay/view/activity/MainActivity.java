@@ -79,11 +79,11 @@ public class MainActivity extends DrawerActivity {
     protected void signOut() {
         getApp().releaseUserComponent();
         FirebaseAuth.getInstance().signOut();
-        Navigator.goToLoginScreen(this);
+        Navigator.goToLoginScreen(this, null);
     }
 
     @Override
     protected void createUser() {
-
+        Navigator.goToLoginScreen(this, "sync");
     }
 }

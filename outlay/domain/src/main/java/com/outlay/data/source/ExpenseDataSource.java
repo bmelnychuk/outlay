@@ -12,7 +12,6 @@ import rx.Observable;
  */
 
 public interface ExpenseDataSource {
-    Observable<List<Expense>> saveAll(List<Expense> expenses);
     Observable<Expense> saveExpense(Expense expense);
     Observable<List<Expense>> getExpenses(Date startDate, Date endDate);
     Observable<List<Expense>> getExpenses(Date startDate, Date endDate, String categoryId);

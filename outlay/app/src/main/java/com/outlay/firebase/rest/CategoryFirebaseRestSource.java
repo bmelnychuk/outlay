@@ -57,9 +57,4 @@ public class CategoryFirebaseRestSource implements CategoryDataSource {
     public Observable<Category> remove(Category category) {
         throw new UnsupportedOperationException();
     }
-
-    @Override
-    public Observable<Void> clear() {
-        throw new UnsupportedOperationException();
-    }
 }

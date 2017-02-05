@@ -23,6 +23,8 @@ import butterknife.Bind;
  */
 
 public class LoginFragment extends BaseMvpFragment<AuthView, AuthPresenter> implements AuthView {
+    public static final String ARG_ACTION = "_argAction";
+
     @Inject
     AuthPresenter presenter;
 
@@ -31,6 +33,8 @@ public class LoginFragment extends BaseMvpFragment<AuthView, AuthPresenter> impl
 
     @Bind(R.id.progressLayout)
     View progressLayout;
+
+    private String action;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,16 +57,32 @@ public class LoginFragment extends BaseMvpFragment<AuthView, AuthPresenter> impl
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        loginForm.setOnSignUpClickListener((email, password, src) -> {
-            presenter.signUp(email, password);
-        });
-        loginForm.setOnSignInClickListener((email, password, src) -> {
-            presenter.signIn(email, password);
-        });
-        loginForm.setOnPasswordForgetClick(() -> presenter.resetPassword("melnychuk.bogdan@gmail.com"));
-        loginForm.setOnSkipButtonClick(v -> presenter.signInGuest());
+        action = "default";
+        if (getArguments() != null) {
+            action = getArguments().getString(ARG_ACTION, "default");
+        }
+        switch (action) {
+            case "sync":
+                loginForm.setToggleModeButtonVisible(false);
+                loginForm.setMode(LoginForm.MODE_SIGN_UP);
+                loginForm.setOnSignUpClickListener((email, password, src) -> {
+                    presenter.signUp(email, password, true);
+                });
+                break;
+            default:
+                loginForm.setOnSignUpClickListener((email, password, src) -> {
+                    presenter.signUp(email, password, false);
+                });
+                loginForm.setOnSignInClickListener((email, password, src) -> {
+                    presenter.signIn(email, password);
+                });
+                loginForm.setOnPasswordForgetClick(() -> presenter.resetPassword("melnychuk.bogdan@gmail.com"));
+                loginForm.setOnSkipButtonClick(v -> presenter.signInGuest());
 
-        presenter.onCreate();
+                presenter.onCreate();
+        }
+
+
     }
 
     @Override
@@ -77,8 +97,17 @@ public class LoginFragment extends BaseMvpFragment<AuthView, AuthPresenter> impl
 
     @Override
     public void onSuccess(User user) {
-        getApp().createUserComponent(user);
-        Navigator.goToMainScreen(getActivity());
-        getActivity().finish();
+        switch (action) {
+            case "sync":
+                getApp().createUserComponent(user);
+                Navigator.goToMainScreen(getActivity());
+                getActivity().finish();
+                break;
+            default:
+                getApp().createUserComponent(user);
+                Navigator.goToMainScreen(getActivity());
+                getActivity().finish();
+        }
+
     }
 }

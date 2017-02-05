@@ -1,6 +1,7 @@
 package com.outlay.database.source;
 
 import com.outlay.data.source.ExpenseDataSource;
+import com.outlay.data.sync.SyncFrom;
 import com.outlay.database.adapter.CategoryDatabaseMapper;
 import com.outlay.database.adapter.ExpenseDatabaseMapper;
 import com.outlay.database.dao.ExpenseDao;
@@ -19,7 +20,7 @@ import rx.Observable;
  * Created by bmelnychuk on 10/25/16.
  */
 
-public class ExpenseDatabaseSource implements ExpenseDataSource {
+public class ExpenseDatabaseSource implements ExpenseDataSource, SyncFrom<Expense> {
     private ExpenseDao expenseDao;
     private ExpenseDatabaseMapper mapper;
     private CategoryDatabaseMapper categoryDatabaseMapper;
@@ -31,6 +32,7 @@ public class ExpenseDatabaseSource implements ExpenseDataSource {
         this.mapper = new ExpenseDatabaseMapper(categoryDatabaseMapper);
     }
 
+    @Override
     public Observable<List<Expense>> getAll() {
         return Observable.create(subscriber -> {
             try {
@@ -44,7 +46,6 @@ public class ExpenseDatabaseSource implements ExpenseDataSource {
         });
     }
 
-    @Override
     public Observable<List<Expense>> saveAll(List<Expense> expenses) {
         return Observable.create(subscriber -> {
             try {
