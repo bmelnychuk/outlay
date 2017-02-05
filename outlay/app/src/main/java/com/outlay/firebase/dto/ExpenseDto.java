@@ -8,7 +8,7 @@ public class ExpenseDto {
     private String id;
     private String note;
     private String amount;
-    private Long reportedAt;
+    private Long reportedWhen;
     private String categoryId;
 
     public String getId() {
@@ -35,19 +35,20 @@ public class ExpenseDto {
         this.amount = amount;
     }
 
-    public Long getReportedAt() {
-        return reportedAt;
-    }
-
-    public void setReportedAt(Long reportedAt) {
-        this.reportedAt = reportedAt;
-    }
-
     public String getCategoryId() {
         return categoryId;
     }
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Long getReportedWhen() {
+        return reportedWhen;
+    }
+
+    public ExpenseDto setReportedWhen(Long reportedWhen) {
+        this.reportedWhen = reportedWhen;
+        return this;
     }
 }

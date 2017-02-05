@@ -111,7 +111,7 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         adapter = new ExpenseAdapter();
-        adapter.setOnExpenseClickListener(expense -> Navigator.goToExpenseDetails(getActivity(), expense.getId()));
+        adapter.setOnExpenseClickListener(expense -> Navigator.goToExpenseDetails(getActivity(), expense));
         recyclerView.setAdapter(adapter);
         fab.setImageDrawable(ResourceUtils.getMaterialToolbarIcon(getActivity(), R.string.ic_material_add));
         fab.setOnClickListener(v -> Navigator.goToExpenseDetails(getActivity(), null));

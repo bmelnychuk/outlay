@@ -9,6 +9,7 @@ import com.outlay.domain.model.Category;
 import com.outlay.domain.model.Expense;
 import com.outlay.mvp.view.ExpenseDetailsView;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,8 +36,8 @@ public class ExpensesDetailsPresenter extends MvpPresenter<ExpenseDetailsView> {
         this.deleteExpenseUseCase = deleteExpenseUseCase;
     }
 
-    public void loadExpense(String expenseId) {
-        getExpenseUseCase.execute(expenseId, new DefaultSubscriber<Expense>() {
+    public void loadExpense(String expenseId, Date date) {
+        getExpenseUseCase.execute(new GetExpenseUseCase.Input(expenseId, date), new DefaultSubscriber<Expense>() {
             @Override
             public void onNext(Expense expense) {
                 getView().showExpense(expense);

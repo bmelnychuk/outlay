@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.outlay.domain.model.Credentials;
 import com.outlay.domain.model.User;
 import com.outlay.domain.repository.OutlayAuth;
-import com.outlay.firebase.FirebaseRxWrapper;
+import com.outlay.firebase.FirebaseAuthRxWrapper;
 
 import javax.inject.Inject;
 
@@ -16,10 +16,10 @@ import rx.Observable;
  */
 
 public class OutlayAuthImpl implements OutlayAuth {
-    private FirebaseRxWrapper firebaseWrapper;
+    private FirebaseAuthRxWrapper firebaseWrapper;
 
     @Inject
-    public OutlayAuthImpl(FirebaseRxWrapper firebaseWrapper) {
+    public OutlayAuthImpl(FirebaseAuthRxWrapper firebaseWrapper) {
         this.firebaseWrapper = firebaseWrapper;
     }
 

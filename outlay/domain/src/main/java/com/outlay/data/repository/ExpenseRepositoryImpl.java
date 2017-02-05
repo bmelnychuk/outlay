@@ -16,20 +16,20 @@ import rx.Observable;
  */
 
 public class ExpenseRepositoryImpl implements ExpenseRepository {
-    private ExpenseDataSource expenseDataSource;
-    private ExpenseDataSource expenseFirebaseSource;
+    private ExpenseDataSource databaseSource;
+    private ExpenseDataSource firebaseSource;
 
     @Inject
     public ExpenseRepositoryImpl(
-            ExpenseDataSource expenseDataSource,
-            ExpenseDataSource expenseFirebaseSource
+            ExpenseDataSource databaseSource,
+            ExpenseDataSource firebaseSource
     ) {
-        this.expenseDataSource = expenseDataSource;
-        this.expenseFirebaseSource = expenseFirebaseSource;
+        this.databaseSource = databaseSource;
+        this.firebaseSource = firebaseSource;
     }
 
     private ExpenseDataSource getDataSource() {
-        return expenseFirebaseSource == null ? expenseDataSource : expenseFirebaseSource;
+        return firebaseSource == null ? databaseSource : firebaseSource;
     }
 
     @Override
@@ -43,8 +43,8 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
     }
 
     @Override
-    public Observable<Expense> getById(String expenseId) {
-        return getDataSource().getById(expenseId);
+    public Observable<Expense> findExpense(String expenseId, Date date) {
+        return getDataSource().findExpense(expenseId, date);
     }
 
     @Override

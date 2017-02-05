@@ -24,7 +24,7 @@ public class ExpenseDatabaseMapper {
         result.setId(dbExpense.getId().toString());
         result.setAmount(new BigDecimal(dbExpense.getAmount().toString()));
         result.setNote(dbExpense.getNote());
-        result.setReportedAt(dbExpense.getReportedAt());
+        result.setReportedWhen(dbExpense.getReportedAt());
 
         Category category = categoryDatabaseMapper.toCategory(dbExpense.getCategory());
         result.setCategory(category);
@@ -40,7 +40,7 @@ public class ExpenseDatabaseMapper {
                 expense.getCategory().getId() == null ? null : Long.valueOf(expense.getCategory().getId())
         );
         dbExpense.setNote(expense.getNote());
-        dbExpense.setReportedAt(expense.getReportedAt());
+        dbExpense.setReportedAt(expense.getReportedWhen());
 
         return dbExpense;
     }

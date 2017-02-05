@@ -160,7 +160,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
                 com.outlay.domain.model.Expense e = new com.outlay.domain.model.Expense();
                 e.setCategory(c);
                 e.setAmount(new BigDecimal(amountText.getText().toString()));
-                e.setReportedAt(selectedDate);
+                e.setReportedWhen(selectedDate);
                 presenter.insertExpense(e);
                 cleanAmountInput();
             } else {

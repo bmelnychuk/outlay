@@ -148,7 +148,7 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
         if (getArguments().containsKey(ARG_EXPENSE_ID)) {
             String expenseId = getArguments().getString(ARG_EXPENSE_ID);
             getActivity().setTitle(getString(R.string.caption_edit_expense));
-            presenter.loadExpense(expenseId);
+            presenter.loadExpense(expenseId, defaultDate);
         } else {
             getActivity().setTitle(getString(R.string.caption_new_expense));
             showExpense(new Expense());
@@ -168,7 +168,7 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
             c.set(year, monthOfYear, dayOfMonth);
             Date selected = c.getTime();
             setDateStr(selected);
-            expense.setReportedAt(selected);
+            expense.setReportedWhen(selected);
         });
         datePickerFragment.show(getChildFragmentManager(), "datePicker");
     }
@@ -187,10 +187,10 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
             categoryTitle.setText(e.getCategory().getTitle());
             amount.setText(FormatUtils.formatAmount(e.getAmount()));
             note.setText(e.getNote());
-            setDateStr(expense.getReportedAt());
+            setDateStr(expense.getReportedWhen());
         } else {
-            this.expense.setReportedAt(defaultDate);
-            setDateStr(expense.getReportedAt());
+            this.expense.setReportedWhen(defaultDate);
+            setDateStr(expense.getReportedWhen());
         }
     }
 

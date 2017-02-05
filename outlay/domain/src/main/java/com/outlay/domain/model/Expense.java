@@ -11,7 +11,7 @@ public class Expense {
     private String id;
     private String note;
     private BigDecimal amount;
-    private Date reportedAt;
+    private Date reportedWhen;
     private Category category;
 
     public String getId() {
@@ -41,12 +41,12 @@ public class Expense {
         return this;
     }
 
-    public Date getReportedAt() {
-        return reportedAt;
+    public Date getReportedWhen() {
+        return reportedWhen;
     }
 
-    public Expense setReportedAt(Date reportedAt) {
-        this.reportedAt = reportedAt;
+    public Expense setReportedWhen(Date reportedWhen) {
+        this.reportedWhen = reportedWhen;
         return this;
     }
 

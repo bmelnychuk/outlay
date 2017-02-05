@@ -26,7 +26,6 @@ import rx.Observable;
  */
 
 public class CategoryFirebaseSource implements CategoryDataSource {
-
     private DatabaseReference mDatabase;
     private CategoryAdapter adapter;
     private User currentUser;
@@ -142,7 +141,7 @@ public class CategoryFirebaseSource implements CategoryDataSource {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     CategoryDto categoryDto = dataSnapshot.getValue(CategoryDto.class);
-                    if (categoryDto != null) {
+                    if(categoryDto != null) {
                         subscriber.onNext(adapter.toCategory(categoryDto));
                         subscriber.onCompleted();
                     }

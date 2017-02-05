@@ -20,7 +20,7 @@ public class ExpenseAdapter {
         expense.setNote(expenseDto.getNote());
         expense.setAmount(new BigDecimal(expenseDto.getAmount()));
         expense.setId(expenseDto.getId());
-        expense.setReportedAt(new Date(expenseDto.getReportedAt()));
+        expense.setReportedWhen(new Date(expenseDto.getReportedWhen()));
 
         Category category = new Category();
         category.setId(expenseDto.getCategoryId());
@@ -34,25 +34,9 @@ public class ExpenseAdapter {
         expenseDto.setNote(expense.getNote());
         expenseDto.setAmount(expense.getAmount().toString());
         expenseDto.setId(expense.getId());
-        expenseDto.setReportedAt(expense.getReportedAt().getTime());
+        expenseDto.setReportedWhen(expense.getReportedWhen().getTime());
         expenseDto.setCategoryId(expense.getCategory().getId());
 
         return expenseDto;
-    }
-
-    public List<Expense> toExpenses(List<ExpenseDto> expenseDtos) {
-        List<Expense> result = new ArrayList<>(expenseDtos.size());
-        for (ExpenseDto c : expenseDtos) {
-            result.add(toExpense(c));
-        }
-        return result;
-    }
-
-    public List<ExpenseDto> fromExpenses(List<Expense> expenses) {
-        List<ExpenseDto> result = new ArrayList<>(expenses.size());
-        for (Expense c : expenses) {
-            result.add(fromExpense(c));
-        }
-        return result;
     }
 }

@@ -28,7 +28,8 @@ public class ExpenseDataSync extends DataSync<Expense, SyncSource<Expense>> {
 
         @Override
         public Observable<List<Expense>> getAll() {
-            return expenseDataSource.getAll();
+//            return expenseDataSource.getAll();
+            return null;
         }
 
         @Override
@@ -38,7 +39,8 @@ public class ExpenseDataSync extends DataSync<Expense, SyncSource<Expense>> {
 
         @Override
         public Observable<Void> clear() {
-            return expenseDataSource.clear();
+//            return expenseDataSource.clear();
+            return null;
         }
     }
 }

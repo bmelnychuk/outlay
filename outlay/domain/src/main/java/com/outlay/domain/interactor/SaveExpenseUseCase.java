@@ -31,9 +31,9 @@ public class SaveExpenseUseCase extends UseCase<Expense, Expense> {
 
     @Override
     protected Observable<Expense> buildUseCaseObservable(Expense expense) {
-        DateTime dateTime = new DateTime(expense.getReportedAt().getTime());
+        DateTime dateTime = new DateTime(expense.getReportedWhen().getTime());
         dateTime = dateTime.withTime(LocalTime.now());
-        expense.setReportedAt(dateTime.toDate());
+        expense.setReportedWhen(dateTime.toDate());
         return expenseRepository.saveExpense(expense);
     }
 }

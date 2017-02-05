@@ -33,8 +33,9 @@ public class CategoryFirebaseRestSource implements CategoryDataSource {
 
     @Override
     public Observable<List<Category>> getAll() {
-        return firebaseApi.getCategoies(currentUser.getId(), currentUser.getToken())
-                .map(categoriesMap -> adapter.toCategories(new ArrayList<>(categoriesMap.values())));
+        throw new UnsupportedOperationException();
+//        return firebaseApi.getCategoies(currentUser.getId(), currentUser.getToken())
+//                .map(categoriesMap -> adapter.toCategories(new ArrayList<>(categoriesMap.values())));
     }
 
     @Override

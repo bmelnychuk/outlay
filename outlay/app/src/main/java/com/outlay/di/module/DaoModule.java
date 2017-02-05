@@ -8,9 +8,6 @@ import com.outlay.database.dao.DaoMaster;
 import com.outlay.database.dao.DaoSession;
 import com.outlay.database.dao.ExpenseDao;
 import com.outlay.database.source.CategoryDatabaseSource;
-import com.outlay.domain.repository.OutlayAuth;
-import com.outlay.firebase.FirebaseRxWrapper;
-import com.outlay.impl.OutlayAuthImpl;
 
 import javax.inject.Singleton;
 

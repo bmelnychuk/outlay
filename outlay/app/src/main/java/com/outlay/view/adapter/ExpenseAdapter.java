@@ -62,7 +62,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
             }
         });
         holder.categoryAmount.setText(FormatUtils.formatAmount(expense.getAmount()));
-        holder.categoryDate.setText(DateUtils.toShortString(expense.getReportedAt()));
+        holder.categoryDate.setText(DateUtils.toShortString(expense.getReportedWhen()));
         holder.categoryTitle.setText(expense.getCategory().getTitle());
         IconUtils.loadCategoryIcon(expense.getCategory(), holder.categoryIcon);
     }

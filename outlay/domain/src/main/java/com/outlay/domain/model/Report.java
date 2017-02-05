@@ -79,7 +79,7 @@ public class Report {
         DateTime endDate = new DateTime(end);
 
         for (Expense expense : expenses) {
-            DateTime expenseDate = new DateTime(expense.getReportedAt());
+            DateTime expenseDate = new DateTime(expense.getReportedWhen());
             if (expenseDate.isAfter(startDate) && expenseDate.isBefore(endDate)) {
                 result = result.add(expense.getAmount());
             }
@@ -97,14 +97,14 @@ public class Report {
             if (reportForCategory == null) {
                 reportForCategory = new Report();
                 reportForCategory.setCategory(expenseCategory);
-                reportForCategory.setStartDate(expense.getReportedAt());
-                reportForCategory.setEndDate(expense.getReportedAt());
+                reportForCategory.setStartDate(expense.getReportedWhen());
+                reportForCategory.setEndDate(expense.getReportedWhen());
             } else {
                 reportForCategory.setStartDate(
-                        DateUtils.getMin(expense.getReportedAt(), reportForCategory.startDate)
+                        DateUtils.getMin(expense.getReportedWhen(), reportForCategory.startDate)
                 );
                 reportForCategory.setEndDate(
-                        DateUtils.getMax(expense.getReportedAt(), reportForCategory.endDate)
+                        DateUtils.getMax(expense.getReportedWhen(), reportForCategory.endDate)
                 );
             }
             reportForCategory.getExpenses().add(expense);

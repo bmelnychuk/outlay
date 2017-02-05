@@ -5,6 +5,8 @@ import com.outlay.core.executor.ThreadExecutor;
 import com.outlay.domain.model.Expense;
 import com.outlay.domain.repository.ExpenseRepository;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -13,7 +15,7 @@ import rx.Observable;
  * Created by bmelnychuk on 10/24/16.
  */
 
-public class GetExpenseUseCase extends UseCase<String, Expense> {
+public class GetExpenseUseCase extends UseCase<GetExpenseUseCase.Input, Expense> {
     private ExpenseRepository expenseRepository;
 
     @Inject
@@ -27,7 +29,18 @@ public class GetExpenseUseCase extends UseCase<String, Expense> {
     }
 
     @Override
-    protected Observable<Expense> buildUseCaseObservable(String categoryId) {
-        return expenseRepository.getById(categoryId);
+    protected Observable<Expense> buildUseCaseObservable(GetExpenseUseCase.Input input) {
+        return expenseRepository.findExpense(input.id, input.date);
     }
+
+    public static class Input {
+        private final String id;
+        private final Date date;
+
+        public Input(String id, Date date) {
+            this.id = id;
+            this.date = date;
+        }
+    }
+
 }

@@ -3,7 +3,7 @@ package com.outlay.di.module;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.outlay.domain.repository.OutlayAuth;
-import com.outlay.firebase.FirebaseRxWrapper;
+import com.outlay.firebase.FirebaseAuthRxWrapper;
 import com.outlay.firebase.rest.Firebase;
 import com.outlay.impl.OutlayAuthImpl;
 
@@ -46,7 +46,7 @@ public class NetworkModule {
     @Provides
     @Singleton
     public OutlayAuth provideOutlayAuth(
-            FirebaseRxWrapper firebaseRxWrapper
+            FirebaseAuthRxWrapper firebaseRxWrapper
     ) {
         return new OutlayAuthImpl(firebaseRxWrapper);
     }

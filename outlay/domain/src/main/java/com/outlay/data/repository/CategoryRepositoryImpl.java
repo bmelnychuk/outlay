@@ -1,7 +1,6 @@
-package com.outlay.impl;
+package com.outlay.data.repository;
 
-import android.text.TextUtils;
-
+import com.outlay.core.utils.TextUtils;
 import com.outlay.data.source.CategoryDataSource;
 import com.outlay.domain.model.Category;
 import com.outlay.domain.repository.CategoryRepository;
@@ -48,7 +47,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
     @Override
     public Observable<Category> getById(String id) {
-        if (categoryMap != null) {
+        if (categoryMap != null && categoryMap.containsKey(id)) {
             return Observable.just(categoryMap.get(id));
         } else {
             return getDataSource().getById(id);
@@ -58,17 +57,21 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public Observable<List<Category>> updateOrder(List<Category> categories) {
         clearCache();
-        return getDataSource().updateOrder(categories);
+        return getDataSource().updateOrder(categories).doOnNext(updated -> cacheCategories(updated));
     }
 
     @Override
     public Observable<Category> save(Category category) {
         return getAll().switchMap(categories -> {
-            if(TextUtils.isEmpty(category.getId())) {
-                category.setOrder(categories.get(categories.size() - 1).getOrder() + 1);
+            if (TextUtils.isEmpty(category.getId())) {
+                if(categories.isEmpty()) {
+                    category.setOrder(0);
+                } else {
+                    category.setOrder(categories.get(categories.size() - 1).getOrder() + 1);
+                }
             }
             return getDataSource().save(category);
-        }).doOnNext(stored -> clearCache());
+        }).doOnNext(stored -> cacheCategory(category));
     }
 
     @Override

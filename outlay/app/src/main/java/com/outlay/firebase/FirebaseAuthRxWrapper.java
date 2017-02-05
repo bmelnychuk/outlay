@@ -15,11 +15,11 @@ import rx.Observable;
  * Created by bmelnychuk on 10/26/16.
  */
 
-public class FirebaseRxWrapper {
+public class FirebaseAuthRxWrapper {
     private FirebaseAuth firebaseAuth;
 
     @Inject
-    public FirebaseRxWrapper() {
+    public FirebaseAuthRxWrapper() {
         //TODO shoud I provide as param
         this.firebaseAuth = FirebaseAuth.getInstance();
     }

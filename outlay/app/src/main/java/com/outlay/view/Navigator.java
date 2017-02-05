@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.outlay.R;
+import com.outlay.domain.model.Expense;
 import com.outlay.view.activity.MainActivity;
 import com.outlay.view.activity.SingleFragmentActivity;
 import com.outlay.view.fragment.CategoryDetailsFragment;
@@ -49,7 +50,7 @@ public final class Navigator {
 
     public static void goToExpensesList(Activity activityFrom, Date dateFrom, Date dateTo, String categoryId) {
         Bundle b = new Bundle();
-        if(categoryId != null) {
+        if (categoryId != null) {
             b.putString(ExpensesListFragment.ARG_CATEGORY_ID, categoryId);
         }
         if (dateFrom != null) {
@@ -61,10 +62,11 @@ public final class Navigator {
         changeFragment(activityFrom, ExpensesListFragment.class, b);
     }
 
-    public static void goToExpenseDetails(Activity activityFrom, String expenseId) {
+    public static void goToExpenseDetails(Activity activityFrom, Expense expense) {
         Bundle b = new Bundle();
-        if(expenseId != null) {
-            b.putString(ExpensesDetailsFragment.ARG_EXPENSE_ID, expenseId);
+        if (expense != null) {
+            b.putString(ExpensesDetailsFragment.ARG_EXPENSE_ID, expense.getId());
+            b.putLong(ExpensesDetailsFragment.ARG_DATE, expense.getReportedWhen().getTime());
         }
         changeFragment(activityFrom, ExpensesDetailsFragment.class, b);
     }

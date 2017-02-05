@@ -31,7 +31,6 @@ public class ExpenseDatabaseSource implements ExpenseDataSource {
         this.mapper = new ExpenseDatabaseMapper(categoryDatabaseMapper);
     }
 
-    @Override
     public Observable<List<Expense>> getAll() {
         return Observable.create(subscriber -> {
             try {
@@ -93,12 +92,7 @@ public class ExpenseDatabaseSource implements ExpenseDataSource {
     }
 
     @Override
-    public Observable<List<Expense>> getExpenses(String categoryId) {
-        return getExpenses(null, null, categoryId);
-    }
-
-    @Override
-    public Observable<Expense> getById(String expenseId) {
+    public Observable<Expense> findExpense(String expenseId, Date date) {
         return Observable.create(subscriber -> {
             try {
                 com.outlay.database.dao.Expense e = expenseDao.load(Long.valueOf(expenseId));
@@ -124,7 +118,6 @@ public class ExpenseDatabaseSource implements ExpenseDataSource {
         });
     }
 
-    @Override
     public Observable<Void> removeByCategory(String categoryId) {
         return Observable.create(subscriber -> {
             try {
@@ -139,7 +132,6 @@ public class ExpenseDatabaseSource implements ExpenseDataSource {
         });
     }
 
-    @Override
     public Observable<Void> clear() {
         return Observable.create(subscriber -> {
             try {

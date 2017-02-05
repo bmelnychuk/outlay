@@ -8,16 +8,13 @@ import com.outlay.data.sync.ExpenseDataSync;
 import com.outlay.database.source.CategoryDatabaseSource;
 import com.outlay.database.source.ExpenseDatabaseSource;
 import com.outlay.di.scope.UserScope;
-import com.outlay.domain.model.Category;
 import com.outlay.domain.model.OutlaySession;
 import com.outlay.domain.model.User;
 import com.outlay.domain.repository.CategoryRepository;
 import com.outlay.domain.repository.ExpenseRepository;
 import com.outlay.firebase.CategoryFirebaseSource;
 import com.outlay.firebase.ExpenseFirebaseSource;
-import com.outlay.impl.CategoryRepositoryImpl;
-
-import java.util.List;
+import com.outlay.data.repository.CategoryRepositoryImpl;
 
 import dagger.Module;
 import dagger.Provides;

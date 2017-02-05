@@ -15,7 +15,12 @@ import java.util.Date;
 public final class DateUtils {
 
     private static final SimpleDateFormat SHORT_STRING_FORMAT = new SimpleDateFormat("dd MMM yy");
+    private static final SimpleDateFormat YEAR_MONTH_STRING_FORMAT = new SimpleDateFormat("yyyyMM");
     private static final SimpleDateFormat LONG_STRING_FORMAT = new SimpleDateFormat("dd MMMM yyyy");
+
+    public static String toYearMonthString(Date date) {
+        return YEAR_MONTH_STRING_FORMAT.format(date);
+    }
 
     public static String toShortString(Date date) {
         if (isToday(date)) {

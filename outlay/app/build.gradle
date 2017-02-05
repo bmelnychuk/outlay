@@ -16,7 +16,6 @@ repositories {
 
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.android.databinding'
 
 def cfg = rootProject.ext.configuration
 def libs = rootProject.ext.libraries
