@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.outlay.R;
 import com.outlay.domain.model.Expense;
+import com.outlay.view.activity.LoginActivity;
 import com.outlay.view.activity.MainActivity;
 import com.outlay.view.activity.SingleFragmentActivity;
 import com.outlay.view.fragment.CategoryDetailsFragment;
@@ -32,6 +33,12 @@ public final class Navigator {
     public static void goToMainScreen(Activity activityFrom) {
         Intent intent = new Intent(activityFrom, MainActivity.class);
         activityFrom.startActivity(intent);
+    }
+
+    public static void goToLoginScreen(Activity activityFrom) {
+        Intent intent = new Intent(activityFrom, LoginActivity.class);
+        activityFrom.startActivity(intent);
+        activityFrom.finish();
     }
 
     public static void goToMainScreen(Activity activityFrom, String action) {

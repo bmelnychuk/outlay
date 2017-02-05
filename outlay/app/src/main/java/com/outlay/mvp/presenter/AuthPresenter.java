@@ -8,7 +8,6 @@ import com.outlay.domain.interactor.ResetPasswordUseCase;
 import com.outlay.domain.interactor.UserSignInUseCase;
 import com.outlay.domain.interactor.UserSignUpUseCase;
 import com.outlay.domain.model.Credentials;
-import com.outlay.domain.model.OutlaySession;
 import com.outlay.domain.model.User;
 import com.outlay.mvp.view.AuthView;
 
@@ -44,6 +43,7 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
             @Override
             public void onNext(User user) {
                 onAuthSuccess(user);
+                getView().setProgress(false);
             }
 
             @Override
@@ -67,6 +67,7 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
             @Override
             public void onNext(User user) {
                 onAuthSuccess(user);
+                getView().setProgress(false);
             }
 
             @Override
@@ -86,15 +87,12 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
                 user.setId(firebaseUser.getUid());
                 user.setEmail(firebaseUser.getEmail());
                 getView().onSuccess(user);
-            } else {
-                getView().onSuccess(User.ANONYMOUS);
             }
         }
     }
 
     private void onAuthSuccess(User user) {
         appPreferences.setFirstRun(false);
-        getView().setProgress(false);
         getView().onSuccess(user);
     }
 

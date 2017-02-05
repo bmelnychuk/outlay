@@ -2,7 +2,9 @@ package com.outlay.view.activity;
 
 import android.os.Bundle;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.outlay.R;
+import com.outlay.view.Navigator;
 import com.outlay.view.activity.base.DrawerActivity;
 import com.outlay.view.fragment.MainFragment;
 
@@ -75,7 +77,9 @@ public class MainActivity extends DrawerActivity {
 
     @Override
     protected void signOut() {
-
+        getApp().releaseUserComponent();
+        FirebaseAuth.getInstance().signOut();
+        Navigator.goToLoginScreen(this);
     }
 
     @Override

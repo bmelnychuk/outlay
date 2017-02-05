@@ -32,8 +32,6 @@ public class LoginFragment extends BaseMvpFragment<AuthView, AuthPresenter> impl
     @Bind(R.id.progressLayout)
     View progressLayout;
 
-    private String action;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +54,9 @@ public class LoginFragment extends BaseMvpFragment<AuthView, AuthPresenter> impl
         super.onViewCreated(view, savedInstanceState);
 
         loginForm.setOnSignUpClickListener((email, password, src) -> {
-            action = "SIGNUP";
             presenter.signUp(email, password);
         });
         loginForm.setOnSignInClickListener((email, password, src) -> {
-            action = "SIGNIN";
             presenter.signIn(email, password);
         });
         loginForm.setOnPasswordForgetClick(() -> presenter.resetPassword("melnychuk.bogdan@gmail.com"));
