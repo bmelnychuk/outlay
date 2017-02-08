@@ -2,14 +2,16 @@ package com.outlay.mvp.presenter;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.hannesdorfmann.mosby.mvp.*;
 import com.outlay.core.data.AppPreferences;
 import com.outlay.core.executor.DefaultSubscriber;
+import com.outlay.domain.interactor.LinkAccountUseCase;
 import com.outlay.domain.interactor.ResetPasswordUseCase;
 import com.outlay.domain.interactor.UserSignInUseCase;
 import com.outlay.domain.interactor.UserSignUpUseCase;
 import com.outlay.domain.model.Credentials;
 import com.outlay.domain.model.User;
-import com.outlay.mvp.view.AuthView;
+import com.outlay.mvp.view.LoginView;
 
 import javax.inject.Inject;
 
@@ -17,33 +19,41 @@ import javax.inject.Inject;
  * Created by bmelnychuk on 10/26/16.
  */
 
-public class AuthPresenter extends MvpPresenter<AuthView> {
+public class LoginViewPresenter extends MvpBasePresenter<LoginView> {
     private UserSignInUseCase userSignInUseCase;
     private UserSignUpUseCase userSignUpUseCase;
     private ResetPasswordUseCase resetPasswordUseCase;
-    private AppPreferences appPreferences;
+    private LinkAccountUseCase linkAccountUseCase;
 
     @Inject
-    public AuthPresenter(
+    public LoginViewPresenter(
             UserSignInUseCase userSignInUseCase,
             UserSignUpUseCase userSignUpUseCase,
             ResetPasswordUseCase resetPasswordUseCase,
-            AppPreferences appPreferences
+            LinkAccountUseCase linkAccountUseCase
     ) {
         this.userSignInUseCase = userSignInUseCase;
         this.userSignUpUseCase = userSignUpUseCase;
         this.resetPasswordUseCase = resetPasswordUseCase;
-        this.appPreferences = appPreferences;
+        this.linkAccountUseCase = linkAccountUseCase;
     }
 
     public void signIn(String email, String password) {
         Credentials credentials = new Credentials(email, password);
+        signIn(credentials);
+    }
+
+    public void signInGuest() {
+        signIn(Credentials.GUEST);
+    }
+
+    private void signIn(Credentials credentials) {
         getView().setProgress(true);
+
         userSignInUseCase.execute(credentials, new DefaultSubscriber<User>() {
             @Override
             public void onNext(User user) {
                 onAuthSuccess(user);
-                getView().setProgress(false);
             }
 
             @Override
@@ -51,23 +61,19 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
                 super.onError(e);
                 getView().setProgress(false);
                 getView().error(e);
-
             }
         });
     }
 
-    public void signInGuest() {
-        onAuthSuccess(User.ANONYMOUS);
-    }
-
-    public void signUp(String email, String password, boolean sync) {
-        Credentials credentials = new Credentials(email, password);
+    public void signUp(String email, String password) {
         getView().setProgress(true);
-        userSignUpUseCase.execute(new UserSignUpUseCase.Input(credentials, sync), new DefaultSubscriber<User>() {
+
+        Credentials credentials = new Credentials(email, password);
+
+        userSignUpUseCase.execute(credentials, new DefaultSubscriber<User>() {
             @Override
             public void onNext(User user) {
                 onAuthSuccess(user);
-                getView().setProgress(false);
             }
 
             @Override
@@ -79,20 +85,28 @@ public class AuthPresenter extends MvpPresenter<AuthView> {
         });
     }
 
-    public void onCreate() {
-        if (!appPreferences.isFirstRun()) {
-            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-            if (firebaseUser != null) {
-                User user = new User();
-                user.setId(firebaseUser.getUid());
-                user.setEmail(firebaseUser.getEmail());
+    public void linkAccount(String email, String password) {
+        linkAccountUseCase.execute(new Credentials(email, password), new DefaultSubscriber<User>() {
+            @Override
+            public void onNext(User user) {
                 getView().onSuccess(user);
             }
+        });
+    }
+
+    public void trySignIn() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            User user = new User();
+            user.setId(firebaseUser.getUid());
+            user.setEmail(firebaseUser.getEmail());
+            user.setAnonymous(firebaseUser.isAnonymous());
+            user.setUserName(firebaseUser.getDisplayName());
+            getView().onSuccess(user);
         }
     }
 
     private void onAuthSuccess(User user) {
-        appPreferences.setFirstRun(false);
         getView().onSuccess(user);
     }
 

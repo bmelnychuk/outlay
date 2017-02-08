@@ -10,7 +10,7 @@ import com.github.johnkil.print.PrintView;
 import com.outlay.R;
 import com.outlay.core.utils.DateUtils;
 import com.outlay.domain.model.Expense;
-import com.outlay.utils.FormatUtils;
+import com.outlay.core.utils.NumberUtils;
 import com.outlay.utils.IconUtils;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
                 onExpenseClickListener.onExpenseClicked(expense);
             }
         });
-        holder.categoryAmount.setText(FormatUtils.formatAmount(expense.getAmount()));
+        holder.categoryAmount.setText(NumberUtils.formatAmount(expense.getAmount()));
         holder.categoryDate.setText(DateUtils.toShortString(expense.getReportedWhen()));
         holder.categoryTitle.setText(expense.getCategory().getTitle());
         IconUtils.loadCategoryIcon(expense.getCategory(), holder.categoryIcon);

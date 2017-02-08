@@ -1,5 +1,6 @@
 package com.outlay.mvp.presenter;
 
+import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 import com.outlay.core.executor.DefaultSubscriber;
 import com.outlay.domain.interactor.GetCategoriesUseCase;
 import com.outlay.domain.interactor.UpdateCategoriesUseCase;
@@ -13,7 +14,7 @@ import javax.inject.Inject;
 /**
  * Created by Bogdan Melnychuk on 1/21/16.
  */
-public class CategoriesPresenter extends MvpPresenter<CategoriesView> {
+public class CategoriesPresenter extends MvpBasePresenter<CategoriesView> {
     private GetCategoriesUseCase getCategoriesUseCase;
     private UpdateCategoriesUseCase updateCategoriesUseCase;
 
@@ -26,7 +27,7 @@ public class CategoriesPresenter extends MvpPresenter<CategoriesView> {
         this.updateCategoriesUseCase = updateCategoriesUseCase;
     }
 
-    public void loadCategories() {
+    public void getCategories() {
         getCategoriesUseCase.execute(new DefaultSubscriber<List<Category>>() {
             @Override
             public void onNext(List<Category> categories) {
@@ -35,7 +36,7 @@ public class CategoriesPresenter extends MvpPresenter<CategoriesView> {
         });
     }
 
-    public void refreshOrder(List<Category> categories) {
+    public void updateOrder(List<Category> categories) {
         updateCategoriesUseCase.execute(categories, new DefaultSubscriber());
     }
 }

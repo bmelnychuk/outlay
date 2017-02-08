@@ -21,15 +21,9 @@ public class Report {
     private List<Expense> expenses;
     private Date startDate;
     private Date endDate;
-    private Category category;
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public Report setCategory(Category category) {
-        this.category = category;
-        return this;
+    public boolean isEmpty() {
+        return expenses.isEmpty();
     }
 
     public List<Expense> getExpenses() {
@@ -96,7 +90,6 @@ public class Report {
             Report reportForCategory = result.get(expenseCategory);
             if (reportForCategory == null) {
                 reportForCategory = new Report();
-                reportForCategory.setCategory(expenseCategory);
                 reportForCategory.setStartDate(expense.getReportedWhen());
                 reportForCategory.setEndDate(expense.getReportedWhen());
             } else {
@@ -115,61 +108,60 @@ public class Report {
         return result;
     }
 
+//    public DateSummary getDateSummary(Date date) {
+//        Date startOfMonth = DateUtils.getMonthStart(date);
+//        Date endOfMonth = DateUtils.getMonthEnd(date);
+//
+//        Date startOfWeek = DateUtils.getWeekStart(date);
+//        Date endOfWeek = DateUtils.getWeekEnd(date);
+//
+//        Date startOfDay = DateUtils.getDayStart(date);
+//        Date endOfDay = DateUtils.getDayEnd(date);
+//
+//        BigDecimal monthAmount = getTotalAmount(startOfMonth, endOfMonth);
+//        BigDecimal weeklyAmount = getTotalAmount(startOfWeek, endOfWeek);
+//        BigDecimal dailyAmount = getTotalAmount(startOfDay, endOfDay);
+//
+//        DateSummary result = new DateSummary();
+//        result.setDate(date);
+//        result.setDayAmount(dailyAmount);
+//        result.setWeekAmount(weeklyAmount);
+//        result.setMonthAmount(monthAmount);
+//        result.setCategories(getMostPayedCategories());
+//        return result;
+//    }
 
-    public DateSummary getDateSummary(Date date) {
-        Date startOfMonth = DateUtils.getMonthStart(date);
-        Date endOfMonth = DateUtils.getMonthEnd(date);
+//    public List<Category> getMostPayedCategories() {
+//        Map<Category, BigDecimal> pricesPerCategory = new HashMap<>();
+//
+//        for (Expense expense : expenses) {
+//            BigDecimal priceForCategory = pricesPerCategory.get(expense.getCategory());
+//            if (priceForCategory == null) {
+//                priceForCategory = BigDecimal.ZERO;
+//            }
+//            priceForCategory = priceForCategory.add(expense.getAmount());
+//            pricesPerCategory.put(expense.getCategory(), priceForCategory);
+//        }
+//
+//        TreeMap<Category, BigDecimal> treeMap = new TreeMap<>(new MapValueComparator(pricesPerCategory));
+//        treeMap.putAll(pricesPerCategory);
+//        List<Category> result = new ArrayList<>(treeMap.keySet());
+//
+//        return result;
+//    }
 
-        Date startOfWeek = DateUtils.getWeekStart(date);
-        Date endOfWeek = DateUtils.getWeekEnd(date);
-
-        Date startOfDay = DateUtils.getDayStart(date);
-        Date endOfDay = DateUtils.getDayEnd(date);
-
-        BigDecimal monthAmount = getTotalAmount(startOfMonth, endOfMonth);
-        BigDecimal weeklyAmount = getTotalAmount(startOfWeek, endOfWeek);
-        BigDecimal dailyAmount = getTotalAmount(startOfDay, endOfDay);
-
-        DateSummary result = new DateSummary();
-        result.setDate(date);
-        result.setDayAmount(dailyAmount);
-        result.setWeekAmount(weeklyAmount);
-        result.setMonthAmount(monthAmount);
-        result.setCategories(getMostPayedCategories());
-        return result;
-    }
-
-    public List<Category> getMostPayedCategories() {
-        Map<Category, BigDecimal> pricesPerCategory = new HashMap<>();
-
-        for (Expense expense : expenses) {
-            BigDecimal priceForCategory = pricesPerCategory.get(expense.getCategory());
-            if (priceForCategory == null) {
-                priceForCategory = BigDecimal.ZERO;
-            }
-            priceForCategory = priceForCategory.add(expense.getAmount());
-            pricesPerCategory.put(expense.getCategory(), priceForCategory);
-        }
-
-        TreeMap<Category, BigDecimal> treeMap = new TreeMap<>(new MapValueComparator(pricesPerCategory));
-        treeMap.putAll(pricesPerCategory);
-        List<Category> result = new ArrayList<>(treeMap.keySet());
-
-        return result;
-    }
-
-    private static final class MapValueComparator<K, V extends Comparable> implements Comparator<K> {
-        private Map<K, V> source;
-
-        public MapValueComparator(Map<K, V> source) {
-            this.source = source;
-        }
-
-        @Override
-        public int compare(K o1, K o2) {
-            V value1 = source.get(o1);
-            V value2 = source.get(o2);
-            return value2.compareTo(value1);
-        }
-    }
+//    private static final class MapValueComparator<K, V extends Comparable> implements Comparator<K> {
+//        private Map<K, V> source;
+//
+//        public MapValueComparator(Map<K, V> source) {
+//            this.source = source;
+//        }
+//
+//        @Override
+//        public int compare(K o1, K o2) {
+//            V value1 = source.get(o1);
+//            V value2 = source.get(o2);
+//            return value2.compareTo(value1);
+//        }
+//    }
 }

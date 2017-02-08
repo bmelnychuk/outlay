@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.github.johnkil.print.PrintView;
 import com.outlay.R;
-import com.outlay.view.adapter.ExpenseAdapter;
 import com.outlay.core.utils.DateUtils;
 import com.outlay.domain.model.Category;
 import com.outlay.domain.model.Expense;
@@ -23,8 +22,8 @@ import com.outlay.mvp.view.ExpensesView;
 import com.outlay.utils.IconUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Navigator;
+import com.outlay.view.adapter.ExpenseAdapter;
 import com.outlay.view.fragment.base.BaseMvpFragment;
-import com.outlay.view.fragment.base.StaticContentFragment;
 
 import java.util.Date;
 import java.util.List;
@@ -32,7 +31,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
@@ -73,7 +71,7 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
     private String categoryId;
 
     @Override
-    public ExpensesListPresenter getPresenter() {
+    public ExpensesListPresenter createPresenter() {
         return presenter;
     }
 
@@ -121,7 +119,7 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
     @Override
     public void onResume() {
         super.onResume();
-        presenter.loadExpenses(dateFrom, dateTo, categoryId);
+        presenter.findExpenses(dateFrom, dateTo, categoryId);
     }
 
     private void displayExpenses(List<Expense> expenses) {
@@ -146,7 +144,7 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
     @Override
     public void showReport(Report report) {
         displayExpenses(report.getExpenses());
-        displayCategory(report.getCategory());
+        //displayCategory(report.getCategory());
     }
 
     private String getDateLabel() {

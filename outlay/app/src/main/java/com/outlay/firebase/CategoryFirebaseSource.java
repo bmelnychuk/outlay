@@ -7,7 +7,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.outlay.data.source.CategoryDataSource;
-import com.outlay.data.sync.SyncTo;
 import com.outlay.domain.model.Category;
 import com.outlay.domain.model.User;
 import com.outlay.firebase.dto.CategoryDto;
@@ -26,12 +25,11 @@ import rx.Observable;
  * Created by bmelnychuk on 10/26/16.
  */
 
-public class CategoryFirebaseSource implements CategoryDataSource, SyncTo<Category> {
+public class CategoryFirebaseSource implements CategoryDataSource {
     private DatabaseReference mDatabase;
     private CategoryAdapter adapter;
     private User currentUser;
 
-    @Inject
     public CategoryFirebaseSource(
             User currentUser,
             DatabaseReference databaseReference
@@ -180,21 +178,5 @@ public class CategoryFirebaseSource implements CategoryDataSource, SyncTo<Catego
         });
 
         return deleteCategory;
-    }
-
-    @Override
-    public Observable<List<Category>> saveAll(List<Category> categories) {
-        return Observable.create(subscriber -> {
-            Map<String, Object> childUpdates = new HashMap<>();
-            for (Category c : categories) {
-                childUpdates.put(c.getId(), adapter.fromCategory(c));
-            }
-
-            DatabaseReference categoriesRef = mDatabase.child("users").child(currentUser.getId()).child("categories");
-            categoriesRef.updateChildren(childUpdates);
-
-            subscriber.onNext(categories);
-            subscriber.onCompleted();
-        });
     }
 }

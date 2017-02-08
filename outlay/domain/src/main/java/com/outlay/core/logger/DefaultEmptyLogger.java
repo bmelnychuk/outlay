@@ -4,8 +4,6 @@ package com.outlay.core.logger;
  * Created by Bogdan Melnychuk on 4/23/16.
  */
 public class DefaultEmptyLogger implements Logger {
-    private static final String TAG = "API";
-
     @Override
     public void info(String message) {
     }

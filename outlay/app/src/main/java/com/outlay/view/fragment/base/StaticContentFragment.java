@@ -10,7 +10,7 @@ import android.view.View;
 import com.outlay.App;
 import com.outlay.di.component.AppComponent;
 import com.outlay.view.activity.base.BaseActivity;
-import com.outlay.view.activity.base.StaticContentActivity;
+import com.outlay.view.activity.base.ParentActivity;
 
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
@@ -47,7 +47,7 @@ public class StaticContentFragment extends Fragment implements BaseFragment {
     }
 
     public View getRootView() {
-        return ((StaticContentActivity)getActivity()).getRootView();
+        return ((ParentActivity)getActivity()).getRootView();
     }
 
     @Override

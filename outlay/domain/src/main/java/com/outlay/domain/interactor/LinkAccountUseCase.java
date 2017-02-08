@@ -2,6 +2,7 @@ package com.outlay.domain.interactor;
 
 import com.outlay.core.executor.PostExecutionThread;
 import com.outlay.core.executor.ThreadExecutor;
+import com.outlay.domain.model.Credentials;
 import com.outlay.domain.model.User;
 import com.outlay.domain.repository.AuthService;
 
@@ -13,11 +14,11 @@ import rx.Observable;
  * Created by bmelnychuk on 10/26/16.
  */
 
-public class ResetPasswordUseCase extends UseCase<User, Void> {
+public class LinkAccountUseCase extends UseCase<Credentials, User> {
     private AuthService authService;
 
     @Inject
-    public ResetPasswordUseCase(
+    public LinkAccountUseCase(
             ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread,
             AuthService authService
@@ -27,7 +28,7 @@ public class ResetPasswordUseCase extends UseCase<User, Void> {
     }
 
     @Override
-    protected Observable<Void> buildUseCaseObservable(User user) {
-        return authService.resetPassword(user);
+    protected Observable<User> buildUseCaseObservable(Credentials credentials) {
+        return authService.linkCredentials(credentials);
     }
 }

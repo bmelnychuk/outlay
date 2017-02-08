@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -23,7 +24,7 @@ import com.outlay.view.fragment.CategoriesFragment;
  * Created by bmelnychuk on 12/14/16.
  */
 
-public abstract class DrawerActivity extends StaticContentActivity {
+public abstract class DrawerActivity extends ParentActivity {
     private static final int ITEM_CATEGORIES = 1;
     private static final int ITEM_FEEDBACK = 2;
     private static final int ITEM_ABOUT = 3;
@@ -32,10 +33,7 @@ public abstract class DrawerActivity extends StaticContentActivity {
     private Drawer mainDrawer;
 
     public void setupDrawer(Toolbar toolbar, User currentUser) {
-        String email = "";
-        if (currentUser != null) {
-            email = currentUser.getEmail();
-        }
+        String email = currentUser.getEmail();
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)

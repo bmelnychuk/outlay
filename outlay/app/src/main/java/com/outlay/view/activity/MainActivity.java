@@ -30,9 +30,9 @@ public class MainActivity extends DrawerActivity {
 //            TextView weekAmount = (TextView) headerView.findViewById(R.id.weekAmount);
 //            TextView monthAmount = (TextView) headerView.findViewById(R.id.monthAmount);
 //
-//            dateAmount.setText(FormatUtils.formatAmount(summary.getDayAmount()));
-//            weekAmount.setText(FormatUtils.formatAmount(summary.getWeekAmount()));
-//            monthAmount.setText(FormatUtils.formatAmount(summary.getMonthAmount()));
+//            dateAmount.setText(NumberUtils.formatAmount(summary.getDayAmount()));
+//            weekAmount.setText(NumberUtils.formatAmount(summary.getWeekAmount()));
+//            monthAmount.setText(NumberUtils.formatAmount(summary.getMonthAmount()));
 //
 //            LinearLayout categoriesContainer = (LinearLayout) headerView.findViewById(R.id.mostSpentCategories);
 //            categoriesContainer.removeAllViews();
@@ -79,11 +79,12 @@ public class MainActivity extends DrawerActivity {
     protected void signOut() {
         getApp().releaseUserComponent();
         FirebaseAuth.getInstance().signOut();
-        Navigator.goToLoginScreen(this, null);
+        Navigator.goToLoginScreen(this);
+        finish();
     }
 
     @Override
     protected void createUser() {
-        Navigator.goToLoginScreen(this, "sync");
+        Navigator.goToSyncGuestActivity(this);
     }
 }

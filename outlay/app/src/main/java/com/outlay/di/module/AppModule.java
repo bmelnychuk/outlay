@@ -3,6 +3,8 @@ package com.outlay.di.module;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.outlay.App;
 import com.outlay.R;
 import com.outlay.core.data.AppPreferences;
@@ -20,7 +22,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import rx.Observable;
 
 /**
  * Created by Bogdan Melnychuk on 12/17/15.
@@ -71,6 +72,13 @@ public class AppModule {
         result.add(category(context.getString(R.string.category_sport), "ic_weightlifting", ContextCompat.getColor(context, R.color.brown), 6));
         result.add(category(context.getString(R.string.category_travel), "ic_flight", ContextCompat.getColor(context, R.color.cyan), 7));
         return result;
+    }
+
+    @Provides
+    @Singleton
+    Gson providerGson() {
+        Gson gson = new GsonBuilder().create();
+        return gson;
     }
 
     private static Category category(String title, String icon, int color, int order) {

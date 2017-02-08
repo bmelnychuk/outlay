@@ -5,16 +5,11 @@ package com.outlay.domain.model;
  */
 
 public class User {
-    public static final User ANONYMOUS = new User();
-
-    static {
-        ANONYMOUS.setAnonymous(true);
-    }
-
     private String id;
     private String email;
     private String token;
     private boolean anonymous;
+    private String userName;
 
     public String getId() {
         return id;
@@ -34,20 +29,30 @@ public class User {
         return this;
     }
 
-    @Deprecated
     public String getToken() {
         return token;
     }
 
-    public void setToken(String token) {
+    public User setToken(String token) {
         this.token = token;
+        return this;
     }
 
     public boolean isAnonymous() {
         return anonymous;
     }
 
-    public void setAnonymous(boolean anonymous) {
+    public User setAnonymous(boolean anonymous) {
         this.anonymous = anonymous;
+        return this;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public User setUserName(String userName) {
+        this.userName = userName;
+        return this;
     }
 }

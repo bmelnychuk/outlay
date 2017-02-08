@@ -9,9 +9,8 @@ import com.outlay.di.component.DaggerAppComponent;
 import com.outlay.di.component.UserComponent;
 import com.outlay.di.module.AppModule;
 import com.outlay.di.module.DaoModule;
-import com.outlay.di.module.NetworkModule;
+import com.outlay.di.module.FirebaseModule;
 import com.outlay.di.module.UserModule;
-import com.outlay.domain.model.OutlaySession;
 import com.outlay.domain.model.User;
 import com.outlay.impl.AndroidLogger;
 
@@ -35,7 +34,6 @@ public class App extends Application {
     public UserComponent createUserComponent(User user) {
         if (userComponent == null) {
             userComponent = appComponent.plus(new UserModule(user));
-            OutlaySession.setCurrentUser(user);
         }
         return userComponent;
     }
@@ -47,8 +45,7 @@ public class App extends Application {
     private void initializeInjector() {
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
-                .networkModule(new NetworkModule())
-                .daoModule(new DaoModule())
+                .firebaseModule(new FirebaseModule())
                 .build();
     }
 

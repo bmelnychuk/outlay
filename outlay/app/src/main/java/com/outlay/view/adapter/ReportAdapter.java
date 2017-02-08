@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.johnkil.print.PrintView;
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -16,14 +15,15 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.outlay.R;
+import com.outlay.core.utils.NumberUtils;
+import com.outlay.domain.model.Category;
 import com.outlay.domain.model.Report;
-import com.outlay.utils.FormatUtils;
 import com.outlay.utils.IconUtils;
+import com.outlay.view.model.CategorizedExpenses;
 import com.outlay.view.progress.ProgressLayout;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,12 +35,12 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final int TYPE_CHART = 0;
     private static final int TYPE_REPORT_ITEM = 1;
 
-    private List<Report> reports;
+    private CategorizedExpenses categorizedExpenses;
     private double maxProgress;
     private ItemClickListener onItemClickListener;
 
-    public ReportAdapter(List<Report> items) {
-        this.reports = items;
+    public ReportAdapter(CategorizedExpenses categorizedExpenses) {
+        this.categorizedExpenses = categorizedExpenses;
         maxProgress = getMaxProgress();
     }
 
@@ -49,11 +49,11 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public ReportAdapter() {
-        this(new ArrayList<>());
+        this(new CategorizedExpenses());
     }
 
-    public void setItems(List<Report> items) {
-        this.reports = items;
+    public void setItems(CategorizedExpenses categorizedExpenses) {
+        this.categorizedExpenses = categorizedExpenses;
         maxProgress = getMaxProgress();
         notifyDataSetChanged();
     }
@@ -82,28 +82,32 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ReportViewHolder) {
             ReportViewHolder reportHolder = (ReportViewHolder) holder;
-            Report currentReport = reports.get(position - 1);
-            reportHolder.amountText.setText(FormatUtils.formatAmount(currentReport.getTotalAmount()));
-            reportHolder.titleText.setText(currentReport.getCategory().getTitle());
-            IconUtils.loadCategoryIcon(currentReport.getCategory().getIcon(), reportHolder.icon);
+
+            Report currentReport = categorizedExpenses.getReport(position - 1);
+            Category currentCategory = categorizedExpenses.getCategory(position - 1);
+
+
+            reportHolder.amountText.setText(NumberUtils.formatAmount(currentReport.getTotalAmount()));
+            reportHolder.titleText.setText(currentCategory.getTitle());
+            IconUtils.loadCategoryIcon(currentCategory.getIcon(), reportHolder.icon);
             reportHolder.progressLayout.setMaxProgress((int) (maxProgress * 10));
             reportHolder.progressLayout.setCurrentProgress(currentReport.getTotalAmount().multiply(new BigDecimal(10)).intValue());
-            reportHolder.icon.setIconColor(currentReport.getCategory().getColor());
+            reportHolder.icon.setIconColor(currentCategory.getColor());
             reportHolder.reportContainer.setOnClickListener(v -> {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onItemClicked(currentReport);
+                    onItemClickListener.onItemClicked(currentCategory, currentReport);
                 }
             });
             //reportHolder.progressLayout.setLoadedColor(currentReport.getColor());
         } else if (holder instanceof ChartViewHolder) {
             ChartViewHolder charViewHolder = (ChartViewHolder) holder;
-            updateChartData(reports, charViewHolder.chart);
+            updateChartData(charViewHolder.chart);
             //charViewHolder.chart.animateY(1000, Easing.EasingOption.EaseInOutQuad);
             charViewHolder.chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                 @Override
                 public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onItemClicked(reports.get(h.getXIndex()));
+                        //onItemClickListener.onItemClicked(reports.get(h.getXIndex()));
                     }
                 }
 
@@ -116,7 +120,7 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return reports.size() + 1;
+        return categorizedExpenses == null ? 1 : categorizedExpenses.getCategoriesSize() + 1;
     }
 
     public class ReportViewHolder extends RecyclerView.ViewHolder {
@@ -160,18 +164,19 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private void updateChartData(List<Report> reports, PieChart chart) {
+    private void updateChartData(PieChart chart) {
         ArrayList<Entry> entries = new ArrayList<>();
         ArrayList<String> labels = new ArrayList<>();
         ArrayList<Integer> colors = new ArrayList<>();
 
         double sum = 0;
-        for (int i = 0; i < reports.size(); i++) {
-            Report r = reports.get(i);
+        for (int i = 0; i < categorizedExpenses.getCategories().size(); i++) {
+            Category c = categorizedExpenses.getCategory(i);
+            Report r = categorizedExpenses.getReport(c);
             sum += r.getTotalAmount().doubleValue();
             entries.add(new Entry((int) (r.getTotalAmount().doubleValue() * 1000), i));
-            labels.add(r.getCategory().getTitle());
-            colors.add(r.getCategory().getColor());
+            labels.add(c.getTitle());
+            colors.add(c.getColor());
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Outlay");
@@ -180,18 +185,19 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         dataSet.setColors(colors);
 
         PieData data = new PieData(labels, dataSet);
-        data.setValueFormatter((value, entry, dataSetIndex, viewPortHandler) -> FormatUtils.formatAmount((double) value / 1000));
+        data.setValueFormatter((value, entry, dataSetIndex, viewPortHandler) -> NumberUtils.formatAmount((double) value / 1000));
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.WHITE);
         chart.setData(data);
-        chart.setCenterText(FormatUtils.formatAmount(sum));
+        chart.setCenterText(NumberUtils.formatAmount(sum));
         chart.highlightValues(null);
         chart.invalidate();
     }
 
     private double getMaxProgress() {
         double max = -1;
-        for (Report r : reports) {
+        for (Category c : categorizedExpenses.getCategories()) {
+            Report r = categorizedExpenses.getReport(c);
             if (max < r.getTotalAmount().doubleValue()) {
                 max = r.getTotalAmount().doubleValue();
             }
@@ -200,6 +206,6 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public interface ItemClickListener {
-        void onItemClicked(Report report);
+        void onItemClicked(Category category, Report report);
     }
 }

@@ -1,7 +1,6 @@
 package com.outlay.utils;
 
 import com.github.johnkil.print.PrintView;
-import com.outlay.database.dao.Category;
 
 import java.util.Arrays;
 import java.util.List;

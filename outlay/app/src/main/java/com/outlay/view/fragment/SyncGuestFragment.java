@@ -17,13 +17,12 @@ import com.outlay.view.fragment.base.BaseMvpFragment;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by bmelnychuk on 12/14/16.
  */
 
-public class LoginFragment extends BaseMvpFragment<LoginView, LoginViewPresenter> implements LoginView {
+public class SyncGuestFragment extends BaseMvpFragment<LoginView, LoginViewPresenter> implements LoginView {
     @Inject
     LoginViewPresenter presenter;
 
@@ -46,7 +45,7 @@ public class LoginFragment extends BaseMvpFragment<LoginView, LoginViewPresenter
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, null, false);
+        View view = inflater.inflate(R.layout.fragment_sync_guest, null, false);
         return view;
     }
 
@@ -54,16 +53,11 @@ public class LoginFragment extends BaseMvpFragment<LoginView, LoginViewPresenter
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        loginForm.setMode(LoginForm.MODE_SIGN_UP);
+        loginForm.setToggleModeButtonVisible(false);
         loginForm.setOnSignUpClickListener((email, password, src) -> {
-            presenter.signUp(email, password);
+            presenter.linkAccount(email, password);
         });
-        loginForm.setOnSignInClickListener((email, password, src) -> {
-            presenter.signIn(email, password);
-        });
-        loginForm.setOnPasswordForgetClick(() -> presenter.resetPassword("melnychuk.bogdan@gmail.com"));
-        loginForm.setOnSkipButtonClick(v -> presenter.signInGuest());
-
-        presenter.trySignIn();
     }
 
     @Override
@@ -78,6 +72,7 @@ public class LoginFragment extends BaseMvpFragment<LoginView, LoginViewPresenter
 
     @Override
     public void onSuccess(User user) {
+        getApp().releaseUserComponent();
         getApp().createUserComponent(user);
         Navigator.goToMainScreen(getActivity());
         getActivity().finish();

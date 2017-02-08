@@ -1,9 +1,9 @@
 package com.outlay.mvp.presenter;
 
+import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 import com.outlay.core.executor.DefaultSubscriber;
 import com.outlay.core.utils.DateUtils;
-import com.outlay.domain.interactor.LoadReportUseCase;
-import com.outlay.domain.model.ExpensePeriod;
+import com.outlay.domain.interactor.GetExpensesUseCase;
 import com.outlay.domain.model.Report;
 import com.outlay.mvp.view.StatisticView;
 import com.outlay.view.fragment.ReportFragment;
@@ -16,17 +16,17 @@ import javax.inject.Inject;
 /**
  * Created by Bogdan Melnychuk on 1/21/16.
  */
-public class ReportPresenter extends MvpPresenter<StatisticView> {
-    private LoadReportUseCase loadReportUseCase;
+public class ReportPresenter extends MvpBasePresenter<StatisticView> {
+    private GetExpensesUseCase loadReportUseCase;
 
     @Inject
     public ReportPresenter(
-            LoadReportUseCase loadReportUseCase
+            GetExpensesUseCase loadReportUseCase
     ) {
         this.loadReportUseCase = loadReportUseCase;
     }
 
-    public void loadReport(Date date, int period) {
+    public void getExpenses(Date date, int period) {
         Date startDate = date;
         Date endDate = date;
 
@@ -46,11 +46,11 @@ public class ReportPresenter extends MvpPresenter<StatisticView> {
         }
 
 
-        loadReportUseCase.execute(new ExpensePeriod(startDate, endDate), new DefaultSubscriber<Report>() {
+        loadReportUseCase.execute(new GetExpensesUseCase.Input(startDate, endDate, null), new DefaultSubscriber<Report>() {
             @Override
             public void onNext(Report report) {
                 super.onNext(report);
-                getView().showReports(new ArrayList<>(report.groupByCategory().values()));
+                getView().showReport(report);
             }
         });
     }

@@ -1,7 +1,6 @@
 package com.outlay.database.source;
 
 import com.outlay.data.source.CategoryDataSource;
-import com.outlay.data.sync.SyncFrom;
 import com.outlay.database.adapter.CategoryDatabaseMapper;
 import com.outlay.database.dao.CategoryDao;
 import com.outlay.database.dao.ExpenseDao;
@@ -18,7 +17,7 @@ import rx.Observable;
  * Created by bmelnychuk on 10/25/16.
  */
 
-public class CategoryDatabaseSource implements CategoryDataSource, SyncFrom<Category> {
+public class CategoryDatabaseSource implements CategoryDataSource {
     private CategoryDao categoryDao;
     private ExpenseDao expenseDao;
     private CategoryDatabaseMapper categoryMapper;

@@ -1,5 +1,6 @@
 package com.outlay.mvp.presenter;
 
+import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 import com.outlay.core.executor.DefaultSubscriber;
 import com.outlay.domain.interactor.DeleteExpenseUseCase;
 import com.outlay.domain.interactor.GetCategoriesUseCase;
@@ -17,14 +18,14 @@ import javax.inject.Inject;
 /**
  * Created by Bogdan Melnychuk on 1/21/16.
  */
-public class ExpensesDetailsPresenter extends MvpPresenter<ExpenseDetailsView> {
+public class ExpenseDetailsPresenter extends MvpBasePresenter<ExpenseDetailsView> {
     private GetCategoriesUseCase getCategoriesUseCase;
     private GetExpenseUseCase getExpenseUseCase;
     private SaveExpenseUseCase saveExpenseUseCase;
     private DeleteExpenseUseCase deleteExpenseUseCase;
 
     @Inject
-    public ExpensesDetailsPresenter(
+    public ExpenseDetailsPresenter(
             GetCategoriesUseCase getCategoriesUseCase,
             GetExpenseUseCase getExpenseUseCase,
             SaveExpenseUseCase saveExpenseUseCase,
@@ -36,7 +37,7 @@ public class ExpensesDetailsPresenter extends MvpPresenter<ExpenseDetailsView> {
         this.deleteExpenseUseCase = deleteExpenseUseCase;
     }
 
-    public void loadExpense(String expenseId, Date date) {
+    public void findExpense(String expenseId, Date date) {
         getExpenseUseCase.execute(new GetExpenseUseCase.Input(expenseId, date), new DefaultSubscriber<Expense>() {
             @Override
             public void onNext(Expense expense) {
@@ -46,7 +47,7 @@ public class ExpensesDetailsPresenter extends MvpPresenter<ExpenseDetailsView> {
 
     }
 
-    public void loadCategories() {
+    public void getCategories() {
         getCategoriesUseCase.execute(new DefaultSubscriber<List<Category>>() {
             @Override
             public void onNext(List<Category> categories) {

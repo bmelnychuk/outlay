@@ -1,5 +1,6 @@
 package com.outlay.mvp.view;
 
+import com.hannesdorfmann.mosby.mvp.MvpView;
 import com.outlay.domain.model.Category;
 import com.outlay.domain.model.Expense;
 

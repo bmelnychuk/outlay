@@ -4,10 +4,10 @@ import android.os.Bundle;
 
 import com.outlay.R;
 import com.outlay.view.activity.base.ParentActivity;
-import com.outlay.view.fragment.LoginFragment;
+import com.outlay.view.fragment.SyncGuestFragment;
 
-public class LoginActivity extends ParentActivity {
-    private LoginFragment loginFragment;
+public class SyncGuestActivity extends ParentActivity {
+    private SyncGuestFragment syncGuestFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -17,8 +17,8 @@ public class LoginActivity extends ParentActivity {
     }
 
     private void initializeActivity(Bundle savedInstanceState) {
-        loginFragment = new LoginFragment();
-        loginFragment.setArguments(getIntent().getExtras());
-        addFragment(R.id.fragment, loginFragment);
+        syncGuestFragment = new SyncGuestFragment();
+        syncGuestFragment.setArguments(getIntent().getExtras());
+        addFragment(R.id.fragment, syncGuestFragment);
     }
 }

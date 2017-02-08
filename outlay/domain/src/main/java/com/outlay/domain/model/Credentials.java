@@ -5,6 +5,8 @@ package com.outlay.domain.model;
  */
 
 public class Credentials {
+    public static Credentials GUEST = new Credentials(null, null);
+
     private String email;
     private String password;
 
@@ -29,5 +31,9 @@ public class Credentials {
     public Credentials setPassword(String password) {
         this.password = password;
         return this;
+    }
+
+    public boolean isGuestCredentials() {
+        return email == null && password == null;
     }
 }

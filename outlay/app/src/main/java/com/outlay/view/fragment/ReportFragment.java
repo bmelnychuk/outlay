@@ -24,6 +24,7 @@ import com.outlay.view.adapter.ReportAdapter;
 import com.outlay.view.dialog.DatePickerFragment;
 import com.outlay.view.fragment.base.BaseMvpFragment;
 import com.outlay.view.helper.OnTabSelectedListenerAdapter;
+import com.outlay.view.model.CategorizedExpenses;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -63,7 +64,7 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
     private ReportAdapter adapter;
 
     @Override
-    public ReportPresenter getPresenter() {
+    public ReportPresenter createPresenter() {
         return presenter;
     }
 
@@ -105,7 +106,7 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
                     selectedDate = selected;
                     ReportFragment.this.setTitle(DateUtils.toShortString(selected));
                     updateTitle();
-                    presenter.loadReport(selectedDate, selectedPeriod);
+                    presenter.getExpenses(selectedDate, selectedPeriod);
                 });
                 datePickerFragment.show(getChildFragmentManager(), "datePicker");
                 break;
@@ -134,25 +135,25 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
             public void onTabSelected(TabLayout.Tab tab) {
                 selectedPeriod = tab.getPosition();
                 updateTitle();
-                presenter.loadReport(selectedDate, selectedPeriod);
+                presenter.getExpenses(selectedDate, selectedPeriod);
             }
         });
 
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ReportAdapter();
         recyclerView.setAdapter(adapter);
-        presenter.loadReport(selectedDate, selectedPeriod);
+        presenter.getExpenses(selectedDate, selectedPeriod);
 
-        adapter.setOnItemClickListener(report -> goToExpensesList(selectedDate, selectedPeriod, report.getCategory().getId()));
+        adapter.setOnItemClickListener((category, report) -> goToExpensesList(selectedDate, selectedPeriod, category.getId()));
     }
 
     @Override
-    public void showReports(List<Report> reportList) {
-        if (reportList.isEmpty()) {
+    public void showReport(Report report) {
+        if (report.isEmpty()) {
             noResults.setVisibility(View.VISIBLE);
         } else {
             noResults.setVisibility(View.GONE);
-            adapter.setItems(reportList);
+            adapter.setItems(new CategorizedExpenses(report));
         }
     }
 

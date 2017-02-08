@@ -13,11 +13,11 @@ import rx.Observable;
  * Created by bmelnychuk on 10/24/16.
  */
 
-public class UpdateCategoryUseCase extends UseCase<Category, Category> {
+public class SaveCategoryUseCase extends UseCase<Category, Category> {
     private CategoryRepository categoryRepository;
 
     @Inject
-    public UpdateCategoryUseCase(
+    public SaveCategoryUseCase(
             ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread,
             CategoryRepository categoryRepository

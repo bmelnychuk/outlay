@@ -21,13 +21,12 @@ import android.widget.TextView;
 
 import com.outlay.R;
 import com.outlay.core.utils.DateUtils;
-import com.outlay.domain.model.DateSummary;
+import com.outlay.core.utils.NumberUtils;
 import com.outlay.domain.model.Expense;
-import com.outlay.domain.model.OutlaySession;
+import com.outlay.domain.model.User;
 import com.outlay.mvp.presenter.EnterExpensePresenter;
 import com.outlay.mvp.view.EnterExpenseView;
 import com.outlay.utils.DeviceUtils;
-import com.outlay.utils.FormatUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Navigator;
 import com.outlay.view.activity.base.DrawerActivity;
@@ -50,7 +49,8 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpensePresenter> implements AppBarLayout.OnOffsetChangedListener, EnterExpenseView {
+public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpensePresenter>
+        implements AppBarLayout.OnOffsetChangedListener, EnterExpenseView {
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.2f;
     private static final int ALPHA_ANIMATIONS_DURATION = 200;
     public static final String ACTION = "_action";
@@ -86,6 +86,9 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     @Inject
     EnterExpensePresenter presenter;
 
+    @Inject
+    User currentUser;
+
     private CategoriesGridAdapter adapter;
     private boolean mIsTheTitleContainerVisible = false;
     private Date selectedDate = new Date();
@@ -98,7 +101,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     };
 
     @Override
-    public EnterExpensePresenter getPresenter() {
+    public EnterExpensePresenter createPresenter() {
         return presenter;
     }
 
@@ -106,7 +109,6 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getApp().getUserComponent().inject(this);
-        presenter.attachView(this);
     }
 
     @Nullable
@@ -122,7 +124,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
 
         ButterKnife.bind(this, view);
         setToolbar(toolbar);
-        ((DrawerActivity) getActivity()).setupDrawer(toolbar, OutlaySession.getCurrentUser());
+        ((DrawerActivity) getActivity()).setupDrawer(toolbar, currentUser);
 
         appbar.addOnOffsetChangedListener(this);
         startAlphaAnimation(toolbarContainer, 0, View.INVISIBLE);
@@ -161,7 +163,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
                 e.setCategory(c);
                 e.setAmount(new BigDecimal(amountText.getText().toString()));
                 e.setReportedWhen(selectedDate);
-                presenter.insertExpense(e);
+                presenter.createExpense(e);
                 cleanAmountInput();
             } else {
                 validator.onInvalidInput(amountText.getText().toString());
@@ -186,8 +188,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     public void onResume() {
         super.onResume();
         cleanAmountInput();
-        presenter.loadCategories();
-        presenter.loadSummary(new Date());
+        presenter.getCategories();
     }
 
     @Override
@@ -245,13 +246,8 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     }
 
     @Override
-    public void showDateSummary(DateSummary dateSummary) {
-        //((MainActivity) getActivity()).updateDrawerData(dateSummary);
-    }
-
-    @Override
     public void setAmount(BigDecimal amount) {
-        amountText.setText(FormatUtils.formatAmount(amount));
+        amountText.setText(NumberUtils.formatAmount(amount));
     }
 
     @Override
@@ -261,7 +257,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
         Alert.info(getBaseActivity().getRootView(), message,
                 v -> {
                     presenter.deleteExpense(e);
-                    amountText.setText(FormatUtils.formatAmount(e.getAmount()));
+                    amountText.setText(NumberUtils.formatAmount(e.getAmount()));
                 }
         );
     }

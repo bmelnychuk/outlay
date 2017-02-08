@@ -1,15 +1,15 @@
 package com.outlay.view.activity;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.outlay.R;
-import com.outlay.view.activity.base.StaticContentActivity;
+import com.outlay.view.activity.base.ParentActivity;
 
 
-public class SingleFragmentActivity extends StaticContentActivity {
+public class SingleFragmentActivity extends ParentActivity {
 
     public static void start(Context context, Class<?> fragmentClass, Bundle bundle) {
         Intent intent = new Intent(context, SingleFragmentActivity.class);
@@ -38,7 +38,7 @@ public class SingleFragmentActivity extends StaticContentActivity {
         if (bundle == null) {
             Fragment f = Fragment.instantiate(this, fragmentClass.getName());
             f.setArguments(b);
-            getFragmentManager().beginTransaction().replace(R.id.fragment, f, fragmentClass.getName()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment, f, fragmentClass.getName()).commit();
         }
     }
 

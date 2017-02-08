@@ -1,5 +1,6 @@
 package com.outlay.mvp.view;
 
+import com.hannesdorfmann.mosby.mvp.MvpView;
 import com.outlay.domain.model.Report;
 
 import java.util.List;
@@ -9,5 +10,5 @@ import java.util.List;
  */
 
 public interface StatisticView extends MvpView {
-    void showReports(List<Report> report);
+    void showReport(Report report);
 }

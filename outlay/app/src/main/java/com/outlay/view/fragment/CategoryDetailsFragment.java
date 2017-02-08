@@ -16,23 +16,21 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.outlay.R;
-import com.outlay.view.adapter.IconsGridAdapter;
 import com.outlay.domain.model.Category;
-import com.outlay.view.fragment.base.BaseMvpFragment;
-import com.outlay.view.fragment.base.StaticContentFragment;
-import com.outlay.view.helper.TextWatcherAdapter;
 import com.outlay.mvp.presenter.CategoryDetailsPresenter;
 import com.outlay.mvp.view.CategoryDetailsView;
 import com.outlay.utils.IconUtils;
 import com.outlay.utils.ResourceUtils;
+import com.outlay.view.adapter.IconsGridAdapter;
 import com.outlay.view.alert.Alert;
+import com.outlay.view.fragment.base.BaseMvpFragment;
+import com.outlay.view.helper.TextWatcherAdapter;
 
 import java.util.Random;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import uz.shift.colorpicker.LineColorPicker;
 
 /**
@@ -63,7 +61,7 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
     private Category category;
 
     @Override
-    public CategoryDetailsPresenter getPresenter() {
+    public CategoryDetailsPresenter createPresenter() {
         return presenter;
     }
 
@@ -123,7 +121,7 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
         if (getArguments().containsKey(ARG_CATEGORY_PARAM)) {
             String categoryId = getArguments().getString(ARG_CATEGORY_PARAM);
             getActivity().setTitle(getString(R.string.caption_edit_category));
-            presenter.loadCategory(categoryId);
+            presenter.getCategory(categoryId);
         } else {
             getActivity().setTitle(getString(R.string.caption_edit_category));
             showCategory(new Category());

@@ -4,7 +4,7 @@ import com.outlay.core.executor.PostExecutionThread;
 import com.outlay.core.executor.ThreadExecutor;
 import com.outlay.domain.model.Credentials;
 import com.outlay.domain.model.User;
-import com.outlay.domain.repository.OutlayAuth;
+import com.outlay.domain.repository.AuthService;
 
 import javax.inject.Inject;
 
@@ -15,20 +15,24 @@ import rx.Observable;
  */
 
 public class UserSignInUseCase extends UseCase<Credentials, User> {
-    private OutlayAuth outlayAuth;
+    private AuthService authService;
 
     @Inject
     public UserSignInUseCase(
             ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread,
-            OutlayAuth outlayAuth
+            AuthService authService
     ) {
         super(threadExecutor, postExecutionThread);
-        this.outlayAuth = outlayAuth;
+        this.authService = authService;
     }
 
     @Override
     protected Observable<User> buildUseCaseObservable(Credentials credentials) {
-        return outlayAuth.signIn(credentials);
+        if (credentials.isGuestCredentials()) {
+            return authService.signInAnonymously();
+        } else {
+            return authService.signIn(credentials);
+        }
     }
 }

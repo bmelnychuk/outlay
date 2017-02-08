@@ -17,6 +17,11 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".view.activity.SyncGuestActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Material.Translucent" />
+
+        <activity
             android:name=".view.activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>

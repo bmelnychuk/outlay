@@ -2,7 +2,6 @@ package com.outlay.data.repository;
 
 import com.outlay.data.source.ExpenseDataSource;
 import com.outlay.domain.model.Expense;
-import com.outlay.domain.model.OutlaySession;
 import com.outlay.domain.repository.ExpenseRepository;
 
 import java.util.Date;
@@ -22,15 +21,13 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
 
     @Inject
     public ExpenseRepositoryImpl(
-            ExpenseDataSource databaseSource,
             ExpenseDataSource firebaseSource
     ) {
-        this.databaseSource = databaseSource;
         this.firebaseSource = firebaseSource;
     }
 
     private ExpenseDataSource getDataSource() {
-        return OutlaySession.getCurrentUser().isAnonymous() ? databaseSource : firebaseSource;
+        return firebaseSource;
     }
 
     @Override

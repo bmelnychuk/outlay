@@ -3,7 +3,6 @@ package com.outlay.data.repository;
 import com.outlay.core.utils.TextUtils;
 import com.outlay.data.source.CategoryDataSource;
 import com.outlay.domain.model.Category;
-import com.outlay.domain.model.OutlaySession;
 import com.outlay.domain.repository.CategoryRepository;
 
 import java.util.ArrayList;
@@ -27,15 +26,13 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
     @Inject
     public CategoryRepositoryImpl(
-            CategoryDataSource databaseSource,
             CategoryDataSource firebaseSource
     ) {
-        this.databaseSource = databaseSource;
         this.firebaseSource = firebaseSource;
     }
 
     private CategoryDataSource getDataSource() {
-        return OutlaySession.getCurrentUser().isAnonymous() ? databaseSource : firebaseSource;
+        return firebaseSource;
     }
 
     @Override

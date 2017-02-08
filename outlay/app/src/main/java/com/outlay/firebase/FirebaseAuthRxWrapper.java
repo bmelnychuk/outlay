@@ -1,6 +1,7 @@
 package com.outlay.firebase;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,9 +20,8 @@ public class FirebaseAuthRxWrapper {
     private FirebaseAuth firebaseAuth;
 
     @Inject
-    public FirebaseAuthRxWrapper() {
-        //TODO shoud I provide as param
-        this.firebaseAuth = FirebaseAuth.getInstance();
+    public FirebaseAuthRxWrapper(FirebaseAuth firebaseAuth) {
+        this.firebaseAuth = firebaseAuth;
     }
 
     public Observable<String> getUserToken(FirebaseUser firebaseUser) {
@@ -76,6 +76,22 @@ public class FirebaseAuthRxWrapper {
     public Observable<AuthResult> signInAnonymously() {
         return Observable.create(subscriber -> {
             Task<AuthResult> task = firebaseAuth.signInAnonymously();
+            task.addOnCompleteListener(resultTask -> {
+                if (task.isSuccessful()) {
+                    AuthResult authResult = task.getResult();
+                    subscriber.onNext(authResult);
+                    subscriber.onCompleted();
+                } else {
+                    Exception e = task.getException();
+                    subscriber.onError(e);
+                }
+            });
+        });
+    }
+
+    public Observable<AuthResult> linkAccount(AuthCredential credentials) {
+        return Observable.create(subscriber -> {
+            Task<AuthResult> task = firebaseAuth.getCurrentUser().linkWithCredential(credentials);
             task.addOnCompleteListener(resultTask -> {
                 if (task.isSuccessful()) {
                     AuthResult authResult = task.getResult();

@@ -18,12 +18,11 @@ import com.outlay.R;
 import com.outlay.core.utils.DateUtils;
 import com.outlay.domain.model.Category;
 import com.outlay.domain.model.Expense;
+import com.outlay.mvp.presenter.ExpenseDetailsPresenter;
 import com.outlay.view.fragment.base.BaseMvpFragment;
-import com.outlay.view.fragment.base.StaticContentFragment;
 import com.outlay.view.helper.TextWatcherAdapter;
-import com.outlay.mvp.presenter.ExpensesDetailsPresenter;
 import com.outlay.mvp.view.ExpenseDetailsView;
-import com.outlay.utils.FormatUtils;
+import com.outlay.core.utils.NumberUtils;
 import com.outlay.utils.IconUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.autocomplete.CategoryAutoCompleteAdapter;
@@ -43,7 +42,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
  */
-public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView, ExpensesDetailsPresenter> implements ExpenseDetailsView {
+public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView, ExpenseDetailsPresenter> implements ExpenseDetailsView {
 
     public static final String ARG_EXPENSE_ID = "_argExpenseId";
     public static final String ARG_DATE = "_argDate";
@@ -70,14 +69,14 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
     TextInputLayout amountInputLayout;
 
     @Inject
-    ExpensesDetailsPresenter presenter;
+    ExpenseDetailsPresenter presenter;
     private CategoryAutoCompleteAdapter autoCompleteAdapter;
     private Expense expense;
     private Category selectedCategory;
     private Date defaultDate;
 
     @Override
-    public ExpensesDetailsPresenter getPresenter() {
+    public ExpenseDetailsPresenter createPresenter() {
         return presenter;
     }
 
@@ -137,7 +136,7 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
             selectedCategory = category;
             IconUtils.loadCategoryIcon(selectedCategory, categoryIcon);
         });
-        presenter.loadCategories();
+        presenter.getCategories();
         dateEdit.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
                 showDatePickerDialog();
@@ -148,7 +147,7 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
         if (getArguments().containsKey(ARG_EXPENSE_ID)) {
             String expenseId = getArguments().getString(ARG_EXPENSE_ID);
             getActivity().setTitle(getString(R.string.caption_edit_expense));
-            presenter.loadExpense(expenseId, defaultDate);
+            presenter.findExpense(expenseId, defaultDate);
         } else {
             getActivity().setTitle(getString(R.string.caption_new_expense));
             showExpense(new Expense());
@@ -185,7 +184,7 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
             selectedCategory = e.getCategory();
             IconUtils.loadCategoryIcon(e.getCategory(), categoryIcon);
             categoryTitle.setText(e.getCategory().getTitle());
-            amount.setText(FormatUtils.formatAmount(e.getAmount()));
+            amount.setText(NumberUtils.formatAmount(e.getAmount()));
             note.setText(e.getNote());
             setDateStr(expense.getReportedWhen());
         } else {

@@ -27,6 +27,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
@@ -49,7 +50,7 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
     private CategoriesDraggableGridAdapter adapter;
 
     @Override
-    public CategoriesPresenter getPresenter() {
+    public CategoriesPresenter createPresenter() {
         return presenter;
     }
 
@@ -69,6 +70,7 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
 
         setToolbar(toolbar);
         setDisplayHomeAsUpEnabled(true);
@@ -93,7 +95,7 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
     @Override
     public void onResume() {
         super.onResume();
-        presenter.loadCategories();
+        presenter.getCategories();
     }
 
     @Override
@@ -107,7 +109,7 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
         for (int i = 0; i < items.size(); i++) {
             items.get(i).setOrder(i);
         }
-        presenter.refreshOrder(items);
+        presenter.updateOrder(items);
     }
 
     @Override

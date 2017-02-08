@@ -1,4 +1,4 @@
-package com.outlay.utils;
+package com.outlay.core.utils;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 /**
  * Created by Bogdan Melnychuk on 2/10/16.
  */
-public final class FormatUtils {
+public final class NumberUtils {
     public static String formatAmount(Double amount) {
         return String.format("%.2f", amount);
     }
