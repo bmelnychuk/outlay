@@ -2,31 +2,25 @@ package com.outlay.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.outlay.R;
 import com.outlay.core.utils.DateUtils;
 import com.outlay.core.utils.NumberUtils;
+import com.outlay.domain.model.Category;
 import com.outlay.domain.model.Expense;
 import com.outlay.domain.model.User;
 import com.outlay.mvp.presenter.EnterExpensePresenter;
 import com.outlay.mvp.view.EnterExpenseView;
-import com.outlay.utils.DeviceUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Navigator;
 import com.outlay.view.activity.base.DrawerActivity;
@@ -34,9 +28,7 @@ import com.outlay.view.adapter.CategoriesGridAdapter;
 import com.outlay.view.alert.Alert;
 import com.outlay.view.dialog.DatePickerFragment;
 import com.outlay.view.fragment.base.BaseMvpFragment;
-import com.outlay.view.helper.TextWatcherAdapter;
 import com.outlay.view.numpad.NumpadEditable;
-import com.outlay.view.numpad.NumpadView;
 import com.outlay.view.numpad.SimpleNumpadValidator;
 
 import java.math.BigDecimal;
@@ -47,41 +39,23 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpensePresenter>
-        implements AppBarLayout.OnOffsetChangedListener, EnterExpenseView {
-    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.2f;
-    private static final int ALPHA_ANIMATIONS_DURATION = 200;
-    public static final String ACTION = "_action";
+        implements EnterExpenseView {
+    @Bind(R.id.chartIcon)
+    ImageView chartIcon;
 
-    @Nullable
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
-
-    @Bind(R.id.amountEditable)
-    EditText amountText;
-
-    @Bind(R.id.numpadView)
-    NumpadView numpadView;
+    @Bind(R.id.drawerIcon)
+    ImageView drawerIcon;
 
     @Bind(R.id.categoriesGrid)
     RecyclerView categoriesGrid;
 
-    @Bind(R.id.appbar)
-    AppBarLayout appbar;
-
-    @Bind(R.id.toolbarAmountValue)
-    TextView toolbarAmountValue;
-
-    @Bind(R.id.toolbarContainer)
-    View toolbarContainer;
+    @Bind(R.id.amountEditable)
+    EditText amountText;
 
     @Bind(R.id.dateLabel)
     TextView dateLabel;
-
-    @Bind(R.id.coordinatorLayout)
-    CoordinatorLayout coordinatorLayout;
 
     @Inject
     EnterExpensePresenter presenter;
@@ -90,13 +64,20 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     User currentUser;
 
     private CategoriesGridAdapter adapter;
-    private boolean mIsTheTitleContainerVisible = false;
     private Date selectedDate = new Date();
+
     private SimpleNumpadValidator validator = new SimpleNumpadValidator() {
         @Override
         public void onInvalidInput(String value) {
             super.onInvalidInput(value);
             inputError();
+        }
+    };
+
+    private GridLayoutManager.SpanSizeLookup onSpanSizeLookup = new GridLayoutManager.SpanSizeLookup() {
+        @Override
+        public int getSpanSize(int position) {
+            return position == 0 ? 4 : 1;
         }
     };
 
@@ -111,6 +92,13 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
         getApp().getUserComponent().inject(this);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.getCategories();
+        cleanAmountInput();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -121,15 +109,17 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((DrawerActivity) getActivity()).setupDrawer(currentUser);
 
-        ButterKnife.bind(this, view);
-        setToolbar(toolbar);
-        ((DrawerActivity) getActivity()).setupDrawer(toolbar, currentUser);
+        initStaticContent();
 
-        appbar.addOnOffsetChangedListener(this);
-        startAlphaAnimation(toolbarContainer, 0, View.INVISIBLE);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
+        gridLayoutManager.setSpanSizeLookup(onSpanSizeLookup);
+        categoriesGrid.setLayoutManager(gridLayoutManager);
+        adapter = new CategoriesGridAdapter();
+        categoriesGrid.setAdapter(adapter);
 
-        numpadView.attachEditable(new NumpadEditable() {
+        adapter.attachNumpadEditable(new NumpadEditable() {
             @Override
             public String getText() {
                 return amountText.getText().toString();
@@ -140,27 +130,10 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
                 amountText.setText(text);
             }
         }, validator);
-        amountText.addTextChangedListener(new TextWatcherAdapter() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                toolbarAmountValue.setText(s);
-            }
-        });
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
-        categoriesGrid.setLayoutManager(gridLayoutManager);
-
-        int availableHeight = DeviceUtils.getScreenSize(getActivity()).heightPixels
-                - DeviceUtils.getStatusBarHeight(getActivity())
-                - DeviceUtils.getActionBarHeight(getActivity()); // Bottom panel has actionBarHeight
-        int categoriesGridHeight = (int) (availableHeight / 2.7f);
-        appbar.getLayoutParams().height = availableHeight - categoriesGridHeight;
-
-        adapter = new CategoriesGridAdapter(new CategoriesGridAdapter.Style(categoriesGridHeight / 2));
-        adapter.setOnCategoryClickListener(c -> {
+        adapter.setOnCategoryClickListener(category -> {
             if (validator.valid(amountText.getText().toString())) {
-                com.outlay.domain.model.Expense e = new com.outlay.domain.model.Expense();
-                e.setCategory(c);
+                Expense e = new Expense();
+                e.setCategory(category);
                 e.setAmount(new BigDecimal(amountText.getText().toString()));
                 e.setReportedWhen(selectedDate);
                 presenter.createExpense(e);
@@ -169,7 +142,15 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
                 validator.onInvalidInput(amountText.getText().toString());
             }
         });
-        categoriesGrid.setAdapter(adapter);
+    }
+
+    private void initStaticContent() {
+        chartIcon.setImageDrawable(ResourceUtils.getCustomToolbarIcon(getActivity(), R.integer.ic_chart));
+        drawerIcon.setImageDrawable(ResourceUtils.getMaterialToolbarIcon(getActivity(), R.string.ic_material_menu));
+
+        drawerIcon.setOnClickListener(v -> ((DrawerActivity) getActivity()).getMainDrawer().openDrawer());
+        chartIcon.setOnClickListener(v -> Navigator.goToReport(getActivity(), selectedDate));
+
         dateLabel.setOnClickListener(v -> {
             DatePickerFragment datePickerFragment = new DatePickerFragment();
             datePickerFragment.setOnDateSetListener((parent, year, monthOfYear, dayOfMonth) -> {
@@ -181,68 +162,11 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
             });
             datePickerFragment.show(getChildFragmentManager(), "datePicker");
         });
-        setHasOptionsMenu(true);
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        cleanAmountInput();
-        presenter.getCategories();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_main, menu);
-        MenuItem summaryItem = menu.findItem(R.id.action_summary);
-        summaryItem.setIcon(ResourceUtils.getCustomToolbarIcon(getActivity(), R.integer.ic_chart));
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_summary:
-                Navigator.goToReport(getActivity(), selectedDate);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        int maxScroll = appBarLayout.getTotalScrollRange();
-        float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
-        handleAlphaOnTitle(percentage);
-    }
-
-    private void handleAlphaOnTitle(float percentage) {
-        if (percentage < PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
-            if (mIsTheTitleContainerVisible) {
-                startAlphaAnimation(toolbarContainer, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
-                mIsTheTitleContainerVisible = false;
-            }
-        } else {
-            if (!mIsTheTitleContainerVisible) {
-                startAlphaAnimation(toolbarContainer, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
-                mIsTheTitleContainerVisible = true;
-            }
-        }
-    }
-
-    public static void startAlphaAnimation(View v, long duration, int visibility) {
-        AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
-                ? new AlphaAnimation(0f, 1f)
-                : new AlphaAnimation(1f, 0f);
-
-        alphaAnimation.setDuration(duration);
-        alphaAnimation.setFillAfter(true);
-        v.startAnimation(alphaAnimation);
-    }
-
-    public void inputError() {
-        Animation shakeAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
-        amountText.startAnimation(shakeAnimation);
+    public void showCategories(List<Category> categoryList) {
+        adapter.setItems(categoryList);
     }
 
     @Override
@@ -251,20 +175,20 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     }
 
     @Override
-    public void alertExpenseSuccess(Expense e) {
+    public void alertExpenseSuccess(Expense expense) {
         String message = getString(R.string.info_expense_created);
-        message = String.format(message, e.getAmount(), e.getCategory().getTitle());
+        message = String.format(message, expense.getAmount(), expense.getCategory().getTitle());
         Alert.info(getBaseActivity().getRootView(), message,
                 v -> {
-                    presenter.deleteExpense(e);
-                    amountText.setText(NumberUtils.formatAmount(e.getAmount()));
+                    presenter.deleteExpense(expense);
+                    amountText.setText(NumberUtils.formatAmount(expense.getAmount()));
                 }
         );
     }
 
-    @Override
-    public void showCategories(List<com.outlay.domain.model.Category> categoryList) {
-        adapter.setItems(categoryList);
+    public void inputError() {
+        Animation shakeAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+        amountText.startAnimation(shakeAnimation);
     }
 
     private void cleanAmountInput() {

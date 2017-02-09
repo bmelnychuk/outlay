@@ -23,8 +23,6 @@ public interface UserComponent {
 
     void inject(CategoryDetailsFragment fragment);
 
-    void inject(MainFragment fragment);
-
     void inject(ReportFragment fragment);
 
     void inject(ExpensesListFragment fragment);
@@ -32,4 +30,6 @@ public interface UserComponent {
     void inject(ExpensesDetailsFragment fragment);
 
     void inject(MainActivity mainActivity);
+
+    void inject(MainFragment mainFragment2);
 }

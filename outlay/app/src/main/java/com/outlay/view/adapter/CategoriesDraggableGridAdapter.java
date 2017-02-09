@@ -1,17 +1,20 @@
 package com.outlay.view.adapter;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.johnkil.print.PrintView;
 import com.outlay.R;
-import com.outlay.view.adapter.listener.OnCategoryClickListener;
 import com.outlay.domain.model.Category;
 import com.outlay.utils.IconUtils;
+import com.outlay.utils.ResourceUtils;
+import com.outlay.view.adapter.listener.OnCategoryClickListener;
 import com.outlay.view.helper.itemtouch.ItemTouchHelperAdapter;
 import com.outlay.view.helper.itemtouch.ItemTouchHelperViewHolder;
 import com.outlay.view.helper.itemtouch.OnDragListener;
@@ -83,9 +86,12 @@ public class CategoriesDraggableGridAdapter extends RecyclerView.Adapter<Categor
 
     @Override
     public void onBindViewHolder(CategoryDraggableViewHolder holder, int position) {
+        Context context = holder.categoryContainer.getContext();
         Category currentOne = items.get(position);
+        int iconCodeRes = ResourceUtils.getIntegerResource(context, currentOne.getIcon());
+        Drawable categoryIcon = IconUtils.getCategoryIcon(context, iconCodeRes, currentOne.getColor(), R.dimen.category_icon);
+        holder.categoryIcon.setImageDrawable(categoryIcon);
         holder.categoryTitle.setText(currentOne.getTitle());
-        IconUtils.loadCategoryIcon(currentOne, holder.categoryIcon);
         holder.categoryIcon.setOnClickListener(v -> {
             if (clickListener != null) {
                 clickListener.onCategoryClicked(currentOne);
@@ -104,7 +110,7 @@ public class CategoriesDraggableGridAdapter extends RecyclerView.Adapter<Categor
         View categoryContainer;
 
         @Bind(R.id.categoryIcon)
-        PrintView categoryIcon;
+        ImageView categoryIcon;
 
         @Bind(R.id.categoryTitle)
         TextView categoryTitle;

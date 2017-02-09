@@ -1,6 +1,11 @@
 package com.outlay.utils;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+
+import com.github.johnkil.print.PrintDrawable;
 import com.github.johnkil.print.PrintView;
+import com.outlay.R;
 
 import java.util.Arrays;
 import java.util.List;
@@ -91,5 +96,14 @@ public final class IconUtils {
     public static void loadCategoryIcon(String icon, PrintView printView) {
         printView.setIconFont("fonts/font-outlay.ttf");
         printView.setIconCodeRes(ResourceUtils.getIntegerResource(printView.getContext(), icon));
+    }
+
+    public static Drawable getCategoryIcon(Context context, int codeResId, int color, int sizeRes) {
+        return new PrintDrawable.Builder(context)
+                .iconCodeRes(codeResId)
+                .iconFont("fonts/font-outlay.ttf")
+                .iconColor(color)
+                .iconSizeRes(sizeRes)
+                .build();
     }
 }

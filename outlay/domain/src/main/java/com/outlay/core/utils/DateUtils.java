@@ -42,6 +42,14 @@ public final class DateUtils {
         return dateTime.toDate();
     }
 
+    public static boolean isInPeriod(Date date, Date start, Date end) {
+        DateTime dateTime = new DateTime(date);
+        DateTime startDate = new DateTime(start);
+        DateTime endDate = new DateTime(end);
+
+        return dateTime.isAfter(startDate) && dateTime.isBefore(endDate);
+    }
+
     public static boolean isSameDay(Date date1, Date date2) {
         if (date1 == null || date2 == null) {
             throw new IllegalArgumentException("The dates must not be null");

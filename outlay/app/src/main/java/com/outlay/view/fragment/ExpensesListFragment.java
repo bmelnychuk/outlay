@@ -27,6 +27,7 @@ import com.outlay.view.fragment.base.BaseMvpFragment;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -144,7 +145,10 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
     @Override
     public void showReport(Report report) {
         displayExpenses(report.getExpenses());
-        //displayCategory(report.getCategory());
+        Map<Category, Report> grouped = report.groupByCategory();
+        if (grouped.size() == 1) {
+            displayCategory(report.getExpenses().get(0).getCategory());
+        }
     }
 
     private String getDateLabel() {

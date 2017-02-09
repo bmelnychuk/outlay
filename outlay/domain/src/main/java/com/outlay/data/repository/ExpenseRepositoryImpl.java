@@ -16,7 +16,6 @@ import rx.Observable;
  */
 
 public class ExpenseRepositoryImpl implements ExpenseRepository {
-    private ExpenseDataSource databaseSource;
     private ExpenseDataSource firebaseSource;
 
     @Inject

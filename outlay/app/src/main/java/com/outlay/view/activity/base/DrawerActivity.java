@@ -32,7 +32,7 @@ public abstract class DrawerActivity extends ParentActivity {
 
     private Drawer mainDrawer;
 
-    public void setupDrawer(Toolbar toolbar, User currentUser) {
+    public void setupDrawer(User currentUser) {
         String email = currentUser.getEmail();
 
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -53,7 +53,6 @@ public abstract class DrawerActivity extends ParentActivity {
                 .withIcon(currentUser.isAnonymous() ? MaterialDesignIconic.Icon.gmi_account : MaterialDesignIconic.Icon.gmi_square_right);
 
         mainDrawer = new DrawerBuilder()
-                .withToolbar(toolbar)
                 .withFullscreen(true)
                 .withActivity(this)
                 .withAccountHeader(headerResult)
@@ -112,5 +111,9 @@ public abstract class DrawerActivity extends ParentActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public Drawer getMainDrawer() {
+        return mainDrawer;
     }
 }

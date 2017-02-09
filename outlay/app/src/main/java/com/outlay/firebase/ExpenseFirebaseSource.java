@@ -19,6 +19,7 @@ import com.outlay.firebase.dto.adapter.ExpenseAdapter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -103,6 +104,16 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
                             expenses.add(adapter.toExpense(expenseDto));
                         }
                     }
+                    // at this point we ave monthly data
+
+                    Iterator<Expense> expenseIterator = expenses.iterator();
+                    while (expenseIterator.hasNext()) {
+                        Expense e = expenseIterator.next();
+                        if (!DateUtils.isInPeriod(e.getReportedWhen(), startDate, endDate)) {
+                            expenseIterator.remove();
+                        }
+                    }
+
                     subscriber.onNext(expenses);
                     subscriber.onCompleted();
                 }
@@ -172,8 +183,11 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
     public Observable<Expense> remove(Expense expense) {
         return Observable.create(subscriber -> {
 
-            DatabaseReference expenseRef = mDatabase.child("users").child(currentUser.getId())
-                    .child("expenses").child(expense.getId());
+            DatabaseReference expenseRef = mDatabase.child("users")
+                    .child(currentUser.getId())
+                    .child("expenses")
+                    .child(DateUtils.toYearMonthString(expense.getReportedWhen()))
+                    .child(expense.getId());
             expenseRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

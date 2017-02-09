@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/categoryContainer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:layout_height="@dimen/category_item_height"
     android:padding="@dimen/spacing_small">
 
-    <com.github.johnkil.print.PrintView
+    <ImageView
         android:id="@+id/categoryIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/spacing_small"
-        android:layout_marginTop="@dimen/spacing_very_small"
         android:background="@drawable/btn_rippled"
-        app:iconColor="@color/highlight"
-        app:iconSize="@dimen/category_icon" />
+        android:clickable="true"
+        android:padding="@dimen/spacing_very_small" />
 
     <TextView
         android:id="@+id/categoryTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/categoryIcon"
+        android:ellipsize="end"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
+        android:lines="2"
         android:textSize="@dimen/text_secondary" />
 
 </RelativeLayout>
