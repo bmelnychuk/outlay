@@ -9,9 +9,11 @@ import android.widget.TextView;
 
 import com.github.johnkil.print.PrintView;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.outlay.R;
@@ -105,7 +107,7 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             //charViewHolder.chart.animateY(1000, Easing.EasingOption.EaseInOutQuad);
             charViewHolder.chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                 @Override
-                public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+                public void onValueSelected(Entry e, Highlight h) {
                     if (onItemClickListener != null) {
                         //onItemClickListener.onItemClicked(reports.get(h.getXIndex()));
                     }
@@ -148,12 +150,14 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public ChartViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
+            Description description = new Description();
+            description.setText("");
             chart.getLegend().setEnabled(false);
             chart.setUsePercentValues(false);
-            chart.setDescription("");
+            chart.setDescription(description);
             chart.setDragDecelerationFrictionCoef(0.95f);
             chart.setDrawHoleEnabled(true);
-            chart.setHoleColorTransparent(true);
+            chart.setHoleColor(Color.TRANSPARENT);
             chart.setTransparentCircleColor(Color.WHITE);
             chart.setTransparentCircleAlpha(110);
             chart.setHoleRadius(35f);
@@ -165,8 +169,7 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     private void updateChartData(PieChart chart) {
-        ArrayList<Entry> entries = new ArrayList<>();
-        ArrayList<String> labels = new ArrayList<>();
+        ArrayList<PieEntry> entries = new ArrayList<>();
         ArrayList<Integer> colors = new ArrayList<>();
 
         double sum = 0;
@@ -174,8 +177,7 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             Category c = categorizedExpenses.getCategory(i);
             Report r = categorizedExpenses.getReport(c);
             sum += r.getTotalAmount().doubleValue();
-            entries.add(new Entry((int) (r.getTotalAmount().doubleValue() * 1000), i));
-            labels.add(c.getTitle());
+            entries.add(new PieEntry((int) (r.getTotalAmount().doubleValue() * 1000), c.getTitle(), i));
             colors.add(c.getColor());
         }
 
@@ -184,7 +186,7 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         dataSet.setSelectionShift(10f);
         dataSet.setColors(colors);
 
-        PieData data = new PieData(labels, dataSet);
+        PieData data = new PieData(dataSet);
         data.setValueFormatter((value, entry, dataSetIndex, viewPortHandler) -> NumberUtils.formatAmount((double) value / 1000));
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.WHITE);

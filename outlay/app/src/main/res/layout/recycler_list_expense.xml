@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:layout_marginBottom="@dimen/spacing_tiny">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/spacing_default"
+        android:layout_marginRight="@dimen/spacing_default" />
+
+
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="sans-serif-light"
+        android:gravity="left"
+        android:padding="@dimen/spacing_default"
+        android:textColor="@color/accent"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/amount"
+        android:fontFamily="sans-serif-light"
+        android:padding="@dimen/spacing_default"
+        android:textColor="@color/text_secondary" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/date"
+        android:layout_toRightOf="@+id/icon"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_vertical"
+        android:lines="2"
+        android:textStyle="bold" />
+
+</RelativeLayout>

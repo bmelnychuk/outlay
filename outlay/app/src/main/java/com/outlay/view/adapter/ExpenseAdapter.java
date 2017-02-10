@@ -22,10 +22,9 @@ import butterknife.ButterKnife;
 /**
  * Created by Bogdan Melnychuk on 1/15/16.
  */
-public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder> {
-
-    private List<Expense> items;
-    private OnExpenseClickListener onExpenseClickListener;
+public abstract class ExpenseAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T> {
+    protected List<Expense> items;
+    protected OnExpenseClickListener onExpenseClickListener;
 
     public ExpenseAdapter(List<Expense> categories) {
         this.items = categories;
@@ -45,56 +44,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
     }
 
     @Override
-    public ExpenseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate(R.layout.item_expense, parent, false);
-        final ExpenseViewHolder viewHolder = new ExpenseViewHolder(v);
-        return viewHolder;
-    }
-
-    @Override
-    public void onBindViewHolder(ExpenseViewHolder holder, int position) {
-        Expense expense = items.get(position);
-        holder.note.setText(expense.getNote());
-        holder.root.setOnClickListener(v -> {
-            if (onExpenseClickListener != null) {
-                onExpenseClickListener.onExpenseClicked(expense);
-            }
-        });
-        holder.categoryAmount.setText(NumberUtils.formatAmount(expense.getAmount()));
-        holder.categoryDate.setText(DateUtils.toShortString(expense.getReportedWhen()));
-        holder.categoryTitle.setText(expense.getCategory().getTitle());
-        IconUtils.loadCategoryIcon(expense.getCategory(), holder.categoryIcon);
-    }
-
-    @Override
     public int getItemCount() {
         return items.size();
-    }
-
-    public class ExpenseViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.categoryNote)
-        TextView note;
-
-        @Bind(R.id.expenseContainer)
-        View root;
-
-        @Bind(R.id.categoryIcon)
-        PrintView categoryIcon;
-
-        @Bind(R.id.categoryTitle)
-        TextView categoryTitle;
-
-        @Bind(R.id.categoryDate)
-        TextView categoryDate;
-
-        @Bind(R.id.categoryAmount)
-        TextView categoryAmount;
-
-        public ExpenseViewHolder(View v) {
-            super(v);
-            ButterKnife.bind(this, v);
-        }
     }
 
     public interface OnExpenseClickListener {

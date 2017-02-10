@@ -3,6 +3,7 @@ package com.outlay.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,8 @@ import com.outlay.utils.IconUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.Navigator;
 import com.outlay.view.adapter.ExpenseAdapter;
+import com.outlay.view.adapter.GridExpensesAdapter;
+import com.outlay.view.adapter.ListExpensesAdapter;
 import com.outlay.view.fragment.base.BaseMvpFragment;
 
 import java.util.Date;
@@ -41,6 +44,8 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
     public static final String ARG_DATE_FROM = "_argDateFrom";
     public static final String ARG_DATE_TO = "_argDateTo";
 
+    private static final int MODE_LIST = 0;
+    private static final int MODE_GRID = 1;
 
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -70,6 +75,8 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
     private Date dateFrom;
     private Date dateTo;
     private String categoryId;
+
+    private int mode = MODE_LIST;
 
     @Override
     public ExpensesListPresenter createPresenter() {
@@ -106,15 +113,20 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
         setDisplayHomeAsUpEnabled(true);
         setTitle(getString(R.string.caption_expenses));
 
-        recyclerView.setHasFixedSize(true);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        adapter = new ExpenseAdapter();
-        adapter.setOnExpenseClickListener(expense -> Navigator.goToExpenseDetails(getActivity(), expense));
-        recyclerView.setAdapter(adapter);
+        filterDateLabel.setText(getDateLabel());
         fab.setImageDrawable(ResourceUtils.getMaterialToolbarIcon(getActivity(), R.string.ic_material_add));
         fab.setOnClickListener(v -> Navigator.goToExpenseDetails(getActivity(), null));
-        filterDateLabel.setText(getDateLabel());
+        recyclerView.setHasFixedSize(true);
+
+//            adapter = new GridExpensesAdapter();
+//            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+//            recyclerView.setLayoutManager(staggeredGridLayoutManager);
+            
+        adapter = new ListExpensesAdapter();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+        adapter.setOnExpenseClickListener(expense -> Navigator.goToExpenseDetails(getActivity(), expense));
     }
 
     @Override

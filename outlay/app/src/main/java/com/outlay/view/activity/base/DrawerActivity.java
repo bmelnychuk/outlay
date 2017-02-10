@@ -3,6 +3,7 @@ package com.outlay.view.activity.base;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
@@ -12,6 +13,7 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.outlay.Constants;
 import com.outlay.R;
 import com.outlay.domain.model.User;
@@ -19,6 +21,9 @@ import com.outlay.view.activity.SingleFragmentActivity;
 import com.outlay.view.alert.Alert;
 import com.outlay.view.fragment.AboutFragment;
 import com.outlay.view.fragment.CategoriesFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bmelnychuk on 12/14/16.
@@ -28,12 +33,13 @@ public abstract class DrawerActivity extends ParentActivity {
     private static final int ITEM_CATEGORIES = 1;
     private static final int ITEM_FEEDBACK = 2;
     private static final int ITEM_ABOUT = 3;
-    private static final int ITEM_LOGOUT = 4;
+    private static final int ITEM_SING_OUT = 4;
+    private static final int ITEM_CREATE_USER = 5;
 
     private Drawer mainDrawer;
 
     public void setupDrawer(User currentUser) {
-        String email = currentUser.getEmail();
+        String email = TextUtils.isEmpty(currentUser.getEmail()) ? "Guest" : currentUser.getEmail();
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -47,22 +53,23 @@ public abstract class DrawerActivity extends ParentActivity {
                 )
                 .build();
 
-        PrimaryDrawerItem inOutItem = new PrimaryDrawerItem()
-                .withIdentifier(ITEM_LOGOUT)
-                .withName(currentUser.isAnonymous() ? R.string.menu_item_signin : R.string.menu_item_signout)
-                .withIcon(currentUser.isAnonymous() ? MaterialDesignIconic.Icon.gmi_account : MaterialDesignIconic.Icon.gmi_square_right);
+        List<IDrawerItem> items = new ArrayList<>();
+        if (currentUser.isAnonymous()) {
+            items.add(new PrimaryDrawerItem().withName(R.string.menu_item_create_user).withIcon(MaterialDesignIconic.Icon.gmi_account_add).withIdentifier(ITEM_CREATE_USER));
+        }
+
+        items.add(new PrimaryDrawerItem().withName(R.string.menu_item_categories).withIcon(MaterialDesignIconic.Icon.gmi_apps).withIdentifier(ITEM_CATEGORIES));
+        items.add(new PrimaryDrawerItem().withName(R.string.menu_item_feedback).withIcon(MaterialDesignIconic.Icon.gmi_email).withIdentifier(ITEM_FEEDBACK));
+        items.add(new PrimaryDrawerItem().withName(R.string.menu_item_about).withIcon(MaterialDesignIconic.Icon.gmi_info).withIdentifier(ITEM_ABOUT));
+        items.add(new PrimaryDrawerItem().withName(R.string.menu_item_signout).withIcon(MaterialDesignIconic.Icon.gmi_sign_in).withIdentifier(ITEM_SING_OUT));
+
 
         mainDrawer = new DrawerBuilder()
                 .withFullscreen(true)
                 .withActivity(this)
                 .withAccountHeader(headerResult)
                 .withSelectedItem(-1)
-                .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.menu_item_categories).withIcon(MaterialDesignIconic.Icon.gmi_apps).withIdentifier(ITEM_CATEGORIES),
-                        new PrimaryDrawerItem().withName(R.string.menu_item_feedback).withIcon(MaterialDesignIconic.Icon.gmi_email).withIdentifier(ITEM_FEEDBACK),
-                        new PrimaryDrawerItem().withName(R.string.menu_item_about).withIcon(MaterialDesignIconic.Icon.gmi_info).withIdentifier(ITEM_ABOUT),
-                        inOutItem
-                )
+                .addDrawerItems(items.toArray(new IDrawerItem[items.size()]))
                 .withOnDrawerItemClickListener((view, i, iDrawerItem) -> {
                     if (iDrawerItem != null) {
                         int id = (int) iDrawerItem.getIdentifier();
@@ -84,12 +91,12 @@ public abstract class DrawerActivity extends ParentActivity {
                             case ITEM_ABOUT:
                                 SingleFragmentActivity.start(this, AboutFragment.class);
                                 break;
-                            case ITEM_LOGOUT:
-                                if (currentUser.isAnonymous()) {
-                                    createUser();
-                                } else {
-                                    signOut();
-                                }
+                            case ITEM_SING_OUT:
+                                signOut();
+                                break;
+                            case ITEM_CREATE_USER:
+                                createUser();
+                                break;
                         }
 
                         mainDrawer.setSelection(-1);

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
+    android:background="#CC2A2B40"
     android:focusableInTouchMode="true">
 
     <com.outlay.view.LoginForm
