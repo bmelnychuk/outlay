@@ -1,11 +1,13 @@
 package com.outlay.utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
 import com.github.johnkil.print.PrintDrawable;
 import com.github.johnkil.print.PrintView;
-import com.outlay.R;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.iconics.typeface.IIcon;
 
 import java.util.Arrays;
 import java.util.List;
@@ -91,6 +93,13 @@ public final class IconUtils {
     public static void loadCategoryIcon(com.outlay.domain.model.Category category, PrintView printView) {
         loadCategoryIcon(category.getIcon(), printView);
         printView.setIconColor(category.getColor());
+    }
+
+    public static Drawable getToolbarIcon(Context context, IIcon icon) {
+        return new IconicsDrawable(context)
+                .icon(icon)
+                .color(Color.WHITE)
+                .sizeDp(24);
     }
 
     public static void loadCategoryIcon(String icon, PrintView printView) {

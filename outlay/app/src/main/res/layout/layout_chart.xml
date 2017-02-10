@@ -10,4 +10,36 @@
         android:layout_height="310dp"
         android:layout_centerHorizontal="true" />
 
+    <ImageView
+        android:id="@+id/hideLabels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_rippled"
+        android:clickable="true"
+        android:padding="@dimen/spacing_default" />
+
+    <ImageView
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/btn_rippled"
+        android:clickable="true"
+        android:padding="@dimen/spacing_default"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/btn_rippled"
+        android:clickable="true"
+        android:padding="@dimen/spacing_default"
+        android:visibility="gone" />
+
 </RelativeLayout>

@@ -12,7 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.outlay.R;
+import com.outlay.utils.IconUtils;
+import com.outlay.utils.ResourceUtils;
 import com.outlay.view.helper.AnimationUtils;
 import com.outlay.view.helper.ViewHelper;
 
@@ -93,12 +96,18 @@ public class LoginForm extends RelativeLayout {
         View parent = inflater.inflate(R.layout.view_login_form, this, true);
         ButterKnife.bind(this, parent);
 
+        fab.setImageDrawable(
+                IconUtils.getToolbarIcon(getContext(), MaterialDesignIconic.Icon.gmi_account_add)
+        );
+
         fab.setOnClickListener(v -> {
             Point revealPoint = getViewCenter();
             if (signUpForm.getVisibility() == View.VISIBLE) {
                 AnimationUtils.hideWithReveal(signUpForm, revealPoint);
+                fab.setImageDrawable(IconUtils.getToolbarIcon(getContext(), MaterialDesignIconic.Icon.gmi_account_add));
             } else {
                 AnimationUtils.showWithReveal(signUpForm, revealPoint);
+                fab.setImageDrawable(IconUtils.getToolbarIcon(getContext(), MaterialDesignIconic.Icon.gmi_close));
             }
         });
 
@@ -147,6 +156,10 @@ public class LoginForm extends RelativeLayout {
 
     public void setMode(int mode) {
         signUpForm.setVisibility(mode == MODE_SIGN_UP ? VISIBLE : INVISIBLE);
+        fab.setImageDrawable(mode == MODE_SIGN_UP ?
+                IconUtils.getToolbarIcon(getContext(), MaterialDesignIconic.Icon.gmi_account_add) :
+                IconUtils.getToolbarIcon(getContext(), MaterialDesignIconic.Icon.gmi_close)
+        );
     }
 
     public void setToggleModeButtonVisible(boolean visible) {

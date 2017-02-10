@@ -41,14 +41,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/signInFormTitle"
-                    android:layout_marginTop="@dimen/spacing_default">
+                    android:layout_marginTop="@dimen/spacing_default"
+                    android:hint="Email">
 
-                    <EditText
-                        android:text="melnychuk.bogdan@gmail.com"
+                    <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/signInEmail"
+                        android:text="melnychuk.bogdan@gmail.com"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Email"
                         android:lines="1" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -58,14 +58,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/signInInputEmail"
-                    android:layout_marginTop="@dimen/spacing_default">
+                    android:layout_marginTop="@dimen/spacing_default"
+                    android:hint="Password">
 
-                    <EditText
+                    <android.support.v7.widget.AppCompatEditText
                         android:text="111111"
                         android:id="@+id/signInPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Password"
                         android:inputType="textPassword"
                         android:lines="1" />
 
@@ -104,7 +104,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:layout_marginTop="@dimen/spacing_default"
-                    android:text="Skip" />
+                    android:text="Guest" />
 
             </RelativeLayout>
 
@@ -132,14 +132,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/signUpFormTitle"
-                    android:layout_marginTop="@dimen/spacing_default">
+                    android:layout_marginTop="@dimen/spacing_default"
+                    android:hint="Email">
 
-                    <EditText
-                        android:text="melnychuk.bogdan@gmail.com"
+                    <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/signUpEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Email"
                         android:lines="1" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -149,14 +148,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/signUpInputEmail"
-                    android:layout_marginTop="@dimen/spacing_default">
+                    android:layout_marginTop="@dimen/spacing_default"
+                    android:hint="Password">
 
-                    <EditText
-                        android:text="111111"
+                    <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/signUpPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Password"
                         android:inputType="textPassword"
                         android:lines="1" />
 
@@ -167,14 +165,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/signUpInputPassword"
-                    android:layout_marginTop="@dimen/spacing_default">
+                    android:layout_marginTop="@dimen/spacing_default"
+                    android:hint="Repeat Password">
 
-                    <EditText
-                        android:text="111111"
+                    <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/signUpRepeatPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Repeat Password"
                         android:inputType="textPassword"
                         android:lines="1" />
 

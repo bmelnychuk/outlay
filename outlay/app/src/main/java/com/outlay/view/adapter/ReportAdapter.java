@@ -1,10 +1,12 @@
 package com.outlay.view.adapter;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.johnkil.print.PrintView;
@@ -16,11 +18,13 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.outlay.R;
 import com.outlay.core.utils.NumberUtils;
 import com.outlay.domain.model.Category;
 import com.outlay.domain.model.Report;
 import com.outlay.utils.IconUtils;
+import com.outlay.utils.ResourceUtils;
 import com.outlay.view.model.CategorizedExpenses;
 import com.outlay.view.progress.ProgressLayout;
 
@@ -103,7 +107,30 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             //reportHolder.progressLayout.setLoadedColor(currentReport.getColor());
         } else if (holder instanceof ChartViewHolder) {
             ChartViewHolder charViewHolder = (ChartViewHolder) holder;
+            Context context = charViewHolder.chart.getContext();
+
             updateChartData(charViewHolder.chart);
+
+            charViewHolder.prev.setImageDrawable(IconUtils.getToolbarIcon(context, MaterialDesignIconic.Icon.gmi_arrow_left));
+            charViewHolder.next.setImageDrawable(IconUtils.getToolbarIcon(context, MaterialDesignIconic.Icon.gmi_arrow_right));
+
+            if (charViewHolder.chart.isDrawEntryLabelsEnabled()) {
+                charViewHolder.hideLabels.setImageDrawable(IconUtils.getToolbarIcon(context, MaterialDesignIconic.Icon.gmi_format_size));
+            } else {
+                charViewHolder.hideLabels.setImageDrawable(IconUtils.getToolbarIcon(context, MaterialDesignIconic.Icon.gmi_format_clear));
+            }
+
+            charViewHolder.hideLabels.setOnClickListener(view -> {
+                charViewHolder.chart.setDrawEntryLabels(!charViewHolder.chart.isDrawEntryLabelsEnabled());
+                if (charViewHolder.chart.isDrawEntryLabelsEnabled()) {
+                    charViewHolder.hideLabels.setImageDrawable(IconUtils.getToolbarIcon(context, MaterialDesignIconic.Icon.gmi_format_size));
+                } else {
+                    charViewHolder.hideLabels.setImageDrawable(IconUtils.getToolbarIcon(context, MaterialDesignIconic.Icon.gmi_format_clear));
+                }
+
+                charViewHolder.chart.invalidate();
+            });
+
             //charViewHolder.chart.animateY(1000, Easing.EasingOption.EaseInOutQuad);
             charViewHolder.chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                 @Override
@@ -147,6 +174,15 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         @Bind(R.id.chart)
         PieChart chart;
 
+        @Bind(R.id.hideLabels)
+        ImageView hideLabels;
+
+        @Bind(R.id.previous)
+        ImageView prev;
+
+        @Bind(R.id.next)
+        ImageView next;
+
         public ChartViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
@@ -177,7 +213,7 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             Category c = categorizedExpenses.getCategory(i);
             Report r = categorizedExpenses.getReport(c);
             sum += r.getTotalAmount().doubleValue();
-            entries.add(new PieEntry((int) (r.getTotalAmount().doubleValue() * 1000), c.getTitle(), i));
+            entries.add(new PieEntry((int) (r.getTotalAmount().doubleValue() * 1000), c.getTitle()));
             colors.add(c.getColor());
         }
 
