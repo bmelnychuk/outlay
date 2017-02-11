@@ -1,10 +1,13 @@
 package com.outlay.view;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +17,11 @@ import android.widget.RelativeLayout;
 
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.outlay.R;
+import com.outlay.utils.DeviceUtils;
 import com.outlay.utils.IconUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.helper.AnimationUtils;
+import com.outlay.view.helper.TextWatcherAdapter;
 import com.outlay.view.helper.ViewHelper;
 
 import butterknife.Bind;
@@ -51,20 +56,20 @@ public class LoginForm extends RelativeLayout {
     @Bind(R.id.skipButton)
     Button skipButton;
 
-    @Bind(R.id.signInEmail)
-    EditText signInEmail;
+    @Bind(R.id.signInInputEmail)
+    TextInputLayout signInEmail;
 
-    @Bind(R.id.signInPassword)
-    EditText signInPassword;
+    @Bind(R.id.signInInputPassword)
+    TextInputLayout signInPassword;
 
-    @Bind(R.id.signUpEmail)
-    EditText signUpEmail;
+    @Bind(R.id.signUpInputEmail)
+    TextInputLayout signUpEmail;
 
-    @Bind(R.id.signUpPassword)
-    EditText signUpPassword;
+    @Bind(R.id.signUpInputPassword)
+    TextInputLayout signUpPassword;
 
-    @Bind(R.id.signUpRepeatPassword)
-    EditText signUpRepeatPassword;
+    @Bind(R.id.signUpInputRepeatPassword)
+    TextInputLayout signUpRepeatPassword;
 
     private OnSubmitClickListener signInListener;
     private OnSubmitClickListener signUpListener;
@@ -96,11 +101,19 @@ public class LoginForm extends RelativeLayout {
         View parent = inflater.inflate(R.layout.view_login_form, this, true);
         ButterKnife.bind(this, parent);
 
+        signInEmail.getEditText().addTextChangedListener(new ClearErrorTextWatcher(signInEmail));
+        signInPassword.getEditText().addTextChangedListener(new ClearErrorTextWatcher(signInPassword));
+
+        signUpEmail.getEditText().addTextChangedListener(new ClearErrorTextWatcher(signUpEmail));
+        signUpPassword.getEditText().addTextChangedListener(new ClearErrorTextWatcher(signUpPassword));
+        signUpRepeatPassword.getEditText().addTextChangedListener(new ClearErrorTextWatcher(signUpRepeatPassword));
+
         fab.setImageDrawable(
                 IconUtils.getToolbarIcon(getContext(), MaterialDesignIconic.Icon.gmi_account_add)
         );
 
         fab.setOnClickListener(v -> {
+            DeviceUtils.hideKeyboard((Activity) getContext());
             Point revealPoint = getViewCenter();
             if (signUpForm.getVisibility() == View.VISIBLE) {
                 AnimationUtils.hideWithReveal(signUpForm, revealPoint);
@@ -112,20 +125,20 @@ public class LoginForm extends RelativeLayout {
         });
 
         signInButton.setOnClickListener(v -> {
-            if (signInListener != null) {
+            if (isSignInInputValid() && signInListener != null) {
                 signInListener.onSubmit(
-                        signInEmail.getText().toString(),
-                        signInPassword.getText().toString(),
+                        signInEmail.getEditText().getText().toString(),
+                        signInPassword.getEditText().getText().toString(),
                         v
                 );
             }
         });
 
         signUpButton.setOnClickListener(v -> {
-            if (signUpListener != null) {
+            if (isSignUpInputValid() && signUpListener != null) {
                 signUpListener.onSubmit(
-                        signUpEmail.getText().toString(),
-                        signUpPassword.getText().toString(),
+                        signUpEmail.getEditText().getText().toString(),
+                        signUpPassword.getEditText().getText().toString(),
                         v
                 );
             }
@@ -136,6 +149,49 @@ public class LoginForm extends RelativeLayout {
                 onPasswordForgetClick.onPasswordForget();
             }
         });
+    }
+
+    private boolean isSignInInputValid() {
+        boolean result = true;
+        if (!isEmailValid(signInEmail.getEditText().getText())) {
+            signInEmail.setErrorEnabled(true);
+            signInEmail.setError(getContext().getString(R.string.error_signin_invalid_email));
+            result = false;
+        }
+        String password = signInPassword.getEditText().getText().toString();
+        if (TextUtils.isEmpty(password) || password.length() < 6) {
+            signInPassword.setErrorEnabled(true);
+            signInPassword.setError(getContext().getString(R.string.error_signin_invalid_password));
+            result = false;
+        }
+        return result;
+    }
+
+    private boolean isSignUpInputValid() {
+        boolean result = true;
+        if (!isEmailValid(signUpEmail.getEditText().getText())) {
+            signUpEmail.setErrorEnabled(true);
+            signUpEmail.setError(getContext().getString(R.string.error_signin_invalid_email));
+            result = false;
+        }
+
+        String password = signUpPassword.getEditText().getText().toString();
+
+        if (TextUtils.isEmpty(password) || password.length() < 6) {
+            signUpPassword.setErrorEnabled(true);
+            signUpPassword.setError(getContext().getString(R.string.error_signin_invalid_password));
+            result = false;
+            return result;
+        }
+
+        String repeatPassword = signUpRepeatPassword.getEditText().getText().toString();
+        if (!password.equals(repeatPassword)) {
+            signUpRepeatPassword.setErrorEnabled(true);
+            signUpRepeatPassword.setError(getContext().getString(R.string.error_signin_password_match));
+            result = false;
+        }
+
+        return result;
     }
 
     public void setOnSkipButtonClick(View.OnClickListener click) {
@@ -183,5 +239,22 @@ public class LoginForm extends RelativeLayout {
 
     public interface OnPasswordForgetClick {
         void onPasswordForget();
+    }
+
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private static class ClearErrorTextWatcher extends TextWatcherAdapter {
+        TextInputLayout inputLayout;
+
+        public ClearErrorTextWatcher(TextInputLayout inputLayout) {
+            this.inputLayout = inputLayout;
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            inputLayout.setErrorEnabled(false);
+        }
     }
 }

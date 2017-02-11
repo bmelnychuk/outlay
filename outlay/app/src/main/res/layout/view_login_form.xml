@@ -49,8 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:lines="1"
-                        android:singleLine="true"
-                        android:text="melnychuk.bogdan@gmail.com" />
+                        android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -68,8 +67,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
                         android:lines="1"
-                        android:singleLine="true"
-                        android:text="111111" />
+                        android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
 

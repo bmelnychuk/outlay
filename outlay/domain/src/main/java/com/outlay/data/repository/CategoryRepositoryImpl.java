@@ -69,7 +69,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
                 }
             }
             return getDataSource().save(category);
-        }).doOnNext(stored -> cacheCategory(category));
+        }).doOnNext(stored -> cacheCategory(stored));
     }
 
     @Override

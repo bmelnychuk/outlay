@@ -1,8 +1,10 @@
 package com.outlay.view.fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -10,8 +12,11 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.outlay.R;
+import com.outlay.utils.IconUtils;
 import com.outlay.view.adapter.CategoriesDraggableGridAdapter;
 import com.outlay.domain.model.Category;
 import com.outlay.mvp.presenter.CategoriesPresenter;
@@ -39,6 +44,12 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
 
     @Bind(R.id.categoriesGrid)
     RecyclerView categoriesGrid;
+
+    @Bind(R.id.noContent)
+    View noContent;
+
+    @Bind(R.id.noContentImage)
+    ImageView noContentImage;
 
     @Bind(R.id.fab)
     FloatingActionButton fab;
@@ -90,6 +101,15 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
 
         fab.setImageDrawable(ResourceUtils.getMaterialToolbarIcon(getActivity(), R.string.ic_material_add));
         fab.setOnClickListener(v -> Navigator.goToCategoryDetails(getActivity(), null));
+
+        Drawable noCategoryIcon = IconUtils.getIconMaterialIcon(
+                getContext(),
+                MaterialDesignIconic.Icon.gmi_label,
+                ContextCompat.getColor(getActivity(), R.color.icon_inactive),
+                R.dimen.icon_no_results,
+                16
+        );
+        noContentImage.setImageDrawable(noCategoryIcon);
     }
 
     @Override
@@ -116,5 +136,6 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
     @Override
     public void showCategories(List<Category> categoryList) {
         adapter.setItems(categoryList);
+        noContent.setVisibility(categoryList.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

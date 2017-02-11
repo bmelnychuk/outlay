@@ -13,14 +13,6 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/noResultsText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/label_no_expenses"
-            android:textSize="@dimen/text_very_big" />
-
         <com.github.johnkil.print.PrintView
             android:id="@+id/noResultsIcon"
             android:layout_width="wrap_content"
@@ -30,6 +22,14 @@
             app:iconColor="@color/icon_inactive"
             app:iconFont="fonts/font-outlay.ttf"
             app:iconSize="@dimen/icon_no_results" />
+
+        <TextView
+            android:id="@+id/noResultsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/label_no_expenses"
+            android:textSize="@dimen/text_very_big" />
     </LinearLayout>
 
 </RelativeLayout>

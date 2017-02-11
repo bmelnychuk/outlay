@@ -12,6 +12,7 @@ import com.outlay.view.activity.MainActivity;
 import com.outlay.view.activity.SingleFragmentActivity;
 import com.outlay.view.activity.SyncGuestActivity;
 import com.outlay.view.fragment.AnalysisFragment;
+import com.outlay.view.fragment.CategoriesFragment;
 import com.outlay.view.fragment.CategoryDetailsFragment;
 import com.outlay.view.fragment.ExpensesDetailsFragment;
 import com.outlay.view.fragment.ExpensesListFragment;
@@ -29,6 +30,10 @@ public final class Navigator {
             b.putString(CategoryDetailsFragment.ARG_CATEGORY_PARAM, categoryId);
         }
         changeFragment(activityFrom, CategoryDetailsFragment.class, b);
+    }
+
+    public static void goToCategoriesList(FragmentActivity from) {
+        SingleFragmentActivity.start(from, CategoriesFragment.class);
     }
 
     public static void goToMainScreen(FragmentActivity activityFrom) {

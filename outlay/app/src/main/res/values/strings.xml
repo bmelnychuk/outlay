@@ -12,6 +12,9 @@
 
     <string name="error_no_email_clients">No emails client installed</string>
     <string name="error_category_name_empty">Category can not be empty</string>
+    <string name="error_signin_invalid_email">Invalid email</string>
+    <string name="error_signin_invalid_password">Invalid password. At least 6 chars</string>
+    <string name="error_signin_password_match">Password does not match</string>
     <string name="error_category_name_invalid">Invalid category name</string>
     <string name="error_amount_invalid">Invalid amount</string>
     <string name="error_category_icon">Icon was not selected</string>
@@ -66,5 +69,6 @@
     <string name="category_grocery">Grocery</string>
     <string name="category_games">Games</string>
     <string name="category_tickets">Tickets</string>
+    <string name="no_content_categories">Create Your first category</string>
 
 </resources>

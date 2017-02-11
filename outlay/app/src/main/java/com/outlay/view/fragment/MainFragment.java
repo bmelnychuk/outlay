@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,6 +54,9 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
 
     @Bind(R.id.amountEditable)
     EditText amountText;
+
+    @Bind(R.id.addCategory)
+    Button addCategory;
 
     @Bind(R.id.dateLabel)
     TextView dateLabel;
@@ -168,11 +172,14 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
             });
             datePickerFragment.show(getChildFragmentManager(), "datePicker");
         });
+
+        addCategory.setOnClickListener(view -> Navigator.goToCategoriesList(getActivity()));
     }
 
     @Override
     public void showCategories(List<Category> categoryList) {
         adapter.setItems(categoryList);
+        addCategory.setVisibility(categoryList.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
     @Override

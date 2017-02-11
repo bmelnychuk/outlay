@@ -95,4 +95,19 @@
         android:layout_marginRight="@dimen/spacing_default"
         android:layout_marginTop="@dimen/spacing_small"
         android:scrollbars="none" />
+
+    <Button
+        android:id="@+id/addCategory"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/footer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/spacing_very_big"
+        android:paddingLeft="@dimen/spacing_default"
+        android:paddingRight="@dimen/spacing_default"
+        android:text="Go to categories"
+        android:theme="@style/MyOverlayTheme"
+        android:visibility="gone" />
+
 </RelativeLayout>
