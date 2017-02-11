@@ -158,6 +158,7 @@ public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPres
             return;
         }
 
+        analytics().trackAnalysisPerformed(startDate, endDate);
         getPresenter().getExpenses(startDate, endDate, selectedCategory);
     }
 

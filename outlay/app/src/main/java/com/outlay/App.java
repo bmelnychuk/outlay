@@ -8,7 +8,6 @@ import com.outlay.di.component.AppComponent;
 import com.outlay.di.component.DaggerAppComponent;
 import com.outlay.di.component.UserComponent;
 import com.outlay.di.module.AppModule;
-import com.outlay.di.module.DaoModule;
 import com.outlay.di.module.FirebaseModule;
 import com.outlay.di.module.UserModule;
 import com.outlay.domain.model.User;
@@ -24,7 +23,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        Fabric.with(this, new Crashlytics());
         initializeInjector();
         LoggerFactory.registerLogger(new AndroidLogger());
 

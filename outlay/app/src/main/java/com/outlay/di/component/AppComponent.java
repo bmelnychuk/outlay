@@ -2,6 +2,7 @@ package com.outlay.di.component;
 
 import android.content.Context;
 
+import com.outlay.analytics.Analytics;
 import com.outlay.di.module.AppModule;
 import com.outlay.di.module.FirebaseModule;
 import com.outlay.di.module.UserModule;
@@ -22,6 +23,7 @@ import dagger.Component;
 public interface AppComponent {
     UserComponent plus(UserModule userModule);
     Context getApplication();
+    Analytics analytics();
 
     void inject(LoginActivity loginActivity);
     void inject(ParentActivity staticContentActivity);

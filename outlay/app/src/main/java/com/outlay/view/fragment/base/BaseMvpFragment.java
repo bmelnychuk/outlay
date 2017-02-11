@@ -12,6 +12,7 @@ import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 import com.outlay.App;
+import com.outlay.analytics.Analytics;
 import com.outlay.di.component.AppComponent;
 import com.outlay.view.activity.base.BaseActivity;
 
@@ -22,7 +23,6 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseMvpFragment<V extends MvpView, P extends MvpPresenter<V>> extends MvpFragment<V, P> implements BaseFragment {
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,5 +77,10 @@ public abstract class BaseMvpFragment<V extends MvpView, P extends MvpPresenter<
 
     public void error(Throwable throwable) {
         Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public Analytics analytics() {
+        return getAppComponent().analytics();
     }
 }

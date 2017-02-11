@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.outlay.App;
+import com.outlay.analytics.Analytics;
 import com.outlay.di.component.AppComponent;
 import com.outlay.view.activity.base.BaseActivity;
 import com.outlay.view.activity.base.ParentActivity;
@@ -29,6 +30,11 @@ public class StaticContentFragment extends Fragment implements BaseFragment {
     }
 
     @Override
+    public Analytics analytics() {
+        return getAppComponent().analytics();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -47,7 +53,7 @@ public class StaticContentFragment extends Fragment implements BaseFragment {
     }
 
     public View getRootView() {
-        return ((ParentActivity)getActivity()).getRootView();
+        return ((ParentActivity) getActivity()).getRootView();
     }
 
     @Override

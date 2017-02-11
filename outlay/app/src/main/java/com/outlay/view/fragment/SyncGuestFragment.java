@@ -56,6 +56,7 @@ public class SyncGuestFragment extends BaseMvpFragment<LoginView, LoginViewPrese
         loginForm.setMode(LoginForm.MODE_SIGN_UP);
         loginForm.setToggleModeButtonVisible(false);
         loginForm.setOnSignUpClickListener((email, password, src) -> {
+            analytics().trackLinkAccount();
             presenter.linkAccount(email, password);
         });
     }

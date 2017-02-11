@@ -17,7 +17,6 @@ import com.outlay.view.fragment.base.BaseMvpFragment;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by bmelnychuk on 12/14/16.
@@ -55,13 +54,18 @@ public class LoginFragment extends BaseMvpFragment<LoginView, LoginViewPresenter
         super.onViewCreated(view, savedInstanceState);
 
         loginForm.setOnSignUpClickListener((email, password, src) -> {
+            analytics().trackSignUp();
             presenter.signUp(email, password);
         });
         loginForm.setOnSignInClickListener((email, password, src) -> {
+            analytics().trackEmailSignIn();
             presenter.signIn(email, password);
         });
         loginForm.setOnPasswordForgetClick(() -> presenter.resetPassword("melnychuk.bogdan@gmail.com"));
-        loginForm.setOnSkipButtonClick(v -> presenter.signInGuest());
+        loginForm.setOnSkipButtonClick(v -> {
+            analytics().trackGuestSignIn();
+            presenter.signInGuest();
+        });
 
         presenter.trySignIn();
     }

@@ -132,10 +132,12 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
         }, validator);
         adapter.setOnCategoryClickListener(category -> {
             if (validator.valid(amountText.getText().toString())) {
+
                 Expense e = new Expense();
                 e.setCategory(category);
                 e.setAmount(new BigDecimal(amountText.getText().toString()));
                 e.setReportedWhen(selectedDate);
+                analytics().trackExpenseCreated(e);
                 presenter.createExpense(e);
                 cleanAmountInput();
             } else {
@@ -149,7 +151,10 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
         drawerIcon.setImageDrawable(ResourceUtils.getMaterialToolbarIcon(getActivity(), R.string.ic_material_menu));
 
         drawerIcon.setOnClickListener(v -> ((DrawerActivity) getActivity()).getMainDrawer().openDrawer());
-        chartIcon.setOnClickListener(v -> Navigator.goToReport(getActivity(), selectedDate));
+        chartIcon.setOnClickListener(v -> {
+            analytics().trackViewDailyExpenses();
+            Navigator.goToReport(getActivity(), selectedDate);
+        });
 
         dateLabel.setOnClickListener(v -> {
             DatePickerFragment datePickerFragment = new DatePickerFragment();
@@ -157,6 +162,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
                 Calendar c = Calendar.getInstance();
                 c.set(year, monthOfYear, dayOfMonth);
                 Date selected = c.getTime();
+                analytics().trackMainScreenDateChange(new Date(), selected);
                 selectedDate = selected;
                 dateLabel.setText(DateUtils.toLongString(selected));
             });

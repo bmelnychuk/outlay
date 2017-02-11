@@ -100,6 +100,7 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
 
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+        analytics().trackCategoryDragEvent();
         mItemTouchHelper.startDrag(viewHolder);
     }
 

@@ -2,10 +2,8 @@ package com.outlay.view.activity.base;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 
-import com.google.firebase.auth.FirebaseUser;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -16,6 +14,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.outlay.Constants;
 import com.outlay.R;
+import com.outlay.analytics.Analytics;
 import com.outlay.domain.model.User;
 import com.outlay.view.activity.SingleFragmentActivity;
 import com.outlay.view.alert.Alert;
@@ -25,6 +24,8 @@ import com.outlay.view.fragment.CategoriesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by bmelnychuk on 12/14/16.
@@ -63,7 +64,7 @@ public abstract class DrawerActivity extends ParentActivity {
         items.add(new PrimaryDrawerItem().withName(R.string.menu_item_analysis).withIcon(MaterialDesignIconic.Icon.gmi_trending_up).withIdentifier(ITEM_ANALYSIS));
         items.add(new PrimaryDrawerItem().withName(R.string.menu_item_categories).withIcon(MaterialDesignIconic.Icon.gmi_apps).withIdentifier(ITEM_CATEGORIES));
         items.add(new PrimaryDrawerItem().withName(R.string.menu_item_feedback).withIcon(MaterialDesignIconic.Icon.gmi_email).withIdentifier(ITEM_FEEDBACK));
-        items.add(new PrimaryDrawerItem().withName(R.string.menu_item_about).withIcon(MaterialDesignIconic.Icon.gmi_info).withIdentifier(ITEM_ABOUT));
+        //items.add(new PrimaryDrawerItem().withName(R.string.menu_item_about).withIcon(MaterialDesignIconic.Icon.gmi_info).withIdentifier(ITEM_ABOUT));
         items.add(new PrimaryDrawerItem().withName(R.string.menu_item_signout).withIcon(MaterialDesignIconic.Icon.gmi_sign_in).withIdentifier(ITEM_SING_OUT));
 
 
@@ -78,12 +79,15 @@ public abstract class DrawerActivity extends ParentActivity {
                         int id = (int) iDrawerItem.getIdentifier();
                         switch (id) {
                             case ITEM_CATEGORIES:
+                                analytics().trackViewCategoriesList();
                                 SingleFragmentActivity.start(this, CategoriesFragment.class);
                                 break;
                             case ITEM_ANALYSIS:
+                                analytics().trackAnalysisView();
                                 SingleFragmentActivity.start(this, AnalysisFragment.class);
                                 break;
                             case ITEM_FEEDBACK:
+                                analytics().trackFeedbackClick();
                                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                         "mailto", Constants.CONTACT_EMAIL, null));
                                 emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{Constants.CONTACT_EMAIL});
@@ -98,6 +102,7 @@ public abstract class DrawerActivity extends ParentActivity {
                                 SingleFragmentActivity.start(this, AboutFragment.class);
                                 break;
                             case ITEM_SING_OUT:
+                                analytics().trackSingOut();
                                 signOut();
                                 break;
                             case ITEM_CREATE_USER:

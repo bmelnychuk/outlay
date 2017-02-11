@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.outlay.App;
+import com.outlay.analytics.Analytics;
 import com.outlay.di.component.AppComponent;
 
 import butterknife.ButterKnife;
@@ -42,6 +43,11 @@ public class ParentActivity extends AppCompatActivity implements BaseActivity {
     @Override
     public AppComponent getApplicationComponent() {
         return getApp().getAppComponent();
+    }
+
+    @Override
+    public Analytics analytics() {
+        return getApplicationComponent().analytics();
     }
 
     protected void addFragment(int containerViewId, Fragment fragment) {

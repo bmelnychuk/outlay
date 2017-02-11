@@ -96,11 +96,18 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
             case R.id.action_save:
                 Category category = getCategory();
                 if (validateCategory(category)) {
+                    if (TextUtils.isEmpty(category.getId())) {
+                        analytics().trackCategoryCreated(category);
+                    } else {
+                        analytics().trackCategoryUpdated(category);
+                    }
                     presenter.updateCategory(getCategory());
                 }
                 break;
             case R.id.action_delete:
-                presenter.deleteCategory(getCategory());
+                category = getCategory();
+                analytics().trackCategoryDeleted(category);
+                presenter.deleteCategory(category);
                 break;
         }
         return super.onOptionsItemSelected(item);

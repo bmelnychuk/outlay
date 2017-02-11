@@ -28,7 +28,6 @@ import com.outlay.view.model.CategorizedExpenses;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -103,6 +102,7 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
                     Calendar c = Calendar.getInstance();
                     c.set(year, monthOfYear, dayOfMonth);
                     Date selected = c.getTime();
+                    analytics().trackExpensesViewDateChange(selectedDate, selected);
                     selectedDate = selected;
                     ReportFragment.this.setTitle(DateUtils.toShortString(selected));
                     updateTitle();
@@ -111,6 +111,7 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
                 datePickerFragment.show(getChildFragmentManager(), "datePicker");
                 break;
             case R.id.action_list:
+                analytics().trackViewExpensesList();
                 goToExpensesList(selectedDate, selectedPeriod);
         }
         return super.onOptionsItemSelected(item);
@@ -134,6 +135,17 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 selectedPeriod = tab.getPosition();
+                switch (selectedPeriod) {
+                    case ReportFragment.PERIOD_DAY:
+                        analytics().trackViewDailyExpenses();
+                        break;
+                    case ReportFragment.PERIOD_WEEK:
+                        analytics().trackViewWeeklyExpenses();
+                        break;
+                    case ReportFragment.PERIOD_MONTH:
+                        analytics().trackViewMonthlyExpenses();
+                        break;
+                }
                 updateTitle();
                 presenter.getExpenses(selectedDate, selectedPeriod);
             }

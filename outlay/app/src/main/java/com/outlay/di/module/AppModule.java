@@ -7,12 +7,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.outlay.App;
 import com.outlay.R;
+import com.outlay.analytics.Analytics;
 import com.outlay.core.data.AppPreferences;
 import com.outlay.core.executor.PostExecutionThread;
 import com.outlay.core.executor.ThreadExecutor;
 import com.outlay.domain.model.Category;
 import com.outlay.executor.JobExecutor;
 import com.outlay.executor.UIThread;
+import com.outlay.firebase.FirebaseAnalyticsImpl;
 import com.outlay.impl.AndroidPreferencesManager;
 
 import java.util.ArrayList;
@@ -58,6 +60,11 @@ public class AppModule {
         return new AndroidPreferencesManager(context);
     }
 
+    @Provides
+    @Singleton
+    Analytics provideAnalytics() {
+        return new FirebaseAnalyticsImpl(context);
+    }
 
     @Provides
     @Singleton

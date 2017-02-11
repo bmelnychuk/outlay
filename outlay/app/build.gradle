@@ -25,15 +25,23 @@ android {
     buildToolsVersion cfg.buildToolsVersion
 
     defaultConfig {
-        applicationId       cfg.package
-        minSdkVersion       cfg.minSdk
-        targetSdkVersion    cfg.targetSdk
-        versionCode         cfg.version_code
-        versionName         cfg.version_name
+        applicationId cfg.package
+        minSdkVersion cfg.minSdk
+        targetSdkVersion cfg.targetSdk
+        versionCode cfg.version_code
+        versionName cfg.version_name
     }
 
     buildTypes {
+        debug {
+            buildConfigField "boolean", "USE_ANALYTICS", "false"
+        }
+        staging {
+            buildConfigField "boolean", "USE_ANALYTICS", "false"
+        }
         release {
+            buildConfigField "boolean", "USE_ANALYTICS", "true"
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -90,15 +98,12 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
 
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
-        transitive = true;
-    }
-
     compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
 
     compile "com.google.firebase:firebase-core:${libs.firebase}"
     compile "com.google.firebase:firebase-auth:${libs.firebase}"
     compile "com.google.firebase:firebase-database:${libs.firebase}"
+    releaseCompile "com.google.firebase:firebase-crash:${libs.firebase}"
 }
 
 apply plugin: 'com.google.gms.google-services'

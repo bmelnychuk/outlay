@@ -128,12 +128,20 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
         switch (item.getItemId()) {
             case R.id.action_save:
                 if (validateInput()) {
-                    presenter.updateExpense(getExpense());
+                    Expense expense = getExpense();
+                    if (TextUtils.isEmpty(expense.getId())) {
+                        analytics().trackExpenseCreated(expense);
+                    } else {
+                        analytics().trackExpenseUpdated(expense);
+                    }
+                    presenter.updateExpense(expense);
                     getActivity().onBackPressed();
                 }
                 break;
             case R.id.action_delete:
-                presenter.deleteExpense(getExpense());
+                Expense expense = getExpense();
+                analytics().trackExpenseDeleted(expense);
+                presenter.deleteExpense(expense);
                 getActivity().onBackPressed();
                 break;
         }
