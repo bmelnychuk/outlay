@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -83,7 +84,7 @@ public class Report {
     }
 
     public Map<Category, Report> groupByCategory() {
-        Map<Category, Report> result = new HashMap<>();
+        Map<Category, Report> result = new LinkedHashMap<>();
 
         for (Expense expense : expenses) {
             Category expenseCategory = expense.getCategory();

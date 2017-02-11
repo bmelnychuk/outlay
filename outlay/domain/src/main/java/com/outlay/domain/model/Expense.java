@@ -1,6 +1,7 @@
 package com.outlay.domain.model;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -8,6 +9,8 @@ import java.util.Date;
  */
 
 public class Expense {
+    public static Comparator<Expense> DATE_COMPARATOR = (o1, o2) -> (int) (o1.getReportedWhen().getTime() - o2.getReportedWhen().getTime());
+
     private String id;
     private String note;
     private BigDecimal amount;

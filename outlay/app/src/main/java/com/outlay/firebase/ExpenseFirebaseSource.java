@@ -139,7 +139,7 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
                                     return expense.setCategory(categoryMap.get(currentCatId));
                                 })
                                 .filter(expense -> expense.getCategory() != null)
-                                .toList()
+                                .toSortedList((e1, e2) -> (int) (e1.getReportedWhen().getTime() - e2.getReportedWhen().getTime()))
                 );
     }
 

@@ -1,8 +1,10 @@
 package com.outlay.view.fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,21 +14,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
-import com.github.johnkil.print.PrintView;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.outlay.R;
 import com.outlay.core.utils.DateUtils;
+import com.outlay.core.utils.NumberUtils;
 import com.outlay.domain.model.Category;
 import com.outlay.domain.model.Expense;
 import com.outlay.mvp.presenter.ExpenseDetailsPresenter;
-import com.outlay.view.fragment.base.BaseMvpFragment;
-import com.outlay.view.helper.TextWatcherAdapter;
 import com.outlay.mvp.view.ExpenseDetailsView;
-import com.outlay.core.utils.NumberUtils;
 import com.outlay.utils.IconUtils;
 import com.outlay.utils.ResourceUtils;
 import com.outlay.view.autocomplete.CategoryAutoCompleteAdapter;
 import com.outlay.view.dialog.DatePickerFragment;
+import com.outlay.view.fragment.base.BaseMvpFragment;
+import com.outlay.view.helper.TextWatcherAdapter;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 
 import java.math.BigDecimal;
@@ -54,7 +57,7 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
     MaterialAutoCompleteTextView categoryTitle;
 
     @Bind(R.id.categoryIcon)
-    PrintView categoryIcon;
+    ImageView categoryIcon;
 
     @Bind(R.id.amount)
     EditText amount;
@@ -94,6 +97,17 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
         ButterKnife.bind(this, view);
         setToolbar(toolbar);
         setDisplayHomeAsUpEnabled(true);
+
+        Drawable noCategoryIcon = IconUtils.getIconMaterialIcon(
+                getContext(),
+                MaterialDesignIconic.Icon.gmi_label,
+                ContextCompat.getColor(getActivity(), R.color.icon_inactive),
+                R.dimen.report_category_icon,
+                4
+        );
+        categoryIcon.setImageDrawable(noCategoryIcon);
+
+
         return view;
     }
 
@@ -126,15 +140,27 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
         return super.onOptionsItemSelected(item);
     }
 
+    private void loadCategoryIcon(Category category) {
+        int iconCodeRes = ResourceUtils.getIntegerResource(getContext(), category.getIcon());
+        Drawable categoryIconDrawable = IconUtils.getCategoryIcon(getContext(),
+                iconCodeRes,
+                category.getColor(),
+                R.dimen.report_category_icon
+        );
+        categoryIcon.setImageDrawable(categoryIconDrawable);
+    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         autoCompleteAdapter = new CategoryAutoCompleteAdapter();
         categoryTitle.setAdapter(autoCompleteAdapter);
         categoryTitle.setOnItemClickListener((parent, view1, position, id) -> {
+
             Category category = autoCompleteAdapter.getItem(position);
             selectedCategory = category;
-            IconUtils.loadCategoryIcon(selectedCategory, categoryIcon);
+            loadCategoryIcon(category);
+
         });
         presenter.getCategories();
         dateEdit.setOnFocusChangeListener((v, hasFocus) -> {
@@ -182,7 +208,8 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
         this.expense = e;
         if (e.getId() != null) {
             selectedCategory = e.getCategory();
-            IconUtils.loadCategoryIcon(e.getCategory(), categoryIcon);
+            loadCategoryIcon(selectedCategory);
+
             categoryTitle.setText(e.getCategory().getTitle());
             amount.setText(NumberUtils.formatAmount(e.getAmount()));
             note.setText(e.getNote());
