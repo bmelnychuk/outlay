@@ -11,6 +11,7 @@ import com.outlay.view.activity.LoginActivity;
 import com.outlay.view.activity.MainActivity;
 import com.outlay.view.activity.SingleFragmentActivity;
 import com.outlay.view.activity.SyncGuestActivity;
+import com.outlay.view.fragment.AnalysisFragment;
 import com.outlay.view.fragment.CategoryDetailsFragment;
 import com.outlay.view.fragment.ExpensesDetailsFragment;
 import com.outlay.view.fragment.ExpensesListFragment;
@@ -73,6 +74,11 @@ public final class Navigator {
             b.putLong(ExpensesDetailsFragment.ARG_DATE, expense.getReportedWhen().getTime());
         }
         changeFragment(activityFrom, ExpensesDetailsFragment.class, b);
+    }
+
+    public static void goToAnalysis(FragmentActivity activityFrom) {
+        Bundle b = new Bundle();
+        changeFragment(activityFrom, AnalysisFragment.class, b);
     }
 
     private static void changeFragment(FragmentActivity activityFrom, Class<?> clazz, Bundle b) {

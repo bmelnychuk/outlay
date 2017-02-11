@@ -6,6 +6,7 @@
     <string name="menu_item_signout">Sign Out</string>
     <string name="menu_item_signin">Sign In</string>
     <string name="menu_item_create_user">Create User</string>
+    <string name="menu_item_analysis">Analysis</string>
 
     <string name="info_expense_created">You just spent %1$.2f on %2$s</string>
 

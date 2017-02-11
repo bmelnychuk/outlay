@@ -20,6 +20,7 @@ import com.outlay.domain.model.User;
 import com.outlay.view.activity.SingleFragmentActivity;
 import com.outlay.view.alert.Alert;
 import com.outlay.view.fragment.AboutFragment;
+import com.outlay.view.fragment.AnalysisFragment;
 import com.outlay.view.fragment.CategoriesFragment;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public abstract class DrawerActivity extends ParentActivity {
     private static final int ITEM_ABOUT = 3;
     private static final int ITEM_SING_OUT = 4;
     private static final int ITEM_CREATE_USER = 5;
+    private static final int ITEM_ANALYSIS = 6;
 
     private Drawer mainDrawer;
 
@@ -58,6 +60,7 @@ public abstract class DrawerActivity extends ParentActivity {
             items.add(new PrimaryDrawerItem().withName(R.string.menu_item_create_user).withIcon(MaterialDesignIconic.Icon.gmi_account_add).withIdentifier(ITEM_CREATE_USER));
         }
 
+        items.add(new PrimaryDrawerItem().withName(R.string.menu_item_analysis).withIcon(MaterialDesignIconic.Icon.gmi_trending_up).withIdentifier(ITEM_ANALYSIS));
         items.add(new PrimaryDrawerItem().withName(R.string.menu_item_categories).withIcon(MaterialDesignIconic.Icon.gmi_apps).withIdentifier(ITEM_CATEGORIES));
         items.add(new PrimaryDrawerItem().withName(R.string.menu_item_feedback).withIcon(MaterialDesignIconic.Icon.gmi_email).withIdentifier(ITEM_FEEDBACK));
         items.add(new PrimaryDrawerItem().withName(R.string.menu_item_about).withIcon(MaterialDesignIconic.Icon.gmi_info).withIdentifier(ITEM_ABOUT));
@@ -76,6 +79,9 @@ public abstract class DrawerActivity extends ParentActivity {
                         switch (id) {
                             case ITEM_CATEGORIES:
                                 SingleFragmentActivity.start(this, CategoriesFragment.class);
+                                break;
+                            case ITEM_ANALYSIS:
+                                SingleFragmentActivity.start(this, AnalysisFragment.class);
                                 break;
                             case ITEM_FEEDBACK:
                                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(

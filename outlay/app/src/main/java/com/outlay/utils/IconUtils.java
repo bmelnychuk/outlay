@@ -102,6 +102,14 @@ public final class IconUtils {
                 .sizeDp(24);
     }
 
+    public static Drawable getToolbarIcon(Context context, IIcon icon, int paddingDp) {
+        return new IconicsDrawable(context)
+                .icon(icon)
+                .paddingDp(paddingDp)
+                .color(Color.WHITE)
+                .sizeDp(24);
+    }
+
     public static void loadCategoryIcon(String icon, PrintView printView) {
         printView.setIconFont("fonts/font-outlay.ttf");
         printView.setIconCodeRes(ResourceUtils.getIntegerResource(printView.getContext(), icon));

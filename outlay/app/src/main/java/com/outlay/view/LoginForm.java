@@ -107,7 +107,7 @@ public class LoginForm extends RelativeLayout {
                 fab.setImageDrawable(IconUtils.getToolbarIcon(getContext(), MaterialDesignIconic.Icon.gmi_account_add));
             } else {
                 AnimationUtils.showWithReveal(signUpForm, revealPoint);
-                fab.setImageDrawable(IconUtils.getToolbarIcon(getContext(), MaterialDesignIconic.Icon.gmi_close));
+                fab.setImageDrawable(IconUtils.getToolbarIcon(getContext(), MaterialDesignIconic.Icon.gmi_close, 4));
             }
         });
 

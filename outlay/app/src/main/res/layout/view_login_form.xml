@@ -46,10 +46,11 @@
 
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/signInEmail"
-                        android:text="melnychuk.bogdan@gmail.com"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lines="1" />
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:text="melnychuk.bogdan@gmail.com" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -62,12 +63,13 @@
                     android:hint="Password">
 
                     <android.support.v7.widget.AppCompatEditText
-                        android:text="111111"
                         android:id="@+id/signInPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:lines="1" />
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:text="111111" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -83,7 +85,8 @@
                     android:gravity="center_vertical"
                     android:padding="@dimen/spacing_small"
                     android:text="Forget Password?"
-                    android:textColor="@color/text_primary" />
+                    android:textColor="@color/text_primary"
+                    android:visibility="invisible" />
 
                 <Button
                     android:id="@+id/signInButton"
@@ -139,7 +142,8 @@
                         android:id="@+id/signUpEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lines="1" />
+                        android:lines="1"
+                        android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -156,7 +160,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:lines="1" />
+                        android:lines="1"
+                        android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -173,7 +178,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:lines="1" />
+                        android:lines="1"
+                        android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
 

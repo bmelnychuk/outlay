@@ -186,11 +186,9 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public ChartViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
-            Description description = new Description();
-            description.setText("");
             chart.getLegend().setEnabled(false);
             chart.setUsePercentValues(false);
-            chart.setDescription(description);
+            chart.getDescription().setEnabled(false);
             chart.setDragDecelerationFrictionCoef(0.95f);
             chart.setDrawHoleEnabled(true);
             chart.setHoleColor(Color.TRANSPARENT);

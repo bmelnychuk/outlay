@@ -3,6 +3,7 @@ package com.outlay.di.component;
 import com.outlay.di.module.UserModule;
 import com.outlay.di.scope.UserScope;
 import com.outlay.view.activity.MainActivity;
+import com.outlay.view.fragment.AnalysisFragment;
 import com.outlay.view.fragment.CategoriesFragment;
 import com.outlay.view.fragment.CategoryDetailsFragment;
 import com.outlay.view.fragment.ExpensesDetailsFragment;
@@ -32,4 +33,6 @@ public interface UserComponent {
     void inject(MainActivity mainActivity);
 
     void inject(MainFragment mainFragment2);
+
+    void inject(AnalysisFragment analysisFragment);
 }
