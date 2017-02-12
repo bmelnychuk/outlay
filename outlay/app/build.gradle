@@ -31,6 +31,23 @@ android {
         versionName cfg.version_name
     }
 
+    def propsFile = rootProject.file('release.properties')
+    def props = new Properties()
+    if (propsFile.exists()) {
+        props.load(new FileInputStream(propsFile))
+    }
+
+    signingConfigs {
+        release {
+            if (propsFile.exists()) {
+                storeFile file(props['RELEASE_STORE_FILE'])
+                storePassword props['RELEASE_STORE_PASSWORD']
+                keyAlias props['RELEASE_KEY_ALIAS']
+                keyPassword props['RELEASE_KEY_PASSWORD']
+            }
+        }
+    }
+
     buildTypes {
         debug {
             buildConfigField "boolean", "USE_ANALYTICS", "false"
@@ -40,6 +57,8 @@ android {
         }
         release {
             buildConfigField "boolean", "USE_ANALYTICS", "true"
+
+            signingConfig signingConfigs.release
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -104,6 +123,7 @@ dependencies {
     compile "com.google.firebase:firebase-auth:${libs.firebase}"
     compile "com.google.firebase:firebase-database:${libs.firebase}"
     releaseCompile "com.google.firebase:firebase-crash:${libs.firebase}"
+    stagingCompile "com.google.firebase:firebase-crash:${libs.firebase}"
 }
 
 apply plugin: 'com.google.gms.google-services'

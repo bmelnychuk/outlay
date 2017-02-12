@@ -2,7 +2,7 @@
 
 ext {
     configuration = [
-            package             : "com.outlay",
+            package             : "app.outlay",
             buildToolsVersion   : "25.0.2",
             compileVersion      : 25,
             minSdk              : 17,
