@@ -22,6 +22,7 @@
     <color name="material_drawer_primary_icon">@color/material_drawer_dark_primary_text</color>
     <color name="material_drawer_dark_selected">#202020</color>
 
+    <color name="transparent">#00FFFFFF</color>
 
     <color name="red">#F44336</color>
     <color name="pink">#E91E63</color>

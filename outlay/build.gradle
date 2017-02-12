@@ -2,18 +2,18 @@
 
 ext {
     configuration = [
-            package             : "com.outlay",
-            buildToolsVersion   : "23.0.2",
-            compileVersion      : 23,
+            package             : "app.outlay",
+            buildToolsVersion   : "25.0.2",
+            compileVersion      : 25,
             minSdk              : 17,
-            targetSdk           : 23,
+            targetSdk           : 25,
             version_code        : 2,
             version_name        : "1.1",
     ]
 
     libraries = [
-            supportVersion      : "23.1.1",
-            dagger              : "2.0.2",
+            supportVersion      : "25.1.1",
+            dagger              : "2.9",
             rxjava              : "1.1.0",
             rxandroid           : "1.1.0",
             butterknife         : "7.0.1",
@@ -21,6 +21,7 @@ ext {
             circleimageview     : "2.0.0",
             picasso             : "2.5.2",
             greenDao            : "2.0.0",
+            firebase            : "10.0.1",
     ]
 }
 
@@ -30,11 +31,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'me.tatarka:gradle-retrolambda:3.1.0'
-        classpath 'com.android.databinding:dataBinder:1.0-rc4'
-
+        classpath 'me.tatarka:gradle-retrolambda:3.4.0'
+        classpath 'com.google.gms:google-services:3.0.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

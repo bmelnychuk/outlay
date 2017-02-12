@@ -4,30 +4,73 @@
     android:layout_height="match_parent"
     android:background="@color/background_main">
 
+
+    <ImageView
+        android:id="@+id/chartIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/btn_rippled"
+        android:clickable="true"
+        android:padding="@dimen/spacing_default" />
+
+    <ImageView
+        android:id="@+id/drawerIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/btn_rippled"
+        android:clickable="true"
+        android:padding="@dimen/spacing_default" />
+
+    <EditText
+        android:id="@+id/amountEditable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_toLeftOf="@+id/chartIcon"
+        android:layout_toRightOf="@+id/drawerIcon"
+        android:background="@android:color/transparent"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:hint="0.0"
+        android:lines="1"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_disabled"
+        android:textSize="@dimen/text_amount" />
+
+
     <RelativeLayout
-        android:layout_centerHorizontal="true"
-        android:id="@+id/dateContainer"
+        android:id="@+id/footer"
         android:layout_width="wrap_content"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:padding="@dimen/spacing_small">
 
         <TextView
             android:id="@+id/dateLabel"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center_vertical"
-            android:background="@drawable/btn_rippled_rect"
-            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
+            android:background="@drawable/btn_rippled_rect"
+            android:clickable="true"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_vertical"
             android:paddingBottom="@dimen/spacing_small"
             android:paddingLeft="50dp"
             android:paddingRight="@dimen/spacing_default"
             android:paddingTop="@dimen/spacing_small"
             android:text="@string/label_today"
-            android:textSize="@dimen/text_big"
-            android:textColor="@color/text_primary" />
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_big" />
 
         <com.github.johnkil.print.PrintView
             android:id="@+id/dateIcon"
@@ -42,100 +85,29 @@
             app:iconText="@string/ic_material_today" />
     </RelativeLayout>
 
-
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/categoriesGrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/dateContainer">
+        android:layout_above="@+id/footer"
+        android:layout_below="@+id/amountEditable"
+        android:layout_marginLeft="@dimen/spacing_default"
+        android:layout_marginRight="@dimen/spacing_default"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:scrollbars="none" />
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <Button
+        android:id="@+id/addCategory"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/footer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/spacing_very_big"
+        android:paddingLeft="@dimen/spacing_default"
+        android:paddingRight="@dimen/spacing_default"
+        android:text="Go to categories"
+        android:theme="@style/MyOverlayTheme"
+        android:visibility="gone" />
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/collapsing_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorPrimary"
-                app:expandedTitleMarginEnd="64dp"
-                app:expandedTitleMarginStart="48dp"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/amountEditable"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginLeft="@dimen/default_height"
-                        android:layout_marginRight="@dimen/default_height"
-                        android:layout_marginTop="@dimen/spacing_small"
-                        android:background="@android:color/transparent"
-                        android:editable="false"
-                        android:fontFamily="sans-serif-light"
-                        android:gravity="center"
-                        android:hint="0.0"
-                        android:singleLine="true"
-                        android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_disabled"
-                        android:textSize="@dimen/text_amount" />
-
-                    <com.outlay.view.numpad.NumpadView
-                        android:id="@+id/numpadView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_above="@+id/categoriesGrid"
-                        android:layout_below="@+id/amountEditable"
-                        android:layout_marginLeft="@dimen/spacing_small"
-                        android:layout_marginRight="@dimen/spacing_small" />
-                </LinearLayout>
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-                    <RelativeLayout
-                        android:id="@+id/toolbarContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/background_main">
-
-                        <TextView
-                            android:textSize="24sp"
-                            android:textColor="@color/text_primary"
-                            android:hint="0.0"
-                            android:id="@+id/toolbarAmountValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center" />
-                    </RelativeLayout>
-                </android.support.v7.widget.Toolbar>
-
-            </android.support.design.widget.CollapsingToolbarLayout>
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/categoriesGrid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="@dimen/spacing_default"
-            android:layout_marginRight="@dimen/spacing_default"
-            android:paddingBottom="@dimen/spacing_default"
-            android:scrollbars="none"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    </android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>

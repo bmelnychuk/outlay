@@ -43,12 +43,12 @@
                 android:textSize="@dimen/text_big" />
 
             <TextView
-                android:layout_marginRight="@dimen/spacing_default"
                 android:id="@+id/filterDateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="@dimen/spacing_very_big"
+                android:layout_marginRight="@dimen/spacing_default"
                 android:textSize="@dimen/text_big" />
 
         </RelativeLayout>
@@ -58,9 +58,13 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/filterContainer"
-        android:padding="@dimen/spacing_very_small"
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/spacing_very_small"
+        android:paddingRight="@dimen/spacing_very_small"
+        android:paddingTop="@dimen/spacing_very_small"
+        android:paddingBottom="128dp"
         android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

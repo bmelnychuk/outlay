@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_main">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/DarkToolbarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true" />
+
+    <ImageView
+        android:id="@+id/categoryIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/categoryTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/categoryTitle"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginLeft="@dimen/spacing_default"
+        android:layout_marginRight="@dimen/spacing_default" />
+
+    <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+        android:id="@+id/categoryTitle"
+        style="@style/CustomEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginRight="@dimen/spacing_default"
+        android:layout_toRightOf="@+id/categoryIcon"
+        android:hint="@string/label_category"
+        android:inputType="textNoSuggestions"
+        android:textColor="@color/text_primary"
+        app:met_floatingLabel="highlight" />
+
+    <LinearLayout
+        android:id="@+id/datesContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/categoryTitle"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/spacing_default"
+        android:paddingRight="@dimen/spacing_default">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/startDateInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/categoryTitle"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/startDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:editable="false"
+                android:focusable="false"
+                android:hint="Start Date"
+                android:textColor="@color/text_primary" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/endDateInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/categoryTitle"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/endDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:editable="false"
+                android:focusable="false"
+                android:hint="End Date"
+                android:textColor="@color/text_primary" />
+
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/datesContainer"
+        android:layout_marginBottom="@dimen/spacing_default"
+        android:layout_marginLeft="@dimen/spacing_default"
+        android:layout_marginRight="@dimen/spacing_default" />
+</RelativeLayout>

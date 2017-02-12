@@ -8,7 +8,6 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -16,7 +15,6 @@ repositories {
 
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.android.databinding'
 
 def cfg = rootProject.ext.configuration
 def libs = rootProject.ext.libraries
@@ -26,15 +24,42 @@ android {
     buildToolsVersion cfg.buildToolsVersion
 
     defaultConfig {
-        applicationId       cfg.package
-        minSdkVersion       cfg.minSdk
-        targetSdkVersion    cfg.targetSdk
-        versionCode         cfg.version_code
-        versionName         cfg.version_name
+        applicationId cfg.package
+        minSdkVersion cfg.minSdk
+        targetSdkVersion cfg.targetSdk
+        versionCode cfg.version_code
+        versionName cfg.version_name
+    }
+
+    def propsFile = rootProject.file('release.properties')
+    def props = new Properties()
+    if (propsFile.exists()) {
+        props.load(new FileInputStream(propsFile))
+    }
+
+    signingConfigs {
+        release {
+            if (propsFile.exists()) {
+                storeFile file(props['RELEASE_STORE_FILE'])
+                storePassword props['RELEASE_STORE_PASSWORD']
+                keyAlias props['RELEASE_KEY_ALIAS']
+                keyPassword props['RELEASE_KEY_PASSWORD']
+            }
+        }
     }
 
     buildTypes {
+        debug {
+            buildConfigField "boolean", "USE_ANALYTICS", "false"
+        }
+        staging {
+            buildConfigField "boolean", "USE_ANALYTICS", "false"
+        }
         release {
+            buildConfigField "boolean", "USE_ANALYTICS", "true"
+
+            signingConfig signingConfigs.release
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -46,6 +71,7 @@ android {
     }
 
     packagingOptions {
+        //<div>Icons made by <a href="http://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
         exclude 'META-INF/services/javax.annotation.processing.Processor'
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/DEPENDENCIES'
@@ -62,11 +88,10 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':domain')
 
     //Google
     apt "com.google.dagger:dagger-compiler:${libs.dagger}"
-    compile "com.google.dagger:dagger-compiler:${libs.dagger}"
-    provided "javax.annotation:jsr250-api:1.0"
 
     //Support
     compile "com.android.support:support-v13:${libs.supportVersion}"
@@ -79,23 +104,27 @@ dependencies {
     compile "io.reactivex:rxjava:${libs.rxjava}"
     compile "io.reactivex:rxandroid:${libs.rxandroid}"
 
-    //greenRobot
-    compile "de.greenrobot:greendao:${libs.greenDao}"
-
     //UI
-    compile('com.mikepenz:materialdrawer:4.6.4@aar') {
+    compile('com.mikepenz:materialdrawer:5.8.1@aar') {
         transitive = true
     }
-    compile 'com.mikepenz:google-material-typeface:1.2.0.1@aar'
+    compile 'com.mikepenz:material-design-iconic-typeface:+@aar'
+
     compile 'com.jakewharton:butterknife:7.0.1'
+
     compile "com.github.johnkil.print:print:1.3.1"
     compile(group: 'uz.shift', name: 'colorpicker', version: '0.5', ext: 'aar')
-    compile 'com.github.PhilJay:MPAndroidChart:v2.2.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile 'com.github.castorflex.smoothprogressbar:library-circular:1.2.0'
 
-    compile 'joda-time:joda-time:2.9.2'
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
-        transitive = true;
-    }
+    compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
 
+    compile "com.google.firebase:firebase-core:${libs.firebase}"
+    compile "com.google.firebase:firebase-auth:${libs.firebase}"
+    compile "com.google.firebase:firebase-database:${libs.firebase}"
+    releaseCompile "com.google.firebase:firebase-crash:${libs.firebase}"
+    stagingCompile "com.google.firebase:firebase-crash:${libs.firebase}"
 }
+
+apply plugin: 'com.google.gms.google-services'

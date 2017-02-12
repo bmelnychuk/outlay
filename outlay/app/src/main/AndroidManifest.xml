@@ -1,29 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.outlay">
+    package="app.outlay">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".App"
+        android:name="app.outlay.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Material.Custom">
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name="app.outlay.view.activity.MainActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name="app.outlay.view.activity.SingleFragmentActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="app.outlay.view.activity.SyncGuestActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Material.Translucent" />
+
+        <activity
+            android:name="app.outlay.view.activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".view.activity.SingleFragmentActivity"
-            android:screenOrientation="portrait" />
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="0" />
     </application>
 
 </manifest>

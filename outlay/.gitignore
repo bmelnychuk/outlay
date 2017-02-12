@@ -5,3 +5,7 @@
 .DS_Store
 /build
 /captures
+/app/src/debug/google-services.json
+/app/src/release/google-services.json
+/app/src/staging/google-services.json
+/release.properties

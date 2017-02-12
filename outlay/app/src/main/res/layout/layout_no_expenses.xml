@@ -2,30 +2,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:visibility="gone"
-    android:paddingBottom="128dp"
     android:layout_height="match_parent"
-    android:background="@color/background_main">
+    android:background="@color/background_main"
+    android:visibility="gone">
 
-    <TextView
-        android:id="@+id/noResultsText"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/label_no_expenses"
-        android:textSize="@dimen/text_very_big" />
-
-    <com.github.johnkil.print.PrintView
-        android:layout_above="@+id/noResultsText"
-        android:id="@+id/noResultsIcon"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_big"
-        android:layout_centerHorizontal="true"
-        app:iconCode="@integer/ic_coins"
-        app:iconColor="@color/icon_inactive"
-        app:iconFont="fonts/font-outlay.ttf"
-        app:iconSize="@dimen/icon_no_results" />
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.github.johnkil.print.PrintView
+            android:id="@+id/noResultsIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_big"
+            app:iconCode="@integer/ic_coins"
+            app:iconColor="@color/icon_inactive"
+            app:iconFont="fonts/font-outlay.ttf"
+            app:iconSize="@dimen/icon_no_results" />
+
+        <TextView
+            android:id="@+id/noResultsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/label_no_expenses"
+            android:textSize="@dimen/text_very_big" />
+    </LinearLayout>
 
 </RelativeLayout>
