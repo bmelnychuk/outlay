@@ -97,6 +97,7 @@ dependencies {
     compile(group: 'uz.shift', name: 'colorpicker', version: '0.5', ext: 'aar')
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile 'com.github.castorflex.smoothprogressbar:library-circular:1.2.0'
 
     compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
 
