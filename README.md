@@ -12,7 +12,7 @@ Outlay makes tracking your expenses so easy and simple. Fewest taps are necessar
 
 App covers all of my current needs, but there are a lot of possible improvements, so feel free to request features and share your feedback.
 
-Also project shows clean simplified clean architecture of android app with usage:
+Also project shows simplified clean architecture of android app with usage:
 ------------
 
 - Dagger 2
