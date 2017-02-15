@@ -13,6 +13,8 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import app.outlay.utils.DeviceUtils;
+
 /**
  * Created by bogdan.melnychuk on 09.12.2014.
  */
@@ -48,16 +50,20 @@ public final class AnimationUtils {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void showWithReveal(View view, Point point) {
-        view.setVisibility(View.VISIBLE);
+        if(DeviceUtils.supportV5()) {
+            view.setVisibility(View.VISIBLE);
 
-        // get the final radius for the clipping circle
-        int endRadius = (int) Math.hypot(view.getWidth(), view.getHeight());
+            // get the final radius for the clipping circle
+            int endRadius = (int) Math.hypot(view.getWidth(), view.getHeight());
 
-        Animator animator =
-                ViewAnimationUtils.createCircularReveal(view, point.x, point.y, 0, endRadius);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.setDuration(500);
-        animator.start();
+            Animator animator =
+                    ViewAnimationUtils.createCircularReveal(view, point.x, point.y, 0, endRadius);
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.setDuration(500);
+            animator.start();
+        } else {
+            view.setVisibility(View.VISIBLE);
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -70,24 +76,28 @@ public final class AnimationUtils {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void hideWithReveal(View view, Point point) {
-        // get the initial radius for the clipping circle
-        int initialRadius = (int) Math.hypot(view.getWidth(), view.getHeight());
+        if(DeviceUtils.supportV5()) {
+            // get the initial radius for the clipping circle
+            int initialRadius = (int) Math.hypot(view.getWidth(), view.getHeight());
 
-        // create the animation (the final radius is zero)
-        Animator animator = ViewAnimationUtils.createCircularReveal(view, point.x, point.y, initialRadius, 0);
+            // create the animation (the final radius is zero)
+            Animator animator = ViewAnimationUtils.createCircularReveal(view, point.x, point.y, initialRadius, 0);
 
-        // make the view invisible when the animation is done
-        animator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                view.setVisibility(View.INVISIBLE);
-            }
-        });
+            // make the view invisible when the animation is done
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    view.setVisibility(View.INVISIBLE);
+                }
+            });
 
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.setDuration(500);
-        animator.start();
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.setDuration(500);
+            animator.start();
+        } else {
+            view.setVisibility(View.INVISIBLE);
+        }
     }
 
     private static ValueAnimator slideAnimator(int start, int end, final View summary) {
