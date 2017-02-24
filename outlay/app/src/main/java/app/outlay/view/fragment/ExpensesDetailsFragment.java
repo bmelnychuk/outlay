@@ -232,8 +232,9 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
         if (selectedCategory != null) {
             expense.setCategory(selectedCategory);
         }
-        if (!TextUtils.isEmpty(amount.getText().toString())) {
-            expense.setAmount(new BigDecimal(amount.getText().toString()));
+        String amountStr = amount.getText().toString().replaceAll(",", ".");
+        if (!TextUtils.isEmpty(amountStr)) {
+            expense.setAmount(new BigDecimal(amountStr));
         }
         expense.setNote(note.getText().toString());
         return expense;
