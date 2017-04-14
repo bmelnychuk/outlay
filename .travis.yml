@@ -1,4 +1,3 @@
-before_script: cd outlay
 before_install: cd outlay
 language: android
 android:
