@@ -24,6 +24,8 @@ public class App extends Application {
     private AppComponent appComponent;
     private UserComponent userComponent;
 
+    //test for travis
+
     @Override
     public void onCreate() {
         super.onCreate();

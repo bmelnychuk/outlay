@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "978525270566",
+    "firebase_url": "https://outlay-73b0d.firebaseio.com",
+    "project_id": "outlay-73b0d",
+    "storage_bucket": "outlay-73b0d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978525270566:android:95649c21a8bc6266",
+        "android_client_info": {
+          "package_name": "app.outlay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978525270566-01u08te0n2qlvjarkbinereq8m492nfh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.outlay",
+            "certificate_hash": "eb579f1bd89b164647e549b80a0be05aea72c664"
+          }
+        },
+        {
+          "client_id": "978525270566-qos4uacpdlgunee2lccieimgsha4k3vk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAS4svt6mcgpWo_Qn3l9hoVsbVCMIuerU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978525270566-qos4uacpdlgunee2lccieimgsha4k3vk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
