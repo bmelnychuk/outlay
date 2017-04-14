@@ -94,6 +94,9 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/notice.txt'
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
