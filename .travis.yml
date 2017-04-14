@@ -27,3 +27,4 @@ android:
     - sys-img-armeabi-v7a-android-17
 notifications:
   slack: iethf:wbcLeYQGCwfm5FEmAJW6TCgr
+  email: false
