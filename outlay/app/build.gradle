@@ -39,12 +39,16 @@ android {
 
     signingConfigs {
         release {
-            if (propsFile.exists()) {
-                storeFile file(props['RELEASE_STORE_FILE'])
-                storePassword props['RELEASE_STORE_PASSWORD']
-                keyAlias props['RELEASE_KEY_ALIAS']
-                keyPassword props['RELEASE_KEY_PASSWORD']
-            }
+            storeFile file("../debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+//            if (propsFile.exists()) {                 //because of travis balfaszsag
+//                storeFile file(props['RELEASE_STORE_FILE'])
+//                storePassword props['RELEASE_STORE_PASSWORD']
+//                keyAlias props['RELEASE_KEY_ALIAS']
+//                keyPassword props['RELEASE_KEY_PASSWORD']
+//            }
         }
         debug {
             storeFile file("../debug.keystore")
