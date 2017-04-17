@@ -57,9 +57,6 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     @Bind(app.outlay.R.id.dateLabel)
     TextView dateLabel;
 
-    /*@Inject
-    EnterExpensePresenter presenter;*/
-
     @Inject
     User currentUser;
 
