@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import app.outlay.core.utils.DateUtils;
 import app.outlay.core.utils.NumberUtils;
 import app.outlay.domain.model.Category;
@@ -30,15 +29,13 @@ import app.outlay.view.dialog.DatePickerFragment;
 import app.outlay.view.fragment.base.BaseMvpFragment;
 import app.outlay.view.numpad.NumpadEditable;
 import app.outlay.view.numpad.SimpleNumpadValidator;
+import butterknife.Bind;
 
+import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import javax.inject.Inject;
-
-import butterknife.Bind;
 
 public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpensePresenter>
         implements EnterExpenseView {
@@ -60,8 +57,8 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     @Bind(app.outlay.R.id.dateLabel)
     TextView dateLabel;
 
-    @Inject
-    EnterExpensePresenter presenter;
+    /*@Inject
+    EnterExpensePresenter presenter;*/
 
     @Inject
     User currentUser;
@@ -85,11 +82,6 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     };
 
     @Override
-    public EnterExpensePresenter createPresenter() {
-        return presenter;
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getApp().getUserComponent().inject(this);
@@ -98,7 +90,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     @Override
     public void onResume() {
         super.onResume();
-        presenter.getCategories();
+        getPresenter().getCategories();
         cleanAmountInput();
     }
 
@@ -141,7 +133,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
                 e.setAmount(new BigDecimal(amountText.getText().toString()));
                 e.setReportedWhen(selectedDate);
                 analytics().trackExpenseCreated(e);
-                presenter.createExpense(e);
+                getPresenter().createExpense(e);
                 cleanAmountInput();
             } else {
                 validator.onInvalidInput(amountText.getText().toString());
@@ -192,7 +184,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
         message = String.format(message, expense.getAmount(), expense.getCategory().getTitle());
         Alert.info(getBaseActivity().getRootView(), message,
                 v -> {
-                    presenter.deleteExpense(expense);
+                    getPresenter().deleteExpense(expense);
                     amountText.setText(NumberUtils.formatAmount(expense.getAmount()));
                 }
         );

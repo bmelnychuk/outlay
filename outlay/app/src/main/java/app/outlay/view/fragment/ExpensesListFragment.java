@@ -10,9 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.github.johnkil.print.PrintView;
-
 import app.outlay.core.utils.DateUtils;
 import app.outlay.domain.model.Category;
 import app.outlay.domain.model.Expense;
@@ -25,14 +22,12 @@ import app.outlay.view.Navigator;
 import app.outlay.view.adapter.ExpenseAdapter;
 import app.outlay.view.adapter.ListExpensesAdapter;
 import app.outlay.view.fragment.base.BaseMvpFragment;
+import butterknife.Bind;
+import com.github.johnkil.print.PrintView;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import javax.inject.Inject;
-
-import butterknife.Bind;
 
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
@@ -66,20 +61,12 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
     @Bind(app.outlay.R.id.filterDateLabel)
     TextView filterDateLabel;
 
-    @Inject
-    ExpensesListPresenter presenter;
-
     private ExpenseAdapter adapter;
     private Date dateFrom;
     private Date dateTo;
     private String categoryId;
 
     private int mode = MODE_LIST;
-
-    @Override
-    public ExpensesListPresenter createPresenter() {
-        return presenter;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,7 +117,7 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
     @Override
     public void onResume() {
         super.onResume();
-        presenter.findExpenses(dateFrom, dateTo, categoryId);
+        getPresenter().findExpenses(dateFrom, dateTo, categoryId);
     }
 
     private void displayExpenses(List<Expense> expenses) {

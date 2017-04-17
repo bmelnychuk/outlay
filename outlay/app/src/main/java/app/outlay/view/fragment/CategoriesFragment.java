@@ -13,26 +13,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
-
-import app.outlay.utils.IconUtils;
-import app.outlay.view.adapter.CategoriesDraggableGridAdapter;
 import app.outlay.domain.model.Category;
 import app.outlay.mvp.presenter.CategoriesPresenter;
 import app.outlay.mvp.view.CategoriesView;
+import app.outlay.utils.IconUtils;
 import app.outlay.utils.ResourceUtils;
 import app.outlay.view.Navigator;
+import app.outlay.view.adapter.CategoriesDraggableGridAdapter;
 import app.outlay.view.fragment.base.BaseMvpFragment;
 import app.outlay.view.helper.itemtouch.OnDragListener;
 import app.outlay.view.helper.itemtouch.SimpleItemTouchHelperCallback;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
+
+import java.util.List;
 
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
@@ -54,16 +49,8 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
     @Bind(app.outlay.R.id.fab)
     FloatingActionButton fab;
 
-    @Inject
-    CategoriesPresenter presenter;
-
     private ItemTouchHelper mItemTouchHelper;
     private CategoriesDraggableGridAdapter adapter;
-
-    @Override
-    public CategoriesPresenter createPresenter() {
-        return presenter;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -115,7 +102,7 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
     @Override
     public void onResume() {
         super.onResume();
-        presenter.getCategories();
+        getPresenter().getCategories();
     }
 
     @Override
@@ -130,7 +117,7 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
         for (int i = 0; i < items.size(); i++) {
             items.get(i).setOrder(i);
         }
-        presenter.updateOrder(items);
+        getPresenter().updateOrder(items);
     }
 
     @Override
