@@ -5,16 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import app.outlay.domain.model.User;
 import app.outlay.mvp.presenter.LoginViewPresenter;
 import app.outlay.mvp.view.LoginView;
 import app.outlay.view.LoginForm;
 import app.outlay.view.Navigator;
 import app.outlay.view.fragment.base.BaseMvpFragment;
-
-import javax.inject.Inject;
-
 import butterknife.Bind;
 
 /**
@@ -22,8 +18,6 @@ import butterknife.Bind;
  */
 
 public class SyncGuestFragment extends BaseMvpFragment<LoginView, LoginViewPresenter> implements LoginView {
-    @Inject
-    LoginViewPresenter presenter;
 
     @Bind(app.outlay.R.id.loginForm)
     LoginForm loginForm;
@@ -35,11 +29,6 @@ public class SyncGuestFragment extends BaseMvpFragment<LoginView, LoginViewPrese
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getApp().getAppComponent().inject(this);
-    }
-
-    @Override
-    public LoginViewPresenter createPresenter() {
-        return presenter;
     }
 
     @Override
@@ -56,7 +45,7 @@ public class SyncGuestFragment extends BaseMvpFragment<LoginView, LoginViewPrese
         loginForm.setToggleModeButtonVisible(false);
         loginForm.setOnSignUpClickListener((email, password, src) -> {
             analytics().trackLinkAccount();
-            presenter.linkAccount(email, password);
+            getPresenter().linkAccount(email, password);
         });
     }
 
