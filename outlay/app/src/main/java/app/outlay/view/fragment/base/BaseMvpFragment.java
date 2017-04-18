@@ -1,39 +1,28 @@
 package app.outlay.view.fragment.base;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.hannesdorfmann.mosby.mvp.MvpFragment;
+import com.hannesdorfmann.mosby.mvp.MvpPresenter;
+import com.hannesdorfmann.mosby.mvp.MvpView;
 import app.outlay.App;
 import app.outlay.analytics.Analytics;
 import app.outlay.di.component.AppComponent;
 import app.outlay.view.activity.base.BaseActivity;
-import butterknife.ButterKnife;
-import com.hannesdorfmann.mosby.mvp.MvpFragment;
-import com.hannesdorfmann.mosby.mvp.MvpPresenter;
-import com.hannesdorfmann.mosby.mvp.MvpView;
 
-import javax.inject.Inject;
+import butterknife.ButterKnife;
 
 /**
  * Created by bmelnychuk on 12/14/16.
  */
 
 public abstract class BaseMvpFragment<V extends MvpView, P extends MvpPresenter<V>> extends MvpFragment<V, P> implements BaseFragment {
-
-    @Inject
-    P mvpPresenter;
-
-    @NonNull
-    @Override
-    public P createPresenter() {
-        return mvpPresenter;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

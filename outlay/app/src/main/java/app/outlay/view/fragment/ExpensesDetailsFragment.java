@@ -7,9 +7,17 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
+
 import app.outlay.core.utils.DateUtils;
 import app.outlay.core.utils.NumberUtils;
 import app.outlay.domain.model.Category;
@@ -22,15 +30,18 @@ import app.outlay.view.autocomplete.CategoryAutoCompleteAdapter;
 import app.outlay.view.dialog.DatePickerFragment;
 import app.outlay.view.fragment.base.BaseMvpFragment;
 import app.outlay.view.helper.TextWatcherAdapter;
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
+
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
@@ -61,10 +72,17 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
     @Bind(app.outlay.R.id.amountInputLayout)
     TextInputLayout amountInputLayout;
 
+    @Inject
+    ExpenseDetailsPresenter presenter;
     private CategoryAutoCompleteAdapter autoCompleteAdapter;
     private Expense expense;
     private Category selectedCategory;
     private Date defaultDate;
+
+    @Override
+    public ExpenseDetailsPresenter createPresenter() {
+        return presenter;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,14 +135,14 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
                     } else {
                         analytics().trackExpenseUpdated(expense);
                     }
-                    getPresenter().updateExpense(expense);
+                    presenter.updateExpense(expense);
                     getActivity().onBackPressed();
                 }
                 break;
             case app.outlay.R.id.action_delete:
                 Expense expense = getExpense();
                 analytics().trackExpenseDeleted(expense);
-                getPresenter().deleteExpense(expense);
+                presenter.deleteExpense(expense);
                 getActivity().onBackPressed();
                 break;
         }
@@ -153,7 +171,7 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
             loadCategoryIcon(category);
 
         });
-        getPresenter().getCategories();
+        presenter.getCategories();
         dateEdit.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
                 showDatePickerDialog();
@@ -164,7 +182,7 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
         if (getArguments().containsKey(ARG_EXPENSE_ID)) {
             String expenseId = getArguments().getString(ARG_EXPENSE_ID);
             getActivity().setTitle(getString(app.outlay.R.string.caption_edit_expense));
-            getPresenter().findExpense(expenseId, defaultDate);
+            presenter.findExpense(expenseId, defaultDate);
         } else {
             getActivity().setTitle(getString(app.outlay.R.string.caption_new_expense));
             showExpense(new Expense());

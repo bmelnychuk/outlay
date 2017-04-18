@@ -7,8 +7,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+
 import app.outlay.domain.model.Category;
 import app.outlay.mvp.presenter.CategoryDetailsPresenter;
 import app.outlay.mvp.view.CategoryDetailsView;
@@ -18,11 +24,13 @@ import app.outlay.view.adapter.IconsGridAdapter;
 import app.outlay.view.alert.Alert;
 import app.outlay.view.fragment.base.BaseMvpFragment;
 import app.outlay.view.helper.TextWatcherAdapter;
-import butterknife.Bind;
-import uz.shift.colorpicker.LineColorPicker;
+
+import java.util.Random;
 
 import javax.inject.Inject;
-import java.util.Random;
+
+import butterknife.Bind;
+import uz.shift.colorpicker.LineColorPicker;
 
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
@@ -50,6 +58,11 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
 
     private IconsGridAdapter adapter;
     private Category category;
+
+    @Override
+    public CategoryDetailsPresenter createPresenter() {
+        return presenter;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,13 +100,13 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
                     } else {
                         analytics().trackCategoryUpdated(category);
                     }
-                    getPresenter().updateCategory(getCategory());
+                    presenter.updateCategory(getCategory());
                 }
                 break;
             case app.outlay.R.id.action_delete:
                 category = getCategory();
                 analytics().trackCategoryDeleted(category);
-                getPresenter().deleteCategory(category);
+                presenter.deleteCategory(category);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -114,7 +127,7 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
         if (getArguments().containsKey(ARG_CATEGORY_PARAM)) {
             String categoryId = getArguments().getString(ARG_CATEGORY_PARAM);
             getActivity().setTitle(getString(app.outlay.R.string.caption_edit_category));
-            getPresenter().getCategory(categoryId);
+            presenter.getCategory(categoryId);
         } else {
             getActivity().setTitle(getString(app.outlay.R.string.caption_edit_category));
             showCategory(new Category());

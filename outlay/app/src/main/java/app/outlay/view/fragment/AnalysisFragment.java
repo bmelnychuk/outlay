@@ -10,6 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
+
 import app.outlay.core.utils.DateUtils;
 import app.outlay.domain.model.Category;
 import app.outlay.domain.model.Expense;
@@ -22,18 +34,8 @@ import app.outlay.utils.ResourceUtils;
 import app.outlay.view.autocomplete.CategoryAutoCompleteAdapter;
 import app.outlay.view.dialog.DatePickerFragment;
 import app.outlay.view.fragment.base.BaseMvpFragment;
-import butterknife.Bind;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
+
 import org.joda.time.DateTime;
 
 import java.text.DecimalFormat;
@@ -41,6 +43,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.Bind;
 
 /**
  * Created by bmelnychuk on 2/10/17.
@@ -67,12 +73,20 @@ public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPres
     @Bind(app.outlay.R.id.endDate)
     EditText endDateEdit;
 
+    @Inject
+    AnalysisPresenter presenter;
+
     private CategoryAutoCompleteAdapter autoCompleteAdapter;
     private DayAxisValueFormatter dayAxisValueFormatter;
 
     private Date startDate;
     private Date endDate;
     private Category selectedCategory;
+
+    @Override
+    public AnalysisPresenter createPresenter() {
+        return presenter;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
