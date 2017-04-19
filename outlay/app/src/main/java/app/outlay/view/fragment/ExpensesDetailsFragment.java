@@ -145,6 +145,8 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
                 presenter.deleteExpense(expense);
                 getActivity().onBackPressed();
                 break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
