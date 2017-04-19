@@ -4,7 +4,14 @@ android:
   components:
     - tools # needs to be first to get new package versions
     - build-tools-25.0.2
+    - platform-tools
+    - extra-android-m2repository
+    - extra-google-android-support
+  licenses:
+    - '.+'
 jdk:
   - oraclejdk8
+os:
+  - linux
 script:
   - cd outlay && ./gradlew build connectedCheck
