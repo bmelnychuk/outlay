@@ -58,7 +58,9 @@ android {
         release {
             buildConfigField "boolean", "USE_ANALYTICS", "true"
 
-            signingConfig signingConfigs.release
+            if (propsFile.exists()) {
+                signingConfig signingConfigs.release
+            }
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -68,6 +70,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dexOptions {
+        preDexLibraries true
+        javaMaxHeapSize "3g"
     }
 
     packagingOptions {

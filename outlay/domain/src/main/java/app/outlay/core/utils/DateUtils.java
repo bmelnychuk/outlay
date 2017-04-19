@@ -8,32 +8,37 @@ import org.joda.time.LocalTime;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Bogdan Melnychuk on 1/29/16.
  */
 public final class DateUtils {
 
-    private static final SimpleDateFormat SHORT_STRING_FORMAT = new SimpleDateFormat("dd MMM yy");
-    private static final SimpleDateFormat YEAR_MONTH_STRING_FORMAT = new SimpleDateFormat("yyyyMM");
-    private static final SimpleDateFormat LONG_STRING_FORMAT = new SimpleDateFormat("dd MMMM yyyy");
+    private static final String SHORT_STRING_FORMAT = "dd MMM yy";
+    private static final String YEAR_MONTH_STRING_FORMAT = "yyyyMM";
+    private static final String LONG_STRING_FORMAT = "dd MMMM yyyy";
+
+    private static SimpleDateFormat getFormat(String formatString) {
+        return new SimpleDateFormat(formatString, Locale.getDefault());
+    }
 
     public static String toYearMonthString(Date date) {
-        return YEAR_MONTH_STRING_FORMAT.format(date);
+        return getFormat(YEAR_MONTH_STRING_FORMAT).format(date);
     }
 
     public static String toShortString(Date date) {
         if (isToday(date)) {
             return "Today";
         }
-        return SHORT_STRING_FORMAT.format(date);
+        return getFormat(SHORT_STRING_FORMAT).format(date);
     }
 
     public static String toLongString(Date date) {
         if (isToday(date)) {
             return "Today";
         }
-        return LONG_STRING_FORMAT.format(date);
+        return getFormat(LONG_STRING_FORMAT).format(date);
     }
 
     public static Date fillCurrentTime(Date date) {

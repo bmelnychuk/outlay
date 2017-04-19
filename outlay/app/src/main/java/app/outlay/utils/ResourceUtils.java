@@ -2,7 +2,6 @@ package app.outlay.utils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-
 import com.github.johnkil.print.PrintDrawable;
 
 import java.util.Random;
@@ -11,13 +10,8 @@ import java.util.Random;
  * Created by Bogdan Melnychuk on 1/17/16.
  */
 public final class ResourceUtils {
-    public static int getResourceId(Context context, String pVariableName, String pResourcename) {
-        try {
-            return context.getResources().getIdentifier(pVariableName, pResourcename, context.getPackageName());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
+    private static int getResourceId(Context context, String pVariableName, String pResourcename) {
+        return context.getResources().getIdentifier(pVariableName, pResourcename, context.getPackageName());
     }
 
     public static int getStringResource(Context context, String stringResName) {
