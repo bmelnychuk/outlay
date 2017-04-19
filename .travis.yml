@@ -3,11 +3,10 @@ language: android
 android:
   components:
     - tools # needs to be first to get new package versions
+    - platform-tools
     - tools
     - build-tools-25.0.2
-    - platform-tools
-    - extra-android-m2repository
-    - extra-google-android-support
+    - android-25
   licenses:
     - '.+'
 jdk:
