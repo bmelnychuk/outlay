@@ -11,5 +11,5 @@ android:
     - extra-google-m2repository
 before_script: cd outlay
 script:
-- ./gradlew build connectedCheck
+- ./gradlew assembleDebug
   
