@@ -9,5 +9,16 @@ android:
     - extra-android-m2repository
     - extra-google-m2repository
 
+sudo: required
+
+jdk:
+  - oraclejdk8
+
+install: true
+
+before_script:
+  - chmod +x gradlew
+
 script:
-   - ./gradlew build connectedCheck
+  - ./gradlew assembleRelease --stacktrace
+  
