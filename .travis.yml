@@ -20,4 +20,4 @@ jdk:
 os:
   - linux
 script:
-  - cd outlay && ./gradlew assemble
+  - cd outlay && ./gradlew assembleDebug
