@@ -99,8 +99,7 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(app.outlay.R.layout.fragment_expenses_list, null, false);
-        return view;
+        return inflater.inflate(app.outlay.R.layout.fragment_expenses_list, null, false);
     }
 
     @Override

@@ -105,8 +105,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(app.outlay.R.layout.fragment_main, null, false);
-        return view;
+        return inflater.inflate(app.outlay.R.layout.fragment_main, null, false);
     }
 
     @Override

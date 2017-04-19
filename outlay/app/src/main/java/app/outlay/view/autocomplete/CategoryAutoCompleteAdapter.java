@@ -87,8 +87,7 @@ public class CategoryAutoCompleteAdapter extends BaseAdapter implements Filterab
     Filter nameFilter = new Filter() {
         @Override
         public CharSequence convertResultToString(Object resultValue) {
-            String str = ((Category) resultValue).getTitle();
-            return str;
+            return ((Category) resultValue).getTitle();
         }
 
         @Override

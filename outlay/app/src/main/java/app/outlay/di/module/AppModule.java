@@ -83,8 +83,7 @@ public class AppModule {
     @Provides
     @Singleton
     Gson providerGson() {
-        Gson gson = new GsonBuilder().create();
-        return gson;
+        return new GsonBuilder().create();
     }
 
     private static Category category(String title, String icon, int color, int order) {

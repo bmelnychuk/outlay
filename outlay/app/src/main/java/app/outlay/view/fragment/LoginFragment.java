@@ -44,8 +44,7 @@ public class LoginFragment extends BaseMvpFragment<LoginView, LoginViewPresenter
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(app.outlay.R.layout.fragment_login, null, false);
-        return view;
+        return inflater.inflate(app.outlay.R.layout.fragment_login, null, false);
     }
 
     @Override
