@@ -8,6 +8,7 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
+apply plugin: 'findbugs'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -128,3 +129,19 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+task findbugs(type: FindBugs) {
+    ignoreFailures = false
+    effort = "default"
+    reportLevel = "medium"
+    classes = files("${project.rootDir}/app/build/intermediates/classes")
+    source = fileTree('src/main/java/')
+    classpath = files()
+    reports {
+        html.enabled = true
+        xml.enabled = false
+        html {
+            destination "$project.buildDir/findbugs/findbugs-output.html"
+        }
+    }
+}
