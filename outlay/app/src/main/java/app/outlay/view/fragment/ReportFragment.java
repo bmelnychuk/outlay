@@ -191,22 +191,22 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
     }
 
     public void goToExpensesList(Date date, int selectedPeriod, String category) {
-        date = DateUtils.fillCurrentTime(date);
-        Date startDate = date;
-        Date endDate = date;
+        Date filledDate = DateUtils.fillCurrentTime(date);
+        Date startDate = filledDate;
+        Date endDate = filledDate;
 
         switch (selectedPeriod) {
             case ReportFragment.PERIOD_DAY:
-                startDate = DateUtils.getDayStart(date);
-                endDate = DateUtils.getDayEnd(date);
+                startDate = DateUtils.getDayStart(filledDate);
+                endDate = DateUtils.getDayEnd(filledDate);
                 break;
             case ReportFragment.PERIOD_WEEK:
-                startDate = DateUtils.getWeekStart(date);
-                endDate = DateUtils.getWeekEnd(date);
+                startDate = DateUtils.getWeekStart(filledDate);
+                endDate = DateUtils.getWeekEnd(filledDate);
                 break;
             case ReportFragment.PERIOD_MONTH:
-                startDate = DateUtils.getMonthStart(date);
-                endDate = DateUtils.getMonthEnd(date);
+                startDate = DateUtils.getMonthStart(filledDate);
+                endDate = DateUtils.getMonthEnd(filledDate);
                 break;
         }
         Navigator.goToExpensesList(getActivity(), startDate, endDate, category);
