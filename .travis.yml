@@ -1,5 +1,10 @@
 language: android
 
+addons:
+  sonarqube:
+    organization: "a1b2c3" # the key of the org you chose at step #3
+    token:
+      secure: 70766b4c8b58ffd39e7c0fc7ceb0c54a5c54ba11 # encrypted value of your token
 android:
   components:
     - tools # needs to be first to get new package versions
@@ -21,3 +26,4 @@ os:
   - linux
 script:
   - cd outlay && ./gradlew assembleDebug
+  - sonar-scanner
