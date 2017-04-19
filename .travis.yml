@@ -10,5 +10,5 @@ android:
     - extra-google-m2repository
 
 script:
-- chmod +x ./gradlew
+- outlay/./gradlew build connectedCheck
   
