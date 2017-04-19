@@ -33,7 +33,7 @@
                     android:layout_marginBottom="@dimen/spacing_default"
                     android:layout_marginTop="@dimen/spacing_very_small"
                     android:text="SIGN IN"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <android.support.design.widget.TextInputLayout
@@ -125,7 +125,7 @@
                     android:layout_marginBottom="@dimen/spacing_default"
                     android:layout_marginTop="@dimen/spacing_very_small"
                     android:text="SIGN UP"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <android.support.design.widget.TextInputLayout
