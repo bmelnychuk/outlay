@@ -130,7 +130,7 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
         tabLayout.addTab(tabLayout.newTab().setText(app.outlay.R.string.label_week));
         tabLayout.addTab(tabLayout.newTab().setText(app.outlay.R.string.label_month));
         tabLayout.getTabAt(selectedPeriod).select();
-        tabLayout.setOnTabSelectedListener(new OnTabSelectedListenerAdapter() {
+        tabLayout.addOnTabSelectedListener(new OnTabSelectedListenerAdapter() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 selectedPeriod = tab.getPosition();
