@@ -5,5 +5,7 @@ android:
     - tools # needs to be first to get new package versions
     - build-tools-25.0.2
     - platform-tools
+jdk:
+  - oraclejdk8
 script:
   - cd outlay && ./gradlew build connectedCheck
