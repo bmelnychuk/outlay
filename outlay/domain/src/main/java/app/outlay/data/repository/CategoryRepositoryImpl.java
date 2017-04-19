@@ -40,7 +40,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         if (categoryMap != null) {
             return Observable.just(new ArrayList<>(categoryMap.values()));
         }
-        return getDataSource().getAll().doOnNext(categories -> cacheCategories(categories));
+        return getDataSource().getAll().doOnNext(this::cacheCategories);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public Observable<List<Category>> updateOrder(List<Category> categories) {
         clearCache();
-        return getDataSource().updateOrder(categories).doOnNext(updated -> cacheCategories(updated));
+        return getDataSource().updateOrder(categories).doOnNext(this::cacheCategories);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
                 }
             }
             return getDataSource().save(category);
-        }).doOnNext(stored -> cacheCategory(stored));
+        }).doOnNext(this::cacheCategory);
     }
 
     @Override

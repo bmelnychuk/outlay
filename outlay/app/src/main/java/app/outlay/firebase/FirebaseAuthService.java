@@ -1,6 +1,7 @@
 package app.outlay.firebase;
 
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
 import app.outlay.domain.model.Credentials;
 import app.outlay.domain.model.User;
@@ -26,30 +27,30 @@ public class FirebaseAuthService implements AuthService {
     @Override
     public Observable<User> signIn(Credentials credentials) {
         return firebaseWrapper.signIn(credentials.getEmail(), credentials.getPassword())
-                .map(authResult -> authResult.getUser())
-                .map(firebaseUser -> UserAdapter.fromFirebaseUser(firebaseUser));
+                .map(AuthResult::getUser)
+                .map(UserAdapter::fromFirebaseUser);
     }
 
     @Override
     public Observable<User> signUp(Credentials credentials) {
         return firebaseWrapper.signUp(credentials.getEmail(), credentials.getPassword())
-                .map(authResult -> authResult.getUser())
-                .map(firebaseUser -> UserAdapter.fromFirebaseUser(firebaseUser));
+                .map(AuthResult::getUser)
+                .map(UserAdapter::fromFirebaseUser);
     }
 
     @Override
     public Observable<User> linkCredentials(Credentials credentials) {
         AuthCredential emailCredentials = EmailAuthProvider.getCredential(credentials.getEmail(), credentials.getPassword());
         return firebaseWrapper.linkAccount(emailCredentials)
-                .map(authResult -> authResult.getUser())
-                .map(firebaseUser -> UserAdapter.fromFirebaseUser(firebaseUser));
+                .map(AuthResult::getUser)
+                .map(UserAdapter::fromFirebaseUser);
     }
 
     @Override
     public Observable<User> signInAnonymously() {
         return firebaseWrapper.signInAnonymously()
-                .map(authResult -> authResult.getUser())
-                .map(firebaseUser -> UserAdapter.fromFirebaseUser(firebaseUser));
+                .map(AuthResult::getUser)
+                .map(UserAdapter::fromFirebaseUser);
     }
 
     @Override
