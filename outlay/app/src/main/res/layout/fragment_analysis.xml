@@ -56,7 +56,7 @@
                 android:id="@+id/startDate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:editable="false"
+                android:inputType="none"
                 android:focusable="false"
                 android:hint="Start Date"
                 android:textColor="@color/text_primary" />
@@ -74,7 +74,7 @@
                 android:id="@+id/endDate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:editable="false"
+                android:inputType="none"
                 android:focusable="false"
                 android:hint="End Date"
                 android:textColor="@color/text_primary" />
