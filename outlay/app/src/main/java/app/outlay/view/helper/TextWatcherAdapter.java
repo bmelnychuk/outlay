@@ -9,16 +9,19 @@ import android.text.TextWatcher;
 public class TextWatcherAdapter implements TextWatcher {
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+        // Empty default implementation
+        // To be overriden depending on the context it is used in
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+        // Empty default implementation
+        // To be overriden depending on the context it is used in
     }
 
     @Override
     public void afterTextChanged(Editable s) {
-
+        // Empty default implementation
+        // To be overriden depending on the context it is used in
     }
 }
