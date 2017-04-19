@@ -11,6 +11,7 @@ import java.util.Random;
  * Created by Bogdan Melnychuk on 1/17/16.
  */
 public final class ResourceUtils {
+    private ResourceUtils(){}
     public static int getResourceId(Context context, String pVariableName, String pResourcename) {
         try {
             return context.getResources().getIdentifier(pVariableName, pResourcename, context.getPackageName());
