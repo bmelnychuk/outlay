@@ -7,17 +7,17 @@ addons:
       secure: 70766b4c8b58ffd39e7c0fc7ceb0c54a5c54ba11 # encrypted value of your token
 android:
   components:
-    - tools # needs to be first to get new package versions
-    - platform-tools
-    - tools
-    - build-tools-25.0.2
-    - android-25
-    - tools
-    - extra-android-m2repository
-    - extra-google-m2repository
-    - tools
-    - extra-google-android-support
-    - extra-google-google_play_services
+    # - tools # needs to be first to get new package versions
+    # - platform-tools
+    # - tools
+    # - build-tools-25.0.2
+    # - android-25
+    # - tools
+    # - extra-android-m2repository
+    # - extra-google-m2repository
+    # - tools
+    # - extra-google-android-support
+    # - extra-google-google_play_services
   licenses:
     - '.+'
 jdk:
@@ -25,5 +25,5 @@ jdk:
 os:
   - linux
 script:
-  - cd outlay && ./gradlew assembleDebug
+  - cd outlay # && ./gradlew assembleDebug
   - sonar-scanner
