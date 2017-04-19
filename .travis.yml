@@ -26,4 +26,4 @@ os:
   - linux
 script:
   - cd outlay && ./gradlew assembleDebug
-  - cd .. && sonar-scanner
+  - sonar-scanner
