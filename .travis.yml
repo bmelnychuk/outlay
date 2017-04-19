@@ -12,4 +12,6 @@ android:
     - .+
 jdk: oraclejdk8
 
-before_install: cd outlay
+before_install:
+  - cd outlay
+  - cp google-services.mock.json app/google-services.json
