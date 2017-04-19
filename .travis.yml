@@ -11,6 +11,7 @@ android:
     - extra-android-m2repository
     - tools
     - extra-google-android-support
+    - extra-google-google_play_services
   licenses:
     - '.+'
 jdk:
