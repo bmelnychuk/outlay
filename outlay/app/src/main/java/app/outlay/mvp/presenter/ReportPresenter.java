@@ -49,7 +49,9 @@ public class ReportPresenter extends MvpBasePresenter<StatisticView> {
             @Override
             public void onNext(Report report) {
                 super.onNext(report);
-                getView().showReport(report);
+                if (getView()!=null){
+                    getView().showReport(report);
+                }
             }
         });
     }

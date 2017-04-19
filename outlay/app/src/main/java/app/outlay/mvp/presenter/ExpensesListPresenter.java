@@ -28,7 +28,9 @@ public class ExpensesListPresenter extends MvpBasePresenter<ExpensesView> {
         loadReportUseCase.execute(input, new DefaultSubscriber<Report>() {
             @Override
             public void onNext(Report report) {
-                getView().showReport(report);
+                if (getView()!=null){
+                    getView().showReport(report);
+                }
             }
         });
     }
