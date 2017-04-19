@@ -112,6 +112,8 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
             case app.outlay.R.id.action_list:
                 analytics().trackViewExpensesList();
                 goToExpensesList(selectedDate, selectedPeriod);
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -143,6 +145,8 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
                         break;
                     case ReportFragment.PERIOD_MONTH:
                         analytics().trackViewMonthlyExpenses();
+                        break;
+                    default:
                         break;
                 }
                 updateTitle();
@@ -183,6 +187,8 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
                 endDate = DateUtils.getMonthEnd(selectedDate);
                 setTitle(DateUtils.toShortString(startDate) + " - " + DateUtils.toShortString(endDate));
                 break;
+            default:
+                break;
         }
     }
 
@@ -192,8 +198,8 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
 
     public void goToExpensesList(Date date, int selectedPeriod, String category) {
         Date filledDate = DateUtils.fillCurrentTime(date);
-        Date startDate = filledDate;
-        Date endDate = filledDate;
+        Date startDate;
+        Date endDate;
 
         switch (selectedPeriod) {
             case ReportFragment.PERIOD_DAY:
@@ -207,6 +213,10 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
             case ReportFragment.PERIOD_MONTH:
                 startDate = DateUtils.getMonthStart(filledDate);
                 endDate = DateUtils.getMonthEnd(filledDate);
+                break;
+            default:
+                startDate = filledDate;
+                endDate = filledDate;
                 break;
         }
         Navigator.goToExpensesList(getActivity(), startDate, endDate, category);
