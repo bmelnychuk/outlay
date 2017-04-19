@@ -9,6 +9,7 @@ android:
     - android-25
     - tools
     - extra-android-m2repository
+    - extra-google-m2repository
     - tools
     - extra-google-android-support
     - extra-google-google_play_services
