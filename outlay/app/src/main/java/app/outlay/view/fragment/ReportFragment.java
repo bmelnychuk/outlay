@@ -6,13 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
+import android.view.*;
 import app.outlay.core.utils.DateUtils;
 import app.outlay.domain.model.Report;
 import app.outlay.mvp.presenter.ReportPresenter;
@@ -24,13 +18,10 @@ import app.outlay.view.dialog.DatePickerFragment;
 import app.outlay.view.fragment.base.BaseMvpFragment;
 import app.outlay.view.helper.OnTabSelectedListenerAdapter;
 import app.outlay.view.model.CategorizedExpenses;
+import butterknife.Bind;
 
 import java.util.Calendar;
 import java.util.Date;
-
-import javax.inject.Inject;
-
-import butterknife.Bind;
 
 /**
  * Created by Bogdan Melnychuk on 1/20/16.
@@ -54,17 +45,9 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
     @Bind(app.outlay.R.id.noResults)
     View noResults;
 
-    @Inject
-    ReportPresenter presenter;
-
     private int selectedPeriod;
     private Date selectedDate;
     private ReportAdapter adapter;
-
-    @Override
-    public ReportPresenter createPresenter() {
-        return presenter;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,7 +88,7 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
                     selectedDate = selected;
                     ReportFragment.this.setTitle(DateUtils.toShortString(selected));
                     updateTitle();
-                    presenter.getExpenses(selectedDate, selectedPeriod);
+                    getPresenter().getExpenses(selectedDate, selectedPeriod);
                 });
                 datePickerFragment.show(getChildFragmentManager(), "datePicker");
                 break;
@@ -146,14 +129,14 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
                         break;
                 }
                 updateTitle();
-                presenter.getExpenses(selectedDate, selectedPeriod);
+                getPresenter().getExpenses(selectedDate, selectedPeriod);
             }
         });
 
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ReportAdapter();
         recyclerView.setAdapter(adapter);
-        presenter.getExpenses(selectedDate, selectedPeriod);
+        getPresenter().getExpenses(selectedDate, selectedPeriod);
 
         adapter.setOnItemClickListener((category, report) -> goToExpensesList(selectedDate, selectedPeriod, category.getId()));
     }
