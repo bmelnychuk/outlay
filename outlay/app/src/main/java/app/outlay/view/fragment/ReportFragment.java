@@ -191,8 +191,8 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
         this.goToExpensesList(date, selectedPeriod, null);
     }
 
-    public void goToExpensesList(Date date, int selectedPeriod, String category) {
-        date = DateUtils.fillCurrentTime(date);
+    public void goToExpensesList(Date dateParam, int selectedPeriod, String category) {
+        Date date = DateUtils.fillCurrentTime(dateParam);
         Date startDate = date;
         Date endDate = date;
 
