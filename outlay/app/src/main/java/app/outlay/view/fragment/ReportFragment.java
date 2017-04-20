@@ -1,6 +1,7 @@
 package app.outlay.view.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -61,6 +62,7 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
     private Date selectedDate;
     private ReportAdapter adapter;
 
+    @NonNull
     @Override
     public ReportPresenter createPresenter() {
         return presenter;

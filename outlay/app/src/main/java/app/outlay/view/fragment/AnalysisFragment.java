@@ -2,6 +2,7 @@ package app.outlay.view.fragment;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -82,6 +83,7 @@ public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPres
     private Date endDate;
     private Category selectedCategory;
 
+    @NonNull
     @Override
     public AnalysisPresenter createPresenter() {
         return presenter;
