@@ -21,7 +21,6 @@ public class SimpleNumpadValidator implements NumpadValidator {
 
     @Override
     public void onInvalidInput(String value) {
-        // Empty default implementation
-        // To be overriden depending on the context it is used in
+        // Unused method, required by the interface
     }
 }
