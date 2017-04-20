@@ -74,7 +74,7 @@ public class CategoryAutoCompleteAdapter extends BaseAdapter implements Filterab
         return view;
     }
 
-    class ViewHolder {
+    static class ViewHolder {
         TextView categoryTitle;
         PrintView categoryIcon;
     }

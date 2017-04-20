@@ -40,9 +40,9 @@ public class AndroidPreferencesManager implements AppPreferences {
         getPreferences().edit().putBoolean(key, value).apply();
     }
 
-    private boolean getBoolean(String key) {
+    /*private boolean getBoolean(String key) {
         return getPreferences().getBoolean(key, false);
-    }
+    }*/
 
     private boolean getBoolean(String key, boolean defValue) {
         return getPreferences().getBoolean(key, defValue);

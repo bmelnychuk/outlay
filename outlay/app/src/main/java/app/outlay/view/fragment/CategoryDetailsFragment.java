@@ -146,9 +146,7 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
         this.category = category;
 
         if (category.getId() == null) {
-            int colorsCount = colorPicker.getColors().length;
-            int randomPosition = new Random().nextInt(colorsCount);
-            colorPicker.setSelectedColorPosition(randomPosition);
+            colorPicker.setSelectedColorPosition(new Random().nextInt(colorPicker.getColors().length));
             adapter.setActiveColor(colorPicker.getColor());
         } else {
             colorPicker.setSelectedColor(category.getColor());
