@@ -240,6 +240,7 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return max;
     }
 
+    @FunctionalInterface
     public interface ItemClickListener {
         void onItemClicked(Category category, Report report);
     }

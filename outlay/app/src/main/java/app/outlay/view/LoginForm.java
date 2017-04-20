@@ -231,10 +231,12 @@ public class LoginForm extends RelativeLayout {
         return new Point(x, y);
     }
 
+    @FunctionalInterface
     public interface OnSubmitClickListener {
         void onSubmit(String email, String password, View src);
     }
 
+    @FunctionalInterface
     public interface OnPasswordForgetClick {
         void onPasswordForget();
     }
