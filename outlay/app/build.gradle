@@ -15,6 +15,7 @@ repositories {
 
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'findbugs'
 
 def cfg = rootProject.ext.configuration
 def libs = rootProject.ext.libraries
@@ -119,7 +120,7 @@ dependencies {
     compile 'com.github.castorflex.smoothprogressbar:library-circular:1.2.0'
 
     compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
-
+    compile 'com.google.firebase:firebase-messaging:9.0.0'
     compile "com.google.firebase:firebase-core:${libs.firebase}"
     compile "com.google.firebase:firebase-auth:${libs.firebase}"
     compile "com.google.firebase:firebase-database:${libs.firebase}"
