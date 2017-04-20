@@ -43,6 +43,7 @@ public class AboutFragment extends StaticContentFragment {
         return view;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
