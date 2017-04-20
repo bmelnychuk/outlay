@@ -23,7 +23,7 @@ public class SingleFragmentActivity extends ParentActivity {
         start(context, fragmentClass, null);
     }
 
-    public final static String FRAGMENT_PARAM = "fragment";
+    private final static String FRAGMENT_PARAM = "fragment";
 
     @Override
     protected void onCreate(Bundle bundle) {
