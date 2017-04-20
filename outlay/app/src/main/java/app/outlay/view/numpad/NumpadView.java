@@ -128,6 +128,8 @@ public class NumpadView extends LinearLayout implements View.OnClickListener {
             case app.outlay.R.id.btnDecimal:
                 onDecimalCLicked();
                 break;
+            default:
+                break;
         }
     }
 

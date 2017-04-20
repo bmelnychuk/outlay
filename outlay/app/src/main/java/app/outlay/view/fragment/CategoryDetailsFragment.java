@@ -95,6 +95,8 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
                 analytics().trackCategoryDeleted(category);
                 getPresenter().deleteCategory(category);
                 break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
