@@ -46,10 +46,10 @@ public interface ItemTouchHelperAdapter {
      * also completed its animation.
      * <p>
      * This is a good place to clear all changes on the View that was done in
-     * {@link #onSelectedChanged(RecyclerView.ViewHolder, int)},
-     * {@link #onChildDraw(Canvas, RecyclerView, RecyclerView.ViewHolder, float, float, int,
+     * {@link SimpleItemTouchHelperCallback#onSelectedChanged(RecyclerView.ViewHolder, int)},
+     * {@link SimpleItemTouchHelperCallback#onChildDraw(Canvas, RecyclerView, RecyclerView.ViewHolder, float, float, int,
      * boolean)} or
-     * {@link #onChildDrawOver(Canvas, RecyclerView, RecyclerView.ViewHolder, float, float, int, boolean)}.
+     * {@link SimpleItemTouchHelperCallback#onChildDrawOver(Canvas, RecyclerView, RecyclerView.ViewHolder, float, float, int, boolean)}.
      *
      * @param recyclerView The RecyclerView which is controlled by the ItemTouchHelper.
      * @param viewHolder   The View that was interacted by the user.
