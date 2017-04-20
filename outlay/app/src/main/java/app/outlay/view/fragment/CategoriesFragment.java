@@ -2,6 +2,7 @@ package app.outlay.view.fragment;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -60,6 +61,7 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
     private ItemTouchHelper mItemTouchHelper;
     private CategoriesDraggableGridAdapter adapter;
 
+    @NonNull
     @Override
     public CategoriesPresenter createPresenter() {
         return presenter;
