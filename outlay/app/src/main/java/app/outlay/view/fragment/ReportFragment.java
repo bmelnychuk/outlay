@@ -112,6 +112,8 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
             case app.outlay.R.id.action_list:
                 analytics().trackViewExpensesList();
                 goToExpensesList(selectedDate, selectedPeriod);
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -143,6 +145,8 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
                         break;
                     case ReportFragment.PERIOD_MONTH:
                         analytics().trackViewMonthlyExpenses();
+                        break;
+                    default:
                         break;
                 }
                 updateTitle();
@@ -183,6 +187,8 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
                 endDate = DateUtils.getMonthEnd(selectedDate);
                 setTitle(DateUtils.toShortString(startDate) + " - " + DateUtils.toShortString(endDate));
                 break;
+            default:
+                break;
         }
     }
 
@@ -191,22 +197,26 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
     }
 
     public void goToExpensesList(Date date, int selectedPeriod, String category) {
-        date = DateUtils.fillCurrentTime(date);
-        Date startDate = date;
-        Date endDate = date;
+        Date filledDate = DateUtils.fillCurrentTime(date);
+        Date startDate;
+        Date endDate;
 
         switch (selectedPeriod) {
             case ReportFragment.PERIOD_DAY:
-                startDate = DateUtils.getDayStart(date);
-                endDate = DateUtils.getDayEnd(date);
+                startDate = DateUtils.getDayStart(filledDate);
+                endDate = DateUtils.getDayEnd(filledDate);
                 break;
             case ReportFragment.PERIOD_WEEK:
-                startDate = DateUtils.getWeekStart(date);
-                endDate = DateUtils.getWeekEnd(date);
+                startDate = DateUtils.getWeekStart(filledDate);
+                endDate = DateUtils.getWeekEnd(filledDate);
                 break;
             case ReportFragment.PERIOD_MONTH:
-                startDate = DateUtils.getMonthStart(date);
-                endDate = DateUtils.getMonthEnd(date);
+                startDate = DateUtils.getMonthStart(filledDate);
+                endDate = DateUtils.getMonthEnd(filledDate);
+                break;
+            default:
+                startDate = filledDate;
+                endDate = filledDate;
                 break;
         }
         Navigator.goToExpensesList(getActivity(), startDate, endDate, category);

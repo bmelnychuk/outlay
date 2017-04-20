@@ -140,6 +140,7 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 @Override
                 public void onNothingSelected() {
+                    // We don't want to do anything
                 }
             });
         }
