@@ -33,7 +33,9 @@ public class CategoryDetailsPresenter extends MvpBasePresenter<CategoryDetailsVi
         getCategoryUseCase.execute(id, new DefaultSubscriber<Category>() {
             @Override
             public void onNext(Category category) {
-                getView().showCategory(category);
+                if (getView()!=null){
+                    getView().showCategory(category);
+                }
             }
         });
     }
@@ -42,7 +44,9 @@ public class CategoryDetailsPresenter extends MvpBasePresenter<CategoryDetailsVi
         updateCategoryUseCase.execute(category, new DefaultSubscriber<Category>() {
             @Override
             public void onCompleted() {
-                getView().finish();
+                if (getView()!=null){
+                    getView().finish();
+                }
             }
         });
 
@@ -52,7 +56,9 @@ public class CategoryDetailsPresenter extends MvpBasePresenter<CategoryDetailsVi
         deleteCategoryUseCase.execute(category, new DefaultSubscriber<Category>() {
             @Override
             public void onCompleted() {
-                getView().finish();
+                if (getView()!=null){
+                    getView().finish();
+                }
             }
         });
     }

@@ -42,7 +42,9 @@ public class EnterExpensePresenter extends MvpBasePresenter<EnterExpenseView> {
         getCategoriesUseCase.execute(new DefaultSubscriber<List<Category>>() {
             @Override
             public void onNext(List<Category> categories) {
-                getView().showCategories(categories);
+                if (getView()!=null){
+                    getView().showCategories(categories);
+                }
             }
         });
     }
@@ -52,7 +54,9 @@ public class EnterExpensePresenter extends MvpBasePresenter<EnterExpenseView> {
         createExpenseUseCase.execute(expense, new DefaultSubscriber<Expense>() {
             @Override
             public void onNext(Expense expense) {
-                getView().alertExpenseSuccess(expense);
+                if (getView()!=null){
+                    getView().alertExpenseSuccess(expense);
+                }
 
             }
         });

@@ -133,9 +133,7 @@ public class ReportAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             charViewHolder.chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                 @Override
                 public void onValueSelected(Entry e, Highlight h) {
-                    if (onItemClickListener != null) {
-                        //onItemClickListener.onItemClicked(reports.get(h.getXIndex()));
-                    }
+
                 }
 
                 @Override

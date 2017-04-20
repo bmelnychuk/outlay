@@ -28,8 +28,7 @@ public class ListExpensesAdapter extends ExpenseAdapter<ListExpensesAdapter.Expe
     public ExpenseListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(app.outlay.R.layout.recycler_list_expense, parent, false);
-        final ExpenseListItemViewHolder viewHolder = new ExpenseListItemViewHolder(v);
-        return viewHolder;
+        return new ExpenseListItemViewHolder(v);
     }
 
     @Override

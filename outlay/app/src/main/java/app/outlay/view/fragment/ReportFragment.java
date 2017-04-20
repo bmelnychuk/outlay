@@ -1,6 +1,7 @@
 package app.outlay.view.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -61,6 +62,7 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
     private Date selectedDate;
     private ReportAdapter adapter;
 
+    @NonNull
     @Override
     public ReportPresenter createPresenter() {
         return presenter;
@@ -76,8 +78,7 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(app.outlay.R.layout.fragment_report, null, false);
-        return view;
+        return inflater.inflate(app.outlay.R.layout.fragment_report, null, false);
     }
 
     @Override
@@ -130,7 +131,7 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
         tabLayout.addTab(tabLayout.newTab().setText(app.outlay.R.string.label_week));
         tabLayout.addTab(tabLayout.newTab().setText(app.outlay.R.string.label_month));
         tabLayout.getTabAt(selectedPeriod).select();
-        tabLayout.setOnTabSelectedListener(new OnTabSelectedListenerAdapter() {
+        tabLayout.addOnTabSelectedListener(new OnTabSelectedListenerAdapter() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 selectedPeriod = tab.getPosition();
@@ -190,8 +191,8 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
         this.goToExpensesList(date, selectedPeriod, null);
     }
 
-    public void goToExpensesList(Date date, int selectedPeriod, String category) {
-        date = DateUtils.fillCurrentTime(date);
+    public void goToExpensesList(Date dateParam, int selectedPeriod, String category) {
+        Date date = DateUtils.fillCurrentTime(dateParam);
         Date startDate = date;
         Date endDate = date;
 

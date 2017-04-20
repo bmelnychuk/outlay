@@ -133,7 +133,7 @@ public class ExpenseFirebaseSource implements ExpenseDataSource {
                     }
                     return categoryMap;
                 }).switchMap(categoryMap ->
-                        listObservable.flatMap(expenses -> Observable.from(expenses))
+                        listObservable.flatMap(Observable::from)
                                 .map(expense -> {
                                     String currentCatId = expense.getCategory().getId();
                                     return expense.setCategory(categoryMap.get(currentCatId));

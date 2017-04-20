@@ -2,6 +2,7 @@ package app.outlay.view.fragment.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -37,7 +38,11 @@ public abstract class BaseMvpFragment<V extends MvpView, P extends MvpPresenter<
     }
 
     public void setDisplayHomeAsUpEnabled(boolean value) {
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(value);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(value);
+        }
+
     }
 
     @Override

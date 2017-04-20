@@ -1,6 +1,7 @@
 package app.outlay.view.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -76,6 +77,7 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
 
     private int mode = MODE_LIST;
 
+    @NonNull
     @Override
     public ExpensesListPresenter createPresenter() {
         return presenter;
@@ -99,8 +101,7 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(app.outlay.R.layout.fragment_expenses_list, null, false);
-        return view;
+        return inflater.inflate(app.outlay.R.layout.fragment_expenses_list, null, false);
     }
 
     @Override
