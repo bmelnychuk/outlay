@@ -59,10 +59,6 @@ public class EnterExpensePresenter extends MvpBasePresenter<EnterExpenseView> {
     }
 
     public void deleteExpense(Expense expense) {
-        deleteExpenseUseCase.execute(expense, new DefaultSubscriber<Expense>() {
-            @Override
-            public void onCompleted() {
-            }
-        });
+        deleteExpenseUseCase.execute(expense, new DefaultSubscriber<Expense>());
     }
 }

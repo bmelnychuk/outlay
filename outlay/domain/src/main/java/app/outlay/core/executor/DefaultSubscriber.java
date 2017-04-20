@@ -14,7 +14,8 @@ public class DefaultSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onCompleted() {
-
+        // Empty default implementation
+        // To be overriden depending on the context it is used in
     }
 
     @Override
@@ -24,6 +25,7 @@ public class DefaultSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onNext(T t) {
-
+        // Empty default implementation
+        // To be overriden depending on the context it is used in
     }
 }

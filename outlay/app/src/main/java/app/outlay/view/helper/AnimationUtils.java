@@ -137,14 +137,17 @@ public final class AnimationUtils {
 
             @Override
             public void onAnimationStart(Animator animator) {
+                // We don't want to do anything
             }
 
             @Override
             public void onAnimationCancel(Animator animator) {
+                // We don't want to do anything
             }
 
             @Override
             public void onAnimationRepeat(Animator animator) {
+                // We don't want to do anything
             }
         });
         mAnimator.start();

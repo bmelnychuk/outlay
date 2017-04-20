@@ -40,6 +40,8 @@ public class StaticContentFragment extends Fragment implements BaseFragment {
             case android.R.id.home:
                 getActivity().onBackPressed();
                 break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

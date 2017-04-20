@@ -14,6 +14,7 @@ public class UIThread implements PostExecutionThread {
 
     @Inject
     public UIThread() {
+        // @Inject ctor required by Dagger
     }
 
     @Override
