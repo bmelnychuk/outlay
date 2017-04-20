@@ -76,8 +76,7 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(app.outlay.R.layout.fragment_report, null, false);
-        return view;
+        return inflater.inflate(app.outlay.R.layout.fragment_report, null, false);
     }
 
     @Override
@@ -130,7 +129,7 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
         tabLayout.addTab(tabLayout.newTab().setText(app.outlay.R.string.label_week));
         tabLayout.addTab(tabLayout.newTab().setText(app.outlay.R.string.label_month));
         tabLayout.getTabAt(selectedPeriod).select();
-        tabLayout.setOnTabSelectedListener(new OnTabSelectedListenerAdapter() {
+        tabLayout.addOnTabSelectedListener(new OnTabSelectedListenerAdapter() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 selectedPeriod = tab.getPosition();

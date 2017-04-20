@@ -44,8 +44,7 @@ public class SyncGuestFragment extends BaseMvpFragment<LoginView, LoginViewPrese
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(app.outlay.R.layout.fragment_sync_guest, null, false);
-        return view;
+        return inflater.inflate(app.outlay.R.layout.fragment_sync_guest, null, false);
     }
 
     @Override

@@ -53,7 +53,6 @@ import butterknife.Bind;
  */
 
 public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPresenter> implements AnalysisView {
-    private static final int REF_TIMESTAMP = 1451660400;
 
     @Bind(app.outlay.R.id.categoryTitle)
     MaterialAutoCompleteTextView categoryTitle;
@@ -97,8 +96,7 @@ public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPres
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(app.outlay.R.layout.fragment_analysis, null, false);
-        return view;
+        return inflater.inflate(app.outlay.R.layout.fragment_analysis, null, false);
     }
 
     @Override

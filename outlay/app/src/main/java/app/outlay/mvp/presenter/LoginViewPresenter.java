@@ -48,7 +48,9 @@ public class LoginViewPresenter extends MvpBasePresenter<LoginView> {
     }
 
     private void signIn(Credentials credentials) {
-        getView().setProgress(true);
+        if (getView()!=null){
+            getView().setProgress(true);
+        }
 
         userSignInUseCase.execute(credentials, new DefaultSubscriber<User>() {
             @Override
@@ -66,7 +68,9 @@ public class LoginViewPresenter extends MvpBasePresenter<LoginView> {
     }
 
     public void signUp(String email, String password) {
-        getView().setProgress(true);
+        if (getView()!=null){
+            getView().setProgress(true);
+        }
 
         Credentials credentials = new Credentials(email, password);
 
@@ -89,7 +93,9 @@ public class LoginViewPresenter extends MvpBasePresenter<LoginView> {
         linkAccountUseCase.execute(new Credentials(email, password), new DefaultSubscriber<User>() {
             @Override
             public void onNext(User user) {
-                getView().onSuccess(user);
+                if (getView()!=null){
+                    getView().onSuccess(user);
+                }
             }
         });
     }
@@ -102,12 +108,16 @@ public class LoginViewPresenter extends MvpBasePresenter<LoginView> {
             user.setEmail(firebaseUser.getEmail());
             user.setAnonymous(firebaseUser.isAnonymous());
             user.setUserName(firebaseUser.getDisplayName());
-            getView().onSuccess(user);
+            if (getView()!=null){
+                getView().onSuccess(user);
+            }
         }
     }
 
     private void onAuthSuccess(User user) {
-        getView().onSuccess(user);
+        if (getView()!=null){
+            getView().onSuccess(user);
+        }
     }
 
     public void resetPassword(String email) {
@@ -116,13 +126,17 @@ public class LoginViewPresenter extends MvpBasePresenter<LoginView> {
         resetPasswordUseCase.execute(user, new DefaultSubscriber() {
             @Override
             public void onCompleted() {
-                getView().info("Email with was sent");
+                if (getView()!=null){
+                    getView().info("Email with was sent");
+                }
             }
 
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                getView().error(new Exception("Problem while resetting your password"));
+                if (getView()!=null){
+                    getView().error(new Exception("Problem while resetting your password"));
+                }
             }
         });
     }

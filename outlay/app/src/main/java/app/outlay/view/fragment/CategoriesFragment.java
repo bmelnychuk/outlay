@@ -74,8 +74,7 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(app.outlay.R.layout.fragment_categories, null, false);
-        return view;
+        return inflater.inflate(app.outlay.R.layout.fragment_categories, null, false);
     }
 
     @Override

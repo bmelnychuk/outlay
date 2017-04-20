@@ -35,7 +35,9 @@ public class AnalysisPresenter extends MvpBasePresenter<AnalysisView> {
             @Override
             public void onNext(List<Category> categories) {
                 super.onNext(categories);
-                getView().setCategories(categories);
+                if (getView()!=null){
+                    getView().setCategories(categories);
+                }
             }
         });
     }
@@ -47,7 +49,7 @@ public class AnalysisPresenter extends MvpBasePresenter<AnalysisView> {
                     @Override
                     public void onNext(Report report) {
                         super.onNext(report);
-                        if (isViewAttached()) {
+                        if (isViewAttached() && getView()!=null) {
                             getView().showAnalysis(report);
                         }
                     }
