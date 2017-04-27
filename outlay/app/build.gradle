@@ -9,6 +9,8 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 
+apply from: '../testformatter.gradle'
+
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
@@ -29,6 +31,7 @@ android {
         targetSdkVersion cfg.targetSdk
         versionCode cfg.version_code
         versionName cfg.version_name
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     def propsFile = rootProject.file('release.properties')
@@ -91,6 +94,10 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/notice.txt'
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -132,6 +139,11 @@ dependencies {
     compile "com.google.firebase:firebase-database:${libs.firebase}"
     releaseCompile "com.google.firebase:firebase-crash:${libs.firebase}"
     stagingCompile "com.google.firebase:firebase-crash:${libs.firebase}"
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2') {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    testCompile 'junit:junit:4.12'
 }
 
 apply plugin: 'com.google.gms.google-services'

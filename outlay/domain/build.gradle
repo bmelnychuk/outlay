@@ -1,6 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 
+apply from: '../testformatter.gradle'
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -17,4 +19,10 @@ dependencies {
     compile "com.google.code.gson:gson:2.6.2"
     compile "com.google.dagger:dagger:${libs.dagger}"
     compile 'joda-time:joda-time:2.9.2'
+
+    testCompile 'junit:junit:4.12'
+}
+
+retrolambda {
+    oldJdk System.getenv("JAVA7_HOME")
 }
