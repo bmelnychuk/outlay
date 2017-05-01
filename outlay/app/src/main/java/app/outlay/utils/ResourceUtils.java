@@ -6,16 +6,19 @@ import android.graphics.drawable.Drawable;
 import com.github.johnkil.print.PrintDrawable;
 
 import java.util.Random;
+import java.util.logging.*;
 
 /**
  * Created by Bogdan Melnychuk on 1/17/16.
  */
 public final class ResourceUtils {
+    private static final Logger LOGGER = Logger.getLogger( ResourceUtils.class.getName() );
+    private ResourceUtils(){}
     public static int getResourceId(Context context, String pVariableName, String pResourcename) {
         try {
             return context.getResources().getIdentifier(pVariableName, pResourcename, context.getPackageName());
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log( Level.SEVERE, e.toString(), e);
             return -1;
         }
     }

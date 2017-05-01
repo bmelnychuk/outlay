@@ -21,7 +21,7 @@ ext {
             circleimageview     : "2.0.0",
             picasso             : "2.5.2",
             greenDao            : "2.0.0",
-            firebase            : "10.0.1",
+            firebase            : "10.2.1",
     ]
 }
 
@@ -31,7 +31,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.3.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.4.0'
         classpath 'com.google.gms:google-services:3.0.0'
