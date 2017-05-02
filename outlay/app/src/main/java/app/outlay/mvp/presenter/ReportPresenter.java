@@ -26,8 +26,8 @@ public class ReportPresenter extends MvpBasePresenter<StatisticView> {
     }
 
     public void getExpenses(Date date, int period) {
-        Date startDate = date;
-        Date endDate = date;
+        Date startDate;
+        Date endDate;
 
         switch (period) {
             case ReportFragment.PERIOD_DAY:
@@ -41,6 +41,10 @@ public class ReportPresenter extends MvpBasePresenter<StatisticView> {
             case ReportFragment.PERIOD_MONTH:
                 startDate = DateUtils.getMonthStart(date);
                 endDate = DateUtils.getMonthEnd(date);
+                break;
+            default:
+                startDate = date;
+                endDate = date;
                 break;
         }
 

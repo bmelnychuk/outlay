@@ -104,6 +104,8 @@ public abstract class DrawerActivity extends ParentActivity {
                             case ITEM_CREATE_USER:
                                 createUser();
                                 break;
+                            default:
+                                break;
                         }
 
                         mainDrawer.setSelection(-1);
