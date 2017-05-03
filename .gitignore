@@ -33,3 +33,5 @@ captures/
 
 # Secrets
 *google-services.json
+
+.idea
