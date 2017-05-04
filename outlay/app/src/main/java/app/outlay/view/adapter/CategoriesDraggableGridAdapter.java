@@ -70,8 +70,7 @@ public class CategoriesDraggableGridAdapter extends RecyclerView.Adapter<Categor
     public CategoryDraggableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(app.outlay.R.layout.item_category, parent, false);
-        final CategoryDraggableViewHolder viewHolder = new CategoryDraggableViewHolder(v);
-        return viewHolder;
+        return new CategoryDraggableViewHolder(v);
     }
 
     public List<Category> getItems() {

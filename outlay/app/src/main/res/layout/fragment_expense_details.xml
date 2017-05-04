@@ -68,7 +68,7 @@
                 android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:editable="false"
+                android:inputType="none"
                 android:hint="@string/label_date"
                 android:textColor="@color/text_primary" />
 

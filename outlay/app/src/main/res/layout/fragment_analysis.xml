@@ -49,16 +49,15 @@
             android:id="@+id/startDateInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/categoryTitle"
             android:layout_weight="1">
 
             <EditText
                 android:id="@+id/startDate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:editable="false"
+                android:inputType="none"
                 android:focusable="false"
-                android:hint="Start Date"
+                android:hint="@string/hint_start_date"
                 android:textColor="@color/text_primary" />
 
         </android.support.design.widget.TextInputLayout>
@@ -67,16 +66,15 @@
             android:id="@+id/endDateInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/categoryTitle"
             android:layout_weight="1">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/endDate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:editable="false"
+                android:inputType="none"
                 android:focusable="false"
-                android:hint="End Date"
+                android:hint="@string/hint_end_date"
                 android:textColor="@color/text_primary" />
 
         </android.support.design.widget.TextInputLayout>

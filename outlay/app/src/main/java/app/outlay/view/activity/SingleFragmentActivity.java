@@ -10,6 +10,8 @@ import app.outlay.view.activity.base.ParentActivity;
 
 public class SingleFragmentActivity extends ParentActivity {
 
+    private static final String FRAGMENT_PARAM = "fragment";
+
     public static void start(Context context, Class<?> fragmentClass, Bundle bundle) {
         Intent intent = new Intent(context, SingleFragmentActivity.class);
         if (bundle != null) {
@@ -22,8 +24,6 @@ public class SingleFragmentActivity extends ParentActivity {
     public static void start(Context context, Class<?> fragmentClass) {
         start(context, fragmentClass, null);
     }
-
-    public final static String FRAGMENT_PARAM = "fragment";
 
     @Override
     protected void onCreate(Bundle bundle) {

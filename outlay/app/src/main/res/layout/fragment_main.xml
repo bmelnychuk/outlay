@@ -40,7 +40,7 @@
         android:focusableInTouchMode="false"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:hint="0.0"
+        android:hint="@string/hint_amount"
         android:lines="1"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_disabled"
@@ -106,7 +106,7 @@
         android:layout_marginBottom="@dimen/spacing_very_big"
         android:paddingLeft="@dimen/spacing_default"
         android:paddingRight="@dimen/spacing_default"
-        android:text="Go to categories"
+        android:text="@string/label_go_to_categories"
         android:theme="@style/MyOverlayTheme"
         android:visibility="gone" />
 

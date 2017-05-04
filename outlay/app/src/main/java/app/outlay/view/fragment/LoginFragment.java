@@ -1,6 +1,7 @@
 package app.outlay.view.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class LoginFragment extends BaseMvpFragment<LoginView, LoginViewPresenter
         getApp().getAppComponent().inject(this);
     }
 
+    @NonNull
     @Override
     public LoginViewPresenter createPresenter() {
         return presenter;
@@ -44,8 +46,7 @@ public class LoginFragment extends BaseMvpFragment<LoginView, LoginViewPresenter
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(app.outlay.R.layout.fragment_login, null, false);
-        return view;
+        return inflater.inflate(app.outlay.R.layout.fragment_login, null, false);
     }
 
     @Override

@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Material.Custom">
         <activity
             android:name="app.outlay.view.activity.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="app.outlay.view.activity.SingleFragmentActivity"

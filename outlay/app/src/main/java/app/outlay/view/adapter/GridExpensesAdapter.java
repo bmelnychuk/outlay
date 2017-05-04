@@ -25,8 +25,7 @@ public class GridExpensesAdapter extends ExpenseAdapter<GridExpensesAdapter.Expe
     public ExpenseGridItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(app.outlay.R.layout.recycler_grid_expense, parent, false);
-        final ExpenseGridItemViewHolder viewHolder = new ExpenseGridItemViewHolder(v);
-        return viewHolder;
+        return new ExpenseGridItemViewHolder(v);
     }
 
     @Override

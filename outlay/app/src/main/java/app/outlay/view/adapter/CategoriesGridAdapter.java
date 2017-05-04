@@ -73,12 +73,10 @@ public class CategoriesGridAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) numpadView.getLayoutParams();
                 params.height = parent.getMeasuredHeight() - (context.getResources().getDimensionPixelSize(app.outlay.R.dimen.category_item_height) * 2);
 
-                final NumpadViewHolder viewHolder = new NumpadViewHolder(numpadView);
-                return viewHolder;
+                return new NumpadViewHolder(numpadView);
             default:
                 final View catView = inflater.inflate(app.outlay.R.layout.item_category, parent, false);
-                final CategoryViewHolder categoryViewHolder = new CategoryViewHolder(catView);
-                return categoryViewHolder;
+                return new CategoryViewHolder(catView);
         }
     }
 

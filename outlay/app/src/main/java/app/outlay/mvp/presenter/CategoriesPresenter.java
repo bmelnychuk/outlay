@@ -31,7 +31,9 @@ public class CategoriesPresenter extends MvpBasePresenter<CategoriesView> {
         getCategoriesUseCase.execute(new DefaultSubscriber<List<Category>>() {
             @Override
             public void onNext(List<Category> categories) {
-                getView().showCategories(categories);
+                if (getView()!=null){
+                    getView().showCategories(categories);
+                }
             }
         });
     }

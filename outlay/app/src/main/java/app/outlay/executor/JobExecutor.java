@@ -1,6 +1,8 @@
 package app.outlay.executor;
 
 
+import android.support.annotation.NonNull;
+
 import app.outlay.core.executor.ThreadExecutor;
 
 import java.util.concurrent.BlockingQueue;
@@ -39,7 +41,7 @@ public class JobExecutor implements ThreadExecutor {
     }
 
     @Override
-    public void execute(Runnable runnable) {
+    public void execute(@NonNull Runnable runnable) {
         if (runnable == null) {
             throw new IllegalArgumentException("Runnable to execute cannot be null");
         }
@@ -51,7 +53,7 @@ public class JobExecutor implements ThreadExecutor {
         private int counter = 0;
 
         @Override
-        public Thread newThread(Runnable runnable) {
+        public Thread newThread(@NonNull Runnable runnable) {
             return new Thread(runnable, THREAD_NAME + counter++);
         }
     }

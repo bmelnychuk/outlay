@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import app.outlay.R;
 import app.outlay.view.fragment.base.StaticContentFragment;
 
 import butterknife.Bind;
@@ -42,6 +43,7 @@ public class AboutFragment extends StaticContentFragment {
         return view;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -51,7 +53,12 @@ public class AboutFragment extends StaticContentFragment {
             i.setData(Uri.parse(url));
             startActivity(i);
         });
-        aboutText.setText(Html.fromHtml(getString(app.outlay.R.string.text_about)));
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            aboutText.setText(Html.fromHtml(getString(R.string.text_about), Html.FROM_HTML_MODE_LEGACY));
+        } else {
+            aboutText.setText(Html.fromHtml(getString(app.outlay.R.string.text_about)));
+        }
+
         aboutText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

@@ -70,5 +70,19 @@
     <string name="category_games">Games</string>
     <string name="category_tickets">Tickets</string>
     <string name="no_content_categories">Create Your first category</string>
+    <string name="label_loading">Loading</string>
+    <string name="hint_start_date">Start Date</string>
+    <string name="hint_end_date">End Date</string>
+    <string name="hint_amount">0.0</string>
+    <string name="label_go_to_categories">Go to categories</string>
+    <string name="label_sign_in">SIGN IN</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="label_forget_password">Forget Password?</string>
+    <string name="label_login">Login</string>
+    <string name="label_guest">Guest</string>
+    <string name="label_sign_up">SIGN UP</string>
+    <string name="hint_repeat_password">Repeat Password</string>
+    <string name="label_sign_up_lowercase">Sign Up</string>
 
 </resources>

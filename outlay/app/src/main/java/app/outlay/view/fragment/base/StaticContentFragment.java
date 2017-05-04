@@ -2,6 +2,7 @@ package app.outlay.view.fragment.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -45,7 +46,10 @@ public class StaticContentFragment extends Fragment implements BaseFragment {
     }
 
     public void setDisplayHomeAsUpEnabled(boolean value) {
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(value);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(value);
+        }
     }
 
     public void setTitle(String value) {

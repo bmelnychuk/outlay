@@ -2,6 +2,7 @@ package app.outlay.view.fragment;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -53,7 +54,6 @@ import butterknife.Bind;
  */
 
 public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPresenter> implements AnalysisView {
-    private static final int REF_TIMESTAMP = 1451660400;
 
     @Bind(app.outlay.R.id.categoryTitle)
     MaterialAutoCompleteTextView categoryTitle;
@@ -83,6 +83,7 @@ public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPres
     private Date endDate;
     private Category selectedCategory;
 
+    @NonNull
     @Override
     public AnalysisPresenter createPresenter() {
         return presenter;
@@ -97,8 +98,7 @@ public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPres
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(app.outlay.R.layout.fragment_analysis, null, false);
-        return view;
+        return inflater.inflate(app.outlay.R.layout.fragment_analysis, null, false);
     }
 
     @Override

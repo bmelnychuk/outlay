@@ -41,7 +41,9 @@ public class ExpenseDetailsPresenter extends MvpBasePresenter<ExpenseDetailsView
         getExpenseUseCase.execute(new GetExpenseUseCase.Input(expenseId, date), new DefaultSubscriber<Expense>() {
             @Override
             public void onNext(Expense expense) {
-                getView().showExpense(expense);
+                if (getView()!=null){
+                    getView().showExpense(expense);
+                }
             }
         });
 
@@ -52,7 +54,9 @@ public class ExpenseDetailsPresenter extends MvpBasePresenter<ExpenseDetailsView
             @Override
             public void onNext(List<Category> categories) {
                 super.onNext(categories);
-                getView().showCategories(categories);
+                if (getView()!=null){
+                    getView().showCategories(categories);
+                }
             }
         });
     }

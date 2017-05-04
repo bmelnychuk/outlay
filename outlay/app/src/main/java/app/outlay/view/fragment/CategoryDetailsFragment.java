@@ -1,6 +1,7 @@
 package app.outlay.view.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -59,6 +60,7 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
     private IconsGridAdapter adapter;
     private Category category;
 
+    @NonNull
     @Override
     public CategoryDetailsPresenter createPresenter() {
         return presenter;
@@ -73,8 +75,7 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(app.outlay.R.layout.fragment_category_details, null, false);
-        return view;
+        return inflater.inflate(app.outlay.R.layout.fragment_category_details, null, false);
     }
 
     @Override

@@ -61,8 +61,7 @@ public class IconsGridAdapter extends RecyclerView.Adapter<IconsGridAdapter.Cate
     public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(app.outlay.R.layout.item_icon, parent, false);
-        final CategoryViewHolder viewHolder = new CategoryViewHolder(v);
-        return viewHolder;
+        return new CategoryViewHolder(v);
     }
 
     @Override

@@ -3,6 +3,7 @@ package app.outlay.view.dialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
@@ -18,6 +19,7 @@ public class DatePickerFragment extends DialogFragment
 
     private DatePickerDialog.OnDateSetListener listener;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         //current date as the default date in the picker
@@ -29,8 +31,6 @@ public class DatePickerFragment extends DialogFragment
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), app.outlay.R.style.DatePicker, this, year, month, day);
         if (DeviceUtils.supportV5()) {
             dialog.getDatePicker().setFirstDayOfWeek(Calendar.MONDAY);
-        } else {
-            //dialog.getDatePicker().getCalendarView().setFirstDayOfWeek(Calendar.MONDAY);
         }
         return dialog;
     }
