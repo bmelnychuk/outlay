@@ -31,5 +31,3 @@ proguard/
 # Android Studio captures folder
 captures/
 
-# Secrets
-*google-services.json
