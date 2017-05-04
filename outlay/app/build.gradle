@@ -30,6 +30,7 @@ android {
         targetSdkVersion cfg.targetSdk
         versionCode cfg.version_code
         versionName cfg.version_name
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
 
     def propsFile = rootProject.file('release.properties')
@@ -126,6 +127,16 @@ dependencies {
     compile "com.google.firebase:firebase-database:${libs.firebase}"
     releaseCompile "com.google.firebase:firebase-crash:${libs.firebase}"
     stagingCompile "com.google.firebase:firebase-crash:${libs.firebase}"
+
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
 
 
     //ezt kellet volna mergelni
