@@ -1,0 +1,19 @@
+language: android
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-25.0.2
+    - android-25
+    - extra-android-support
+    - extra-android-m2repository
+    - extra-google-m2repository
+  licenses:
+    - .+
+jdk: oraclejdk8
+
+before_install:
+  - cd outlay
+  - cp google-services.mock.json app/google-services.json
+  
+script: ./gradlew clean assembleDebug

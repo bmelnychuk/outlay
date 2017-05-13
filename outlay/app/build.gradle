@@ -8,6 +8,7 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
+apply plugin: 'findbugs'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -29,6 +30,7 @@ android {
         targetSdkVersion cfg.targetSdk
         versionCode cfg.version_code
         versionName cfg.version_name
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
 
     def propsFile = rootProject.file('release.properties')
@@ -125,6 +127,38 @@ dependencies {
     compile "com.google.firebase:firebase-database:${libs.firebase}"
     releaseCompile "com.google.firebase:firebase-crash:${libs.firebase}"
     stagingCompile "com.google.firebase:firebase-crash:${libs.firebase}"
+
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
+
+
+    //ezt kellet volna mergelni
+    testCompile 'junit:junit:4.12'
+    // Optional -- Mockito framework
+    testCompile 'org.mockito:mockito-core:1.10.19'
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+task findbugs(type: FindBugs) {
+    ignoreFailures = false
+    effort = "default"
+    reportLevel = "medium"
+    classes = files("${project.rootDir}/app/build/intermediates/classes")
+    source = fileTree('src/main/java/')
+    classpath = files()
+    reports {
+        html.enabled = true
+        xml.enabled = false
+        html {
+            destination "$project.buildDir/findbugs/findbugs-output.html"
+        }
+    }
+}
