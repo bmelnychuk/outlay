@@ -59,6 +59,9 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
     private IconsGridAdapter adapter;
     private Category category;
 
+    //finbugs
+    private Random rndGenerator;
+
     @Override
     public CategoryDetailsPresenter createPresenter() {
         return presenter;
@@ -67,6 +70,10 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //findbugs fix
+        rndGenerator=new Random();
+
         getApp().getUserComponent().inject(this);
     }
 
@@ -146,8 +153,10 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
         this.category = category;
 
         if (category.getId() == null) {
+
             int colorsCount = colorPicker.getColors().length;
-            int randomPosition = new Random().nextInt(colorsCount);
+            //findbugs fix
+            int randomPosition = rndGenerator.nextInt(colorsCount);
             colorPicker.setSelectedColorPosition(randomPosition);
             adapter.setActiveColor(colorPicker.getColor());
         } else {
