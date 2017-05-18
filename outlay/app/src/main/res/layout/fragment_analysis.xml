@@ -2,11 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_main">
+    android:background="?attr/backgroundColor">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        style="@style/DarkToolbarStyle"
+        android:elevation="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true" />
@@ -59,7 +61,7 @@
                 android:editable="false"
                 android:focusable="false"
                 android:hint="Start Date"
-                android:textColor="@color/text_primary" />
+                android:textColor="?attr/textColorPrimary" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -77,7 +79,7 @@
                 android:editable="false"
                 android:focusable="false"
                 android:hint="End Date"
-                android:textColor="@color/text_primary" />
+                android:textColor="?attr/textColorPrimary" />
 
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>

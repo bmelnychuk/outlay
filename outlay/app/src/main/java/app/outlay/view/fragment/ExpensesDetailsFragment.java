@@ -116,7 +116,7 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(app.outlay.R.menu.menu_category_details, menu);
         MenuItem saveItem = menu.findItem(app.outlay.R.id.action_save);
-        saveItem.setIcon(ResourceUtils.getMaterialToolbarIcon(getActivity(), app.outlay.R.string.ic_material_done));
+        saveItem.setIcon(getResourceManager().getMaterialToolbarIcon(app.outlay.R.string.ic_material_done));
         if (expense != null && expense.getId() == null) {
             MenuItem deleteItem = menu.findItem(app.outlay.R.id.action_delete);
             deleteItem.setVisible(false);

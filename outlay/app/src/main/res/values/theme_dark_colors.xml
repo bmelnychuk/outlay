@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="theme.dark.primary">#2A2B40</color>
+    <color name="theme.dark.primary_dark">#2A2B40</color>
+    <color name="theme.dark.accent">#F1C632</color>
+    <color name="theme.dark.background">#30324a</color>
+    <color name="theme.dark.background_dark">#242539</color>
+
+    <color name="theme.dark.icon_inactive">#80ffffff</color>
+    <color name="theme.dark.icon_active">#ffffff</color>
+
+    <color name="theme.dark.text_primary">#FFFFFF</color>
+    <color name="theme.dark.text_secondary">#B2FFFFFF</color>
+    <color name="theme.dark.text_disabled">#4CFFFFFF</color>
+
+    <color name="theme.dark.progress">#11FFFFFF</color>
+</resources>

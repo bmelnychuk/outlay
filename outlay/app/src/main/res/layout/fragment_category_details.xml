@@ -2,12 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_main">
+    android:background="?attr/backgroundColor">
 
 
     <android.support.v7.widget.Toolbar
+        android:layout_marginBottom="16dp"
         android:id="@+id/toolbar"
-        style="@style/DarkToolbarStyle"
+        android:elevation="8dp"
+        android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true" />
@@ -21,7 +23,7 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.AppCompatEditText
-            android:textColor="@color/text_primary"
+            android:textColor="?attr/textColorPrimary"
             android:id="@+id/categoryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

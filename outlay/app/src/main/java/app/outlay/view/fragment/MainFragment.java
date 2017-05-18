@@ -150,8 +150,8 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     }
 
     private void initStaticContent() {
-        chartIcon.setImageDrawable(ResourceUtils.getCustomToolbarIcon(getActivity(), app.outlay.R.integer.ic_chart));
-        drawerIcon.setImageDrawable(ResourceUtils.getMaterialToolbarIcon(getActivity(), app.outlay.R.string.ic_material_menu));
+        chartIcon.setImageDrawable(getResourceManager().getCustomToolbarIcon(app.outlay.R.integer.ic_chart));
+        drawerIcon.setImageDrawable(getResourceManager().getMaterialToolbarIcon(app.outlay.R.string.ic_material_menu));
 
         drawerIcon.setOnClickListener(v -> ((DrawerActivity) getActivity()).getMainDrawer().openDrawer());
         chartIcon.setOnClickListener(v -> {

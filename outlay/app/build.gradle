@@ -101,11 +101,10 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${libs.supportVersion}"
 
     //Rx
-    compile "io.reactivex:rxjava:${libs.rxjava}"
     compile "io.reactivex:rxandroid:${libs.rxandroid}"
 
     //UI
-    compile('com.mikepenz:materialdrawer:5.8.1@aar') {
+    compile('com.mikepenz:materialdrawer:5.9.1@aar') {
         transitive = true
     }
     compile 'com.mikepenz:material-design-iconic-typeface:+@aar'

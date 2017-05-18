@@ -9,25 +9,28 @@
         android:orientation="horizontal">
 
         <app.outlay.view.numpad.NumpadButton
-            app:numpadButtonText="1"
             android:id="@+id/btn1"
+            style="?attr/numpadButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:numpadButtonText="1" />
 
         <app.outlay.view.numpad.NumpadButton
-            app:numpadButtonText="2"
             android:id="@+id/btn2"
+            style="?attr/numpadButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:numpadButtonText="2" />
 
         <app.outlay.view.numpad.NumpadButton
-            app:numpadButtonText="3"
             android:id="@+id/btn3"
+            style="?attr/numpadButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:numpadButtonText="3" />
     </LinearLayout>
 
     <LinearLayout
@@ -37,25 +40,28 @@
         android:orientation="horizontal">
 
         <app.outlay.view.numpad.NumpadButton
-            app:numpadButtonText="4"
             android:id="@+id/btn4"
+            style="?attr/numpadButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:numpadButtonText="4" />
 
         <app.outlay.view.numpad.NumpadButton
-            app:numpadButtonText="5"
             android:id="@+id/btn5"
+            style="?attr/numpadButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:numpadButtonText="5" />
 
         <app.outlay.view.numpad.NumpadButton
-            app:numpadButtonText="6"
             android:id="@+id/btn6"
+            style="?attr/numpadButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:numpadButtonText="6" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,25 +71,28 @@
         android:orientation="horizontal">
 
         <app.outlay.view.numpad.NumpadButton
-            app:numpadButtonText="7"
             android:id="@+id/btn7"
+            style="?attr/numpadButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:numpadButtonText="7" />
 
         <app.outlay.view.numpad.NumpadButton
-            app:numpadButtonText="8"
             android:id="@+id/btn8"
+            style="?attr/numpadButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:numpadButtonText="8" />
 
         <app.outlay.view.numpad.NumpadButton
-            app:numpadButtonText="9"
             android:id="@+id/btn9"
+            style="?attr/numpadButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:numpadButtonText="9" />
     </LinearLayout>
 
     <LinearLayout
@@ -93,24 +102,27 @@
         android:orientation="horizontal">
 
         <app.outlay.view.numpad.NumpadButton
-            app:numpadButtonText="."
             android:id="@+id/btnDecimal"
+            style="?attr/numpadButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:numpadButtonText="." />
 
         <app.outlay.view.numpad.NumpadButton
-            app:numpadButtonText="0"
             android:id="@+id/btn0"
+            style="?attr/numpadButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:numpadButtonText="0" />
 
         <app.outlay.view.numpad.NumpadButton
-            app:numpadButtonIcon="@string/ic_material_backspace"
+            style="?attr/numpadButton"
             android:id="@+id/btnClear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:numpadButtonIcon="@string/ic_material_backspace" />
     </LinearLayout>
 </merge>

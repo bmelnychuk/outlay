@@ -1,6 +1,7 @@
 package app.outlay.view.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import app.outlay.domain.model.Category;
 import app.outlay.utils.IconUtils;
+import app.outlay.utils.ResourceManager;
 import app.outlay.utils.ResourceUtils;
 import app.outlay.view.adapter.listener.OnCategoryClickListener;
 import app.outlay.view.helper.itemtouch.ItemTouchHelperAdapter;
@@ -31,6 +33,11 @@ public class CategoriesDraggableGridAdapter extends RecyclerView.Adapter<Categor
     private List<Category> items = new ArrayList<>();
     private OnDragListener dragListener;
     private OnCategoryClickListener clickListener;
+    private ResourceManager resourceManager;
+
+    public CategoriesDraggableGridAdapter(ResourceManager resourceManager) {
+        this.resourceManager = resourceManager;
+    }
 
     public void setItems(List<Category> items) {
         this.items = items;
@@ -121,7 +128,7 @@ public class CategoriesDraggableGridAdapter extends RecyclerView.Adapter<Categor
 
         @Override
         public void onItemSelected() {
-            itemView.setBackgroundColor(ContextCompat.getColor(categoryIcon.getContext(), app.outlay.R.color.dark));
+            itemView.setBackgroundColor(resourceManager.getBackgroundDarkColor());
         }
 
         @Override

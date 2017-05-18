@@ -17,11 +17,6 @@
     <color name="text_secondary">#9B99A6</color>
     <color name="text_disabled">#B8B8B8</color>
 
-    <color name="material_drawer_background">@color/background_main</color>
-    <color name="material_drawer_primary_text">@color/material_drawer_dark_primary_icon</color>
-    <color name="material_drawer_primary_icon">@color/material_drawer_dark_primary_text</color>
-    <color name="material_drawer_dark_selected">#202020</color>
-
     <color name="transparent">#00FFFFFF</color>
 
     <color name="red">#F44336</color>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="theme.light.primary">#F5F5F5</color>
+    <color name="theme.light.primary_dark">#F5F5F5</color>
+    <color name="theme.light.accent">#F1C632</color>
+    <color name="theme.light.background">#FFFFFF</color>
+    <color name="theme.light.background_dark">#E0E0E0</color>
+
+    <color name="theme.light.icon_inactive">#61000000</color>
+    <color name="theme.light.icon_active">#8A000000</color>
+
+    <color name="theme.light.text_primary">#DE000000</color>
+    <color name="theme.light.text_secondary">#8A000000</color>
+    <color name="theme.light.text_disabled">#61000000</color>
+
+    <color name="theme.light.progress">#E0E0E0</color>
+
+
+    <!-- White Text Color for Dark Background -->
+    <color name="textLightPrimary">#FFFFFF</color> <!--%100 opacity-->
+    <color name="textLightSecondary">#B2FFFFFF</color> <!--B2 for %70 opacity-->
+    <color name="textLightDisabled">#4CFFFFFF</color> <!--4C for %30 opacity-->
+</resources>

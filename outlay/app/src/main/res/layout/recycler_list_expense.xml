@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/spacing_tiny">
 
     <ImageView
@@ -36,7 +36,7 @@
         android:layout_toLeftOf="@+id/amount"
         android:fontFamily="sans-serif-light"
         android:padding="@dimen/spacing_default"
-        android:textColor="@color/text_secondary" />
+        android:textColor="?attr/textColorSecondary" />
 
     <TextView
         android:id="@+id/title"
@@ -49,6 +49,7 @@
         android:fontFamily="sans-serif-light"
         android:gravity="center_vertical"
         android:lines="2"
+        android:textColor="?attr/textColorPrimary"
         android:textStyle="bold" />
 
 </RelativeLayout>

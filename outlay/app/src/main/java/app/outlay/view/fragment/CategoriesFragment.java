@@ -90,7 +90,7 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
         categoriesGrid.setLayoutManager(gridLayoutManager);
 
-        adapter = new CategoriesDraggableGridAdapter();
+        adapter = new CategoriesDraggableGridAdapter(getResourceManager());
         adapter.setDragListener(this);
         adapter.setOnCategoryClickListener(c -> Navigator.goToCategoryDetails(getActivity(), c.getId()));
         categoriesGrid.setAdapter(adapter);
@@ -105,7 +105,7 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
         Drawable noCategoryIcon = IconUtils.getIconMaterialIcon(
                 getContext(),
                 MaterialDesignIconic.Icon.gmi_label,
-                ContextCompat.getColor(getActivity(), app.outlay.R.color.icon_inactive),
+                getResourceManager().getInactiveIconColor(),
                 app.outlay.R.dimen.icon_no_results,
                 16
         );

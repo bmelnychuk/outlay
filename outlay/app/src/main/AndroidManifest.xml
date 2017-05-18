@@ -10,7 +10,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Material.Custom">
+        android:theme="@style/Theme.Outlay.Dark">
         <activity
             android:name="app.outlay.view.activity.MainActivity"
             android:screenOrientation="portrait"></activity>
@@ -22,7 +22,7 @@
         <activity
             android:name="app.outlay.view.activity.SyncGuestActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Material.Translucent" />
+            android:theme="@style/Theme.Outlay.Translucent.Dark" />
 
         <activity
             android:name="app.outlay.view.activity.LoginActivity"

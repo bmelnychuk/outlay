@@ -1,12 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_main">
-
+    android:background="?attr/backgroundColor">
 
     <android.support.v7.widget.Toolbar
+        android:background="?attr/colorPrimary"
         android:id="@+id/toolbar"
-        style="@style/DarkToolbarStyle"
+        android:elevation="8dp"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true" />
@@ -16,8 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:layout_marginLeft="@dimen/spacing_default"
-        android:layout_marginRight="@dimen/spacing_default"
+        android:padding="@dimen/spacing_default"
         android:clipToPadding="false"
         android:paddingBottom="128dp"
         android:scrollbars="none" />

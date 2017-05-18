@@ -4,7 +4,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_main">
+    android:background="?attr/backgroundColor">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -13,7 +13,6 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            style="@style/DarkToolbarStyle"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways" />
@@ -36,6 +35,7 @@
                 app:iconSize="@dimen/expense_category_icon" />
 
             <TextView
+                android:textColor="?attr/textColorSecondary"
                 android:id="@+id/filterCategoryName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,6 +43,7 @@
                 android:textSize="@dimen/text_big" />
 
             <TextView
+                android:textColor="?attr/textColorSecondary"
                 android:id="@+id/filterDateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

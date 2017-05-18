@@ -9,8 +9,8 @@
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:background="@drawable/btn_rippled"
-        android:padding="12dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="16dp"
         app:iconColor="@color/accent"
         app:iconFont="fonts/material-icon-font.ttf"
         app:iconSize="@dimen/toolbar_icon_size" />

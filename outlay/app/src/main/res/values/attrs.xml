@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <attr name="backgroundColor" format="reference" />
+    <attr name="backgroundDarkColor" format="reference" />
+
+    <attr name="activeIconColor" format="reference" />
+    <attr name="inactiveIconColor" format="reference" />
+    <attr name="textColorPrimary" format="reference" />
+    <attr name="textColorSecondary" format="reference" />
+    <attr name="textColorDisabled" format="reference" />
+
+    <attr name="progressColor" format="reference" />
+    <attr name="numpadButton" format="reference" />
+
     <declare-styleable name="NumpadButton">
         <attr name="numpadButtonText" format="string" />
+        <attr name="numpadButtonTextColor" format="color" />
+        <attr name="numpadButtonHighlightColor" format="color" />
         <attr name="numpadButtonIcon" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="NumpadView">
+        <attr name="btnTextColor" format="reference" />
+    </declare-styleable>
+
     <declare-styleable name="progressLayout">
         <attr name="emptyColor" format="color" />
         <attr name="loadedColor" format="color" />
         <attr name="maxProgress" format="integer" />
-        <attr name="autoProgress" format="boolean"/>
+        <attr name="autoProgress" format="boolean" />
     </declare-styleable>
 </resources>

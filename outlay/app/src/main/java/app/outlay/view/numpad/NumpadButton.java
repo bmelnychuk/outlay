@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.github.johnkil.print.PrintView;
 
+import app.outlay.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -61,14 +62,17 @@ public class NumpadButton extends RelativeLayout {
         try {
             String icon = ta.getString(app.outlay.R.styleable.NumpadButton_numpadButtonIcon);
             String name = ta.getString(app.outlay.R.styleable.NumpadButton_numpadButtonText);
+            int textColor = ta.getColor(R.styleable.NumpadButton_numpadButtonTextColor, -1);
+
             if (icon == null) {
                 initTextButton(inflater);
                 textValue.setText(name);
+                textValue.setTextColor(textColor);
             } else {
                 initIconButton(inflater);
                 numpadIcon.setIconText(icon);
+                numpadIcon.setIconColor(textColor);
             }
-
         } finally {
             ta.recycle();
         }

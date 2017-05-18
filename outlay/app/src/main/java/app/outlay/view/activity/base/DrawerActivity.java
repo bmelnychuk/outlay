@@ -1,6 +1,7 @@
 package app.outlay.view.activity.base;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.text.TextUtils;
 
@@ -12,7 +13,9 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+
 import app.outlay.Constants;
+import app.outlay.R;
 import app.outlay.domain.model.User;
 import app.outlay.view.activity.SingleFragmentActivity;
 import app.outlay.view.alert.Alert;
@@ -42,13 +45,14 @@ public abstract class DrawerActivity extends ParentActivity {
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withHeaderBackground(app.outlay.R.drawable.drawer_image)
+                .withTextColor(getResourceManager().getSecondaryTextColor())
                 .withAlternativeProfileHeaderSwitching(false)
                 .withSelectionListEnabledForSingleProfile(false)
                 .withProfileImagesClickable(false)
                 .withCloseDrawerOnProfileListClick(false)
                 .addProfiles(
-                        new ProfileDrawerItem().withEmail(email)
+                        new ProfileDrawerItem()
+                                .withEmail(email)
                 )
                 .build();
 

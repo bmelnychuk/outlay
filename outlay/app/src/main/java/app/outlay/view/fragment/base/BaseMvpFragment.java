@@ -14,6 +14,7 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
 import app.outlay.App;
 import app.outlay.analytics.Analytics;
 import app.outlay.di.component.AppComponent;
+import app.outlay.utils.ResourceManager;
 import app.outlay.view.activity.base.BaseActivity;
 
 import butterknife.ButterKnife;
@@ -63,6 +64,11 @@ public abstract class BaseMvpFragment<V extends MvpView, P extends MvpPresenter<
     @Override
     public BaseActivity getBaseActivity() {
         return (BaseActivity) getActivity();
+    }
+
+    @Override
+    public ResourceManager getResourceManager() {
+        return getBaseActivity().getResourceManager();
     }
 
     @Override

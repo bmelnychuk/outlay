@@ -4,7 +4,6 @@
     android:id="@+id/fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CC2A2B40"
     android:focusable="true"
     android:focusableInTouchMode="true">
 

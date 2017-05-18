@@ -111,7 +111,7 @@ public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPres
         Drawable noCategoryIcon = IconUtils.getIconMaterialIcon(
                 getContext(),
                 MaterialDesignIconic.Icon.gmi_label,
-                ContextCompat.getColor(getActivity(), app.outlay.R.color.icon_inactive),
+                getResourceManager().getInactiveIconColor(),
                 app.outlay.R.dimen.report_category_icon,
                 4
         );
@@ -179,14 +179,14 @@ public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPres
         xAxis.setLabelRotationAngle(270);
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1f);
-        xAxis.setTextColor(ContextCompat.getColor(getActivity(), app.outlay.R.color.icon_active));
+        xAxis.setTextColor(getResourceManager().getSecondaryTextColor());
         xAxis.setValueFormatter(dayAxisValueFormatter);
 
 
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setValueFormatter(new AmountValueFormatter());
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-        leftAxis.setTextColor(ContextCompat.getColor(getActivity(), app.outlay.R.color.icon_active));
+        leftAxis.setTextColor(getResourceManager().getSecondaryTextColor());
         leftAxis.setSpaceTop(15f);
         leftAxis.setAxisMinimum(0f);
     }
@@ -229,7 +229,7 @@ public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPres
 
         BarData data = new BarData(dataSets);
         data.setValueTextSize(10f);
-        data.setValueTextColor(ContextCompat.getColor(getActivity(), app.outlay.R.color.icon_active));
+        data.setValueTextColor(getResourceManager().getSecondaryTextColor());
         data.setBarWidth(0.9f);
 
         dayAxisValueFormatter.setExpenses(expenses);

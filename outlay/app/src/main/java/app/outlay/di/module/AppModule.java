@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import app.outlay.App;
 import app.outlay.analytics.Analytics;
 import app.outlay.core.data.AppPreferences;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
+import app.outlay.utils.ResourceManager;
 import dagger.Module;
 import dagger.Provides;
 

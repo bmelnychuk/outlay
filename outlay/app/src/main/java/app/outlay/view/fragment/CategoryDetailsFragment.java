@@ -81,7 +81,7 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(app.outlay.R.menu.menu_category_details, menu);
         MenuItem saveItem = menu.findItem(app.outlay.R.id.action_save);
-        saveItem.setIcon(ResourceUtils.getMaterialToolbarIcon(getActivity(), app.outlay.R.string.ic_material_done));
+        saveItem.setIcon(getResourceManager().getMaterialToolbarIcon(app.outlay.R.string.ic_material_done));
         if (category != null && category.getId() == null) {
             MenuItem deleteItem = menu.findItem(app.outlay.R.id.action_delete);
             deleteItem.setVisible(false);
@@ -120,7 +120,7 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
         iconsGrid.setLayoutManager(gridLayoutManager);
-        adapter = new IconsGridAdapter(IconUtils.getAll());
+        adapter = new IconsGridAdapter(IconUtils.getAll(), getResourceManager());
         iconsGrid.setAdapter(adapter);
         colorPicker.setOnColorChangedListener(i -> adapter.setActiveColor(i));
 

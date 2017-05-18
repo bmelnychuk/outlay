@@ -13,8 +13,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#464863">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/signInForm"
@@ -22,7 +21,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignBottom="@+id/signUpForm"
                 android:layout_alignTop="@+id/signUpForm"
-                android:background="#464863"
+                android:background="?attr/backgroundColor"
                 android:padding="@dimen/spacing_default">
 
                 <TextView
@@ -31,6 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginBottom="@dimen/spacing_default"
+                    android:textColor="?attr/textColorPrimary"
                     android:layout_marginTop="@dimen/spacing_very_small"
                     android:text="SIGN IN"
                     android:textSize="18dp"
@@ -113,7 +113,7 @@
                 android:id="@+id/signUpForm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#0F112C"
+                android:background="?attr/backgroundDarkColor"
                 android:padding="@dimen/spacing_default"
                 android:visibility="invisible">
 
@@ -124,6 +124,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginBottom="@dimen/spacing_default"
                     android:layout_marginTop="@dimen/spacing_very_small"
+                    android:textColor="?attr/textColorPrimary"
                     android:text="SIGN UP"
                     android:textSize="18dp"
                     android:textStyle="bold" />

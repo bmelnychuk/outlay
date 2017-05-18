@@ -10,12 +10,14 @@ import app.outlay.App;
 import app.outlay.analytics.Analytics;
 import app.outlay.di.component.AppComponent;
 
+import app.outlay.utils.ResourceManager;
 import butterknife.ButterKnife;
 
 /**
  * Created by Bogdan Melnychuk on 1/15/16.
  */
 public class ParentActivity extends AppCompatActivity implements BaseActivity {
+    private ResourceManager resourceManager;
 
     @Override
     public void setContentView(int layoutResID) {
@@ -48,6 +50,14 @@ public class ParentActivity extends AppCompatActivity implements BaseActivity {
     @Override
     public Analytics analytics() {
         return getApplicationComponent().analytics();
+    }
+
+    @Override
+    public ResourceManager getResourceManager() {
+        if(this.resourceManager == null) {
+            resourceManager = new ResourceManager(this);
+        }
+        return resourceManager;
     }
 
     protected void addFragment(int containerViewId, Fragment fragment) {

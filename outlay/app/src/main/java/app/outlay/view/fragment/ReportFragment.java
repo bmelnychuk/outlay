@@ -86,10 +86,10 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
 
         inflater.inflate(app.outlay.R.menu.menu_report, menu);
         MenuItem dateItem = menu.findItem(app.outlay.R.id.action_date);
-        dateItem.setIcon(ResourceUtils.getMaterialToolbarIcon(getActivity(), app.outlay.R.string.ic_material_today));
+        dateItem.setIcon(getResourceManager().getMaterialToolbarIcon(app.outlay.R.string.ic_material_today));
 
         MenuItem listItem = menu.findItem(app.outlay.R.id.action_list);
-        listItem.setIcon(ResourceUtils.getMaterialToolbarIcon(getActivity(), app.outlay.R.string.ic_material_list));
+        listItem.setIcon(getResourceManager().getMaterialToolbarIcon(app.outlay.R.string.ic_material_list));
     }
 
     @Override
@@ -130,7 +130,7 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
         tabLayout.addTab(tabLayout.newTab().setText(app.outlay.R.string.label_week));
         tabLayout.addTab(tabLayout.newTab().setText(app.outlay.R.string.label_month));
         tabLayout.getTabAt(selectedPeriod).select();
-        tabLayout.setOnTabSelectedListener(new OnTabSelectedListenerAdapter() {
+        tabLayout.addOnTabSelectedListener(new OnTabSelectedListenerAdapter() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 selectedPeriod = tab.getPosition();

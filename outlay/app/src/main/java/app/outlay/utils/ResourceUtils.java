@@ -11,6 +11,7 @@ import java.util.Random;
  * Created by Bogdan Melnychuk on 1/17/16.
  */
 public final class ResourceUtils {
+    @Deprecated
     public static int getResourceId(Context context, String pVariableName, String pResourcename) {
         try {
             return context.getResources().getIdentifier(pVariableName, pResourcename, context.getPackageName());
@@ -24,6 +25,7 @@ public final class ResourceUtils {
         return getResourceId(context, stringResName, "string");
     }
 
+    @Deprecated
     public static int getIntegerResource(Context context, String stringResName) {
         return getResourceId(context, stringResName, "integer");
     }
@@ -36,6 +38,7 @@ public final class ResourceUtils {
         return colors[colorIndex];
     }
 
+    @Deprecated
     public static Drawable getMaterialToolbarIcon(Context context, int iconResId) {
         return new PrintDrawable.Builder(context)
                 .iconTextRes(iconResId)
@@ -45,6 +48,7 @@ public final class ResourceUtils {
                 .build();
     }
 
+    @Deprecated
     public static Drawable getCustomToolbarIcon(Context context, int codeResId) {
         return new PrintDrawable.Builder(context)
                 .iconCodeRes(codeResId)

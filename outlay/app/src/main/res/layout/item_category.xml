@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/btn_rippled"
+        android:background="?selectableItemBackgroundBorderless"
         android:clickable="true"
         android:padding="@dimen/spacing_very_small" />
 
@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/categoryIcon"
         android:ellipsize="end"
+        android:textColor="?attr/textColorSecondary"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:lines="2"

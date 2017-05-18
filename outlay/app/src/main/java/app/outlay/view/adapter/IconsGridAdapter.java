@@ -13,6 +13,7 @@ import app.outlay.utils.IconUtils;
 
 import java.util.List;
 
+import app.outlay.utils.ResourceManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -24,20 +25,22 @@ public class IconsGridAdapter extends RecyclerView.Adapter<IconsGridAdapter.Cate
     private List<String> items;
     private int activeColor;
     private String selectedIcon;
+    private ResourceManager resourceManager;
 
 
-    public IconsGridAdapter(List<String> categories, int color, String activeIcon) {
+    public IconsGridAdapter(List<String> categories, int color, String activeIcon, ResourceManager resourceManager) {
         this.items = categories;
         this.activeColor = color;
+        this.resourceManager = resourceManager;
         this.selectedIcon = activeIcon;
     }
 
-    public IconsGridAdapter(List<String> categories, int color) {
-        this(categories, color, null);
+    public IconsGridAdapter(List<String> categories, int color, ResourceManager resourceManager) {
+        this(categories, color, null, resourceManager);
     }
 
-    public IconsGridAdapter(List<String> categories) {
-        this(categories, 0, null);
+    public IconsGridAdapter(List<String> categories, ResourceManager resourceManager) {
+        this(categories, 0, null, resourceManager);
     }
 
     public void setActiveColor(int color) {
@@ -74,7 +77,7 @@ public class IconsGridAdapter extends RecyclerView.Adapter<IconsGridAdapter.Cate
         if (currentOne.equals(selectedIcon)) {
             holder.categoryIcon.setIconColor(activeColor);
         } else {
-            holder.categoryIcon.setIconColor(ContextCompat.getColor(context, app.outlay.R.color.icon_inactive));
+            holder.categoryIcon.setIconColor(resourceManager.getInactiveIconColor());
         }
 
         holder.categoryIcon.setOnClickListener(v -> {

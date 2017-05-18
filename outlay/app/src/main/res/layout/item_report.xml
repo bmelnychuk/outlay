@@ -10,7 +10,8 @@
         android:id="@+id/progressLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:emptyColor="@android:color/transparent" />
+        app:emptyColor="@color/transparent"
+        app:loadedColor="?attr/progressColor" />
 
     <com.github.johnkil.print.PrintView
         android:id="@+id/icon"
@@ -20,7 +21,6 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/spacing_default"
         android:layout_marginRight="@dimen/spacing_default"
-        app:iconColor="@android:color/white"
         app:iconSize="@dimen/report_category_icon" />
 
     <TextView
@@ -30,6 +30,7 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/icon"
         android:fontFamily="sans-serif-light"
+        android:textColor="?attr/textColorPrimary"
         android:textStyle="bold" />
 
 
@@ -41,6 +42,7 @@
         android:layout_centerVertical="true"
         android:fontFamily="sans-serif-light"
         android:padding="@dimen/spacing_default"
+        android:textColor="?attr/colorAccent"
         android:textStyle="bold" />
 
 </RelativeLayout>
