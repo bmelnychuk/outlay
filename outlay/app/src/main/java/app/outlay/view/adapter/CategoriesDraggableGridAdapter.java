@@ -1,9 +1,7 @@
 package app.outlay.view.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,18 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import app.outlay.domain.model.Category;
 import app.outlay.utils.IconUtils;
-import app.outlay.utils.ResourceManager;
-import app.outlay.utils.ResourceUtils;
+import app.outlay.utils.ResourceHelper;
+import app.outlay.view.OutlayTheme;
 import app.outlay.view.adapter.listener.OnCategoryClickListener;
 import app.outlay.view.helper.itemtouch.ItemTouchHelperAdapter;
 import app.outlay.view.helper.itemtouch.ItemTouchHelperViewHolder;
 import app.outlay.view.helper.itemtouch.OnDragListener;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -33,10 +30,10 @@ public class CategoriesDraggableGridAdapter extends RecyclerView.Adapter<Categor
     private List<Category> items = new ArrayList<>();
     private OnDragListener dragListener;
     private OnCategoryClickListener clickListener;
-    private ResourceManager resourceManager;
+    private OutlayTheme outlayTheme;
 
-    public CategoriesDraggableGridAdapter(ResourceManager resourceManager) {
-        this.resourceManager = resourceManager;
+    public CategoriesDraggableGridAdapter(OutlayTheme outlayTheme) {
+        this.outlayTheme = outlayTheme;
     }
 
     public void setItems(List<Category> items) {
@@ -94,7 +91,7 @@ public class CategoriesDraggableGridAdapter extends RecyclerView.Adapter<Categor
     public void onBindViewHolder(CategoryDraggableViewHolder holder, int position) {
         Context context = holder.categoryContainer.getContext();
         Category currentOne = items.get(position);
-        int iconCodeRes = ResourceUtils.getIntegerResource(context, currentOne.getIcon());
+        int iconCodeRes = ResourceHelper.getIntegerResource(context, currentOne.getIcon());
         Drawable categoryIcon = IconUtils.getCategoryIcon(context, iconCodeRes, currentOne.getColor(), app.outlay.R.dimen.category_icon);
         holder.categoryIcon.setImageDrawable(categoryIcon);
         holder.categoryTitle.setText(currentOne.getTitle());
@@ -128,7 +125,7 @@ public class CategoriesDraggableGridAdapter extends RecyclerView.Adapter<Categor
 
         @Override
         public void onItemSelected() {
-            itemView.setBackgroundColor(resourceManager.getBackgroundDarkColor());
+            itemView.setBackgroundColor(outlayTheme.backgroundDarkColor);
         }
 
         @Override

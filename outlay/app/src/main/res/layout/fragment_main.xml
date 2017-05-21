@@ -1,59 +1,91 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/colorPrimary">
+    android:layout_height="match_parent">
 
-
-    <ImageView
-        android:id="@+id/chartIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="?selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:padding="@dimen/spacing_default" />
-
-    <ImageView
-        android:id="@+id/drawerIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="?selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:padding="@dimen/spacing_default" />
-
-    <EditText
-        android:id="@+id/amountEditable"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:layout_toLeftOf="@+id/chartIcon"
-        android:layout_toRightOf="@+id/drawerIcon"
-        android:background="@android:color/transparent"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center"
-        android:hint="0.0"
-        android:lines="1"
-        android:textColor="?attr/textColorPrimary"
-        android:textColorHint="@color/text_disabled"
-        android:textSize="@dimen/text_amount" />
+        android:layout_height="match_parent"
+        android:background="?attr/colorPrimary">
 
+        <ImageView
+            android:id="@+id/chartIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:padding="@dimen/spacing_default" />
+
+        <ImageView
+            android:id="@+id/drawerIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:padding="@dimen/spacing_default" />
+
+        <EditText
+            android:id="@+id/amountEditable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_toLeftOf="@+id/chartIcon"
+            android:layout_toRightOf="@+id/drawerIcon"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:hint="0.0"
+            android:lines="1"
+            android:textColor="?attr/textColorPrimary"
+            android:textColorHint="@color/text_disabled"
+            android:textSize="@dimen/text_amount" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/categoriesGrid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/amountEditable"
+            android:layout_marginLeft="@dimen/spacing_default"
+            android:layout_marginRight="@dimen/spacing_default"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:scrollbars="none" />
+
+        <Button
+            android:id="@+id/addCategory"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/spacing_very_big"
+            android:paddingLeft="@dimen/spacing_default"
+            android:paddingRight="@dimen/spacing_default"
+            android:text="Go to categories"
+            android:theme="@style/MyOverlayTheme"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/footer"
-        android:layout_width="wrap_content"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:padding="@dimen/spacing_small">
+        android:background="?attr/backgroundColor"
+        android:padding="@dimen/spacing_small"
+        app:behavior_peekHeight="56dp"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
         <TextView
             android:id="@+id/dateLabel"
@@ -85,29 +117,4 @@
             app:iconText="@string/ic_material_today" />
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/categoriesGrid"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/footer"
-        android:layout_below="@+id/amountEditable"
-        android:layout_marginLeft="@dimen/spacing_default"
-        android:layout_marginRight="@dimen/spacing_default"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:scrollbars="none" />
-
-    <Button
-        android:id="@+id/addCategory"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/footer"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/spacing_very_big"
-        android:paddingLeft="@dimen/spacing_default"
-        android:paddingRight="@dimen/spacing_default"
-        android:text="Go to categories"
-        android:theme="@style/MyOverlayTheme"
-        android:visibility="gone" />
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

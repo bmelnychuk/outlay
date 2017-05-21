@@ -20,7 +20,6 @@ import app.outlay.domain.model.Report;
 import app.outlay.mvp.presenter.ExpensesListPresenter;
 import app.outlay.mvp.view.ExpensesView;
 import app.outlay.utils.IconUtils;
-import app.outlay.utils.ResourceUtils;
 import app.outlay.view.Navigator;
 import app.outlay.view.adapter.ExpenseAdapter;
 import app.outlay.view.adapter.ListExpensesAdapter;
@@ -112,7 +111,7 @@ public class ExpensesListFragment extends BaseMvpFragment<ExpensesView, Expenses
         setTitle(getString(app.outlay.R.string.caption_expenses));
 
         filterDateLabel.setText(getDateLabel());
-        fab.setImageDrawable(ResourceUtils.getMaterialToolbarIcon(getActivity(), app.outlay.R.string.ic_material_add));
+        fab.setImageDrawable(getResourceHelper().getFabIcon(app.outlay.R.string.ic_material_add));
         fab.setOnClickListener(v -> Navigator.goToExpenseDetails(getActivity(), null));
         recyclerView.setHasFixedSize(true);
 

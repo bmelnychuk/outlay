@@ -4,15 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import app.outlay.core.data.AppPreferences;
+public class AppPreferences {
+    public static final int THEME_DARK = 0;
+    public static final int THEME_LIGHT = 1;
 
-public class AndroidPreferencesManager implements AppPreferences {
-    private static final String PREF_FIRST_RUN = "_firstRun_v2";
-    private static final String PREF_SESSION_ID = "_sessionId";
+    private static final String PREF_THEME = "_outlayTheme";
 
     private Context context;
 
-    public AndroidPreferencesManager(Context context) {
+    public AppPreferences(Context context) {
         this.context = context;
     }
 
@@ -28,13 +28,13 @@ public class AndroidPreferencesManager implements AppPreferences {
         return getPreferences().getString(key, null);
     }
 
-//    private static void putInt(Context context, String key, int value) {
-//        getPreferences(context).edit().putInt(key, value).apply();
-//    }
-//
-//    private static int getInt(Context context, String key) {
-//        return getPreferences(context).getInt(key, 0);
-//    }
+    private void putInt(String key, int value) {
+        getPreferences().edit().putInt(key, value).apply();
+    }
+
+    private int getInt(String key) {
+        return getPreferences().getInt(key, 0);
+    }
 
     private void putBoolean(String key, boolean value) {
         getPreferences().edit().putBoolean(key, value).apply();
@@ -53,26 +53,12 @@ public class AndroidPreferencesManager implements AppPreferences {
         editor.clear().commit();
     }
 
-    public void putFirstRun(boolean value) {
-        putBoolean(PREF_FIRST_RUN, value);
+    public void setTheme(int theme) {
+        putInt(PREF_THEME, theme);
     }
 
-    public boolean isFirstRun() {
-        return getBoolean(PREF_FIRST_RUN, true);
+    public int getTheme() {
+        return getInt(PREF_THEME);
     }
 
-    @Override
-    public void setFirstRun(boolean firstRun) {
-        putFirstRun(firstRun);
-    }
-
-    @Override
-    public String getSessionId() {
-        return getString(PREF_SESSION_ID);
-    }
-
-    @Override
-    public void setSessionId(String sessionId) {
-        putString(PREF_SESSION_ID, sessionId);
-    }
 }

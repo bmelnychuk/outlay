@@ -7,6 +7,7 @@
     <string name="menu_item_signin">Sign In</string>
     <string name="menu_item_create_user">Create User</string>
     <string name="menu_item_analysis">Analysis</string>
+    <string name="menu_item_settings">Settings</string>
 
     <string name="info_expense_created">You just spent %1$.2f on %2$s</string>
 
@@ -35,6 +36,7 @@
     <string name="label_spent_the_most">Spent the most on</string>
     <string name="label_no_expenses">No expenses here</string>
     <string name="label_save">Save</string>
+    <string name="label_theme">Theme</string>
     <string name="label_delete">Delete</string>
     <string name="label_summary">Summary</string>
     <string name="label_expenses_list">Expenses List</string>
@@ -70,5 +72,11 @@
     <string name="category_games">Games</string>
     <string name="category_tickets">Tickets</string>
     <string name="no_content_categories">Create Your first category</string>
+
+    <string name="settings_dialog_select_theme">Select theme</string>
+    <string-array name="themes">
+        <item>Dark</item>
+        <item>Light</item>
+    </string-array>
 
 </resources>

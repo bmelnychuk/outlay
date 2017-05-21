@@ -25,7 +25,6 @@ import app.outlay.domain.model.Expense;
 import app.outlay.mvp.presenter.ExpenseDetailsPresenter;
 import app.outlay.mvp.view.ExpenseDetailsView;
 import app.outlay.utils.IconUtils;
-import app.outlay.utils.ResourceUtils;
 import app.outlay.view.autocomplete.CategoryAutoCompleteAdapter;
 import app.outlay.view.dialog.DatePickerFragment;
 import app.outlay.view.fragment.base.BaseMvpFragment;
@@ -116,7 +115,7 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(app.outlay.R.menu.menu_category_details, menu);
         MenuItem saveItem = menu.findItem(app.outlay.R.id.action_save);
-        saveItem.setIcon(getResourceManager().getMaterialToolbarIcon(app.outlay.R.string.ic_material_done));
+        saveItem.setIcon(getResourceHelper().getMaterialToolbarIcon(app.outlay.R.string.ic_material_done));
         if (expense != null && expense.getId() == null) {
             MenuItem deleteItem = menu.findItem(app.outlay.R.id.action_delete);
             deleteItem.setVisible(false);
@@ -150,7 +149,7 @@ public class ExpensesDetailsFragment extends BaseMvpFragment<ExpenseDetailsView,
     }
 
     private void loadCategoryIcon(Category category) {
-        int iconCodeRes = ResourceUtils.getIntegerResource(getContext(), category.getIcon());
+        int iconCodeRes = getResourceHelper().getIntegerResource(category.getIcon());
         Drawable categoryIconDrawable = IconUtils.getCategoryIcon(getContext(),
                 iconCodeRes,
                 category.getColor(),

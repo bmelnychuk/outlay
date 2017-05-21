@@ -6,23 +6,20 @@ import android.support.v4.content.ContextCompat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Singleton;
+
 import app.outlay.App;
 import app.outlay.analytics.Analytics;
-import app.outlay.core.data.AppPreferences;
 import app.outlay.core.executor.PostExecutionThread;
 import app.outlay.core.executor.ThreadExecutor;
 import app.outlay.domain.model.Category;
 import app.outlay.executor.JobExecutor;
 import app.outlay.executor.UIThread;
 import app.outlay.firebase.FirebaseAnalyticsImpl;
-import app.outlay.impl.AndroidPreferencesManager;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Singleton;
-
-import app.outlay.utils.ResourceManager;
+import app.outlay.impl.AppPreferences;
 import dagger.Module;
 import dagger.Provides;
 
@@ -45,6 +42,12 @@ public class AppModule {
 
     @Provides
     @Singleton
+    AppPreferences provideAppPreferences() {
+        return new AppPreferences(context);
+    }
+
+    @Provides
+    @Singleton
     PostExecutionThread providePostExecutionThread(UIThread uiThread) {
         return uiThread;
     }
@@ -53,12 +56,6 @@ public class AppModule {
     @Singleton
     ThreadExecutor provideThreadExecutor(JobExecutor jobExecutor) {
         return jobExecutor;
-    }
-
-    @Provides
-    @Singleton
-    AppPreferences provideAppPreferences() {
-        return new AndroidPreferencesManager(context);
     }
 
     @Provides

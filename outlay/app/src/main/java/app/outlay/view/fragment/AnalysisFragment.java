@@ -3,7 +3,6 @@ package app.outlay.view.fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,19 +20,6 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
-
-import app.outlay.core.utils.DateUtils;
-import app.outlay.domain.model.Category;
-import app.outlay.domain.model.Expense;
-import app.outlay.domain.model.Report;
-import app.outlay.mvp.presenter.AnalysisPresenter;
-import app.outlay.mvp.view.AnalysisView;
-import app.outlay.utils.DeviceUtils;
-import app.outlay.utils.IconUtils;
-import app.outlay.utils.ResourceUtils;
-import app.outlay.view.autocomplete.CategoryAutoCompleteAdapter;
-import app.outlay.view.dialog.DatePickerFragment;
-import app.outlay.view.fragment.base.BaseMvpFragment;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 
 import org.joda.time.DateTime;
@@ -46,6 +32,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import app.outlay.core.utils.DateUtils;
+import app.outlay.domain.model.Category;
+import app.outlay.domain.model.Expense;
+import app.outlay.domain.model.Report;
+import app.outlay.mvp.presenter.AnalysisPresenter;
+import app.outlay.mvp.view.AnalysisView;
+import app.outlay.utils.DeviceUtils;
+import app.outlay.utils.IconUtils;
+import app.outlay.view.autocomplete.CategoryAutoCompleteAdapter;
+import app.outlay.view.dialog.DatePickerFragment;
+import app.outlay.view.fragment.base.BaseMvpFragment;
 import butterknife.Bind;
 
 /**
@@ -111,7 +108,7 @@ public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPres
         Drawable noCategoryIcon = IconUtils.getIconMaterialIcon(
                 getContext(),
                 MaterialDesignIconic.Icon.gmi_label,
-                getResourceManager().getInactiveIconColor(),
+                getOutlayTheme().inactiveIconColor,
                 app.outlay.R.dimen.report_category_icon,
                 4
         );
@@ -135,7 +132,7 @@ public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPres
     }
 
     private void loadCategoryIcon(Category category) {
-        int iconCodeRes = ResourceUtils.getIntegerResource(getContext(), category.getIcon());
+        int iconCodeRes = getResourceHelper().getIntegerResource(category.getIcon());
         Drawable categoryIconDrawable = IconUtils.getCategoryIcon(getContext(),
                 iconCodeRes,
                 category.getColor(),
@@ -179,14 +176,14 @@ public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPres
         xAxis.setLabelRotationAngle(270);
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1f);
-        xAxis.setTextColor(getResourceManager().getSecondaryTextColor());
+        xAxis.setTextColor(getOutlayTheme().secondaryTextColor);
         xAxis.setValueFormatter(dayAxisValueFormatter);
 
 
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setValueFormatter(new AmountValueFormatter());
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-        leftAxis.setTextColor(getResourceManager().getSecondaryTextColor());
+        leftAxis.setTextColor(getOutlayTheme().secondaryTextColor);
         leftAxis.setSpaceTop(15f);
         leftAxis.setAxisMinimum(0f);
     }
@@ -229,7 +226,7 @@ public class AnalysisFragment extends BaseMvpFragment<AnalysisView, AnalysisPres
 
         BarData data = new BarData(dataSets);
         data.setValueTextSize(10f);
-        data.setValueTextColor(getResourceManager().getSecondaryTextColor());
+        data.setValueTextColor(getOutlayTheme().secondaryTextColor);
         data.setBarWidth(0.9f);
 
         dayAxisValueFormatter.setExpenses(expenses);

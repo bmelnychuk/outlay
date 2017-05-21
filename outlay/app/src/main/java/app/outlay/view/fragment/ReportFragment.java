@@ -17,7 +17,6 @@ import app.outlay.core.utils.DateUtils;
 import app.outlay.domain.model.Report;
 import app.outlay.mvp.presenter.ReportPresenter;
 import app.outlay.mvp.view.StatisticView;
-import app.outlay.utils.ResourceUtils;
 import app.outlay.view.Navigator;
 import app.outlay.view.adapter.ReportAdapter;
 import app.outlay.view.dialog.DatePickerFragment;
@@ -86,10 +85,10 @@ public class ReportFragment extends BaseMvpFragment<StatisticView, ReportPresent
 
         inflater.inflate(app.outlay.R.menu.menu_report, menu);
         MenuItem dateItem = menu.findItem(app.outlay.R.id.action_date);
-        dateItem.setIcon(getResourceManager().getMaterialToolbarIcon(app.outlay.R.string.ic_material_today));
+        dateItem.setIcon(getResourceHelper().getMaterialToolbarIcon(app.outlay.R.string.ic_material_today));
 
         MenuItem listItem = menu.findItem(app.outlay.R.id.action_list);
-        listItem.setIcon(getResourceManager().getMaterialToolbarIcon(app.outlay.R.string.ic_material_list));
+        listItem.setIcon(getResourceHelper().getMaterialToolbarIcon(app.outlay.R.string.ic_material_list));
     }
 
     @Override

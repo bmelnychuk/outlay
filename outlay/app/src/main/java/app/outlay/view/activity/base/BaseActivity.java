@@ -5,7 +5,9 @@ import android.view.View;
 import app.outlay.App;
 import app.outlay.analytics.Analytics;
 import app.outlay.di.component.AppComponent;
-import app.outlay.utils.ResourceManager;
+import app.outlay.impl.AppPreferences;
+import app.outlay.utils.ResourceHelper;
+import app.outlay.view.OutlayTheme;
 
 /**
  * Created by bmelnychuk on 12/14/16.
@@ -14,7 +16,9 @@ import app.outlay.utils.ResourceManager;
 public interface BaseActivity {
     App getApp();
     View getRootView();
+    OutlayTheme getOutlayTheme();
     AppComponent getApplicationComponent();
     Analytics analytics();
-    ResourceManager getResourceManager();
+    ResourceHelper getResourceHelper();
+    AppPreferences appPreferences();
 }

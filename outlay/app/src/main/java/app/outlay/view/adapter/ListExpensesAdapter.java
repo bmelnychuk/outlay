@@ -14,8 +14,8 @@ import app.outlay.core.utils.NumberUtils;
 import app.outlay.domain.model.Category;
 import app.outlay.domain.model.Expense;
 import app.outlay.utils.IconUtils;
-import app.outlay.utils.ResourceUtils;
 
+import app.outlay.utils.ResourceHelper;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -46,7 +46,7 @@ public class ListExpensesAdapter extends ExpenseAdapter<ListExpensesAdapter.Expe
         holder.date.setText(DateUtils.toShortString(expense.getReportedWhen()));
 
         Category currentOne = expense.getCategory();
-        int iconCodeRes = ResourceUtils.getIntegerResource(context, currentOne.getIcon());
+        int iconCodeRes = ResourceHelper.getIntegerResource(context, currentOne.getIcon());
         Drawable categoryIcon = IconUtils.getCategoryIcon(context, iconCodeRes, currentOne.getColor(), app.outlay.R.dimen.report_category_icon);
         holder.icon.setImageDrawable(categoryIcon);
 

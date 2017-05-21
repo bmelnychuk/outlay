@@ -14,7 +14,8 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
 import app.outlay.App;
 import app.outlay.analytics.Analytics;
 import app.outlay.di.component.AppComponent;
-import app.outlay.utils.ResourceManager;
+import app.outlay.utils.ResourceHelper;
+import app.outlay.view.OutlayTheme;
 import app.outlay.view.activity.base.BaseActivity;
 
 import butterknife.ButterKnife;
@@ -67,8 +68,8 @@ public abstract class BaseMvpFragment<V extends MvpView, P extends MvpPresenter<
     }
 
     @Override
-    public ResourceManager getResourceManager() {
-        return getBaseActivity().getResourceManager();
+    public ResourceHelper getResourceHelper() {
+        return getBaseActivity().getResourceHelper();
     }
 
     @Override
@@ -88,5 +89,10 @@ public abstract class BaseMvpFragment<V extends MvpView, P extends MvpPresenter<
     @Override
     public Analytics analytics() {
         return getAppComponent().analytics();
+    }
+
+    @Override
+    public OutlayTheme getOutlayTheme() {
+        return getBaseActivity().getOutlayTheme();
     }
 }

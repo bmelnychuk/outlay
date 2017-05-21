@@ -1,7 +1,6 @@
 package app.outlay.view.activity.base;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.text.TextUtils;
 
@@ -14,6 +13,9 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import app.outlay.Constants;
 import app.outlay.R;
 import app.outlay.domain.model.User;
@@ -22,9 +24,7 @@ import app.outlay.view.alert.Alert;
 import app.outlay.view.fragment.AboutFragment;
 import app.outlay.view.fragment.AnalysisFragment;
 import app.outlay.view.fragment.CategoriesFragment;
-
-import java.util.ArrayList;
-import java.util.List;
+import app.outlay.view.fragment.SettingsFragment;
 
 /**
  * Created by bmelnychuk on 12/14/16.
@@ -37,6 +37,7 @@ public abstract class DrawerActivity extends ParentActivity {
     private static final int ITEM_SING_OUT = 4;
     private static final int ITEM_CREATE_USER = 5;
     private static final int ITEM_ANALYSIS = 6;
+    private static final int ITEM_SETTINGS = 7;
 
     private Drawer mainDrawer;
 
@@ -45,7 +46,7 @@ public abstract class DrawerActivity extends ParentActivity {
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withTextColor(getResourceManager().getSecondaryTextColor())
+                .withTextColor(getOutlayTheme().secondaryTextColor)
                 .withAlternativeProfileHeaderSwitching(false)
                 .withSelectionListEnabledForSingleProfile(false)
                 .withProfileImagesClickable(false)
@@ -64,7 +65,7 @@ public abstract class DrawerActivity extends ParentActivity {
         items.add(new PrimaryDrawerItem().withName(app.outlay.R.string.menu_item_analysis).withIcon(MaterialDesignIconic.Icon.gmi_trending_up).withIdentifier(ITEM_ANALYSIS));
         items.add(new PrimaryDrawerItem().withName(app.outlay.R.string.menu_item_categories).withIcon(MaterialDesignIconic.Icon.gmi_apps).withIdentifier(ITEM_CATEGORIES));
         items.add(new PrimaryDrawerItem().withName(app.outlay.R.string.menu_item_feedback).withIcon(MaterialDesignIconic.Icon.gmi_email).withIdentifier(ITEM_FEEDBACK));
-        //items.add(new PrimaryDrawerItem().withName(R.string.menu_item_about).withIcon(MaterialDesignIconic.Icon.gmi_info).withIdentifier(ITEM_ABOUT));
+        items.add(new PrimaryDrawerItem().withName(R.string.menu_item_settings).withIcon(MaterialDesignIconic.Icon.gmi_settings).withIdentifier(ITEM_SETTINGS));
         items.add(new PrimaryDrawerItem().withName(app.outlay.R.string.menu_item_signout).withIcon(MaterialDesignIconic.Icon.gmi_sign_in).withIdentifier(ITEM_SING_OUT));
 
 
@@ -85,6 +86,9 @@ public abstract class DrawerActivity extends ParentActivity {
                             case ITEM_ANALYSIS:
                                 analytics().trackAnalysisView();
                                 SingleFragmentActivity.start(this, AnalysisFragment.class);
+                                break;
+                            case ITEM_SETTINGS:
+                                SingleFragmentActivity.start(this, SettingsFragment.class);
                                 break;
                             case ITEM_FEEDBACK:
                                 analytics().trackFeedbackClick();

@@ -1,7 +1,6 @@
 package app.outlay.view.adapter;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,7 @@ import app.outlay.utils.IconUtils;
 
 import java.util.List;
 
-import app.outlay.utils.ResourceManager;
+import app.outlay.view.OutlayTheme;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -25,22 +24,22 @@ public class IconsGridAdapter extends RecyclerView.Adapter<IconsGridAdapter.Cate
     private List<String> items;
     private int activeColor;
     private String selectedIcon;
-    private ResourceManager resourceManager;
+    private OutlayTheme outlayTheme;
 
 
-    public IconsGridAdapter(List<String> categories, int color, String activeIcon, ResourceManager resourceManager) {
+    public IconsGridAdapter(List<String> categories, int color, String activeIcon, OutlayTheme outlayTheme) {
         this.items = categories;
         this.activeColor = color;
-        this.resourceManager = resourceManager;
+        this.outlayTheme = outlayTheme;
         this.selectedIcon = activeIcon;
     }
 
-    public IconsGridAdapter(List<String> categories, int color, ResourceManager resourceManager) {
-        this(categories, color, null, resourceManager);
+    public IconsGridAdapter(List<String> categories, int color, OutlayTheme outlayTheme) {
+        this(categories, color, null, outlayTheme);
     }
 
-    public IconsGridAdapter(List<String> categories, ResourceManager resourceManager) {
-        this(categories, 0, null, resourceManager);
+    public IconsGridAdapter(List<String> categories, OutlayTheme outlayTheme) {
+        this(categories, 0, null, outlayTheme);
     }
 
     public void setActiveColor(int color) {
@@ -77,7 +76,7 @@ public class IconsGridAdapter extends RecyclerView.Adapter<IconsGridAdapter.Cate
         if (currentOne.equals(selectedIcon)) {
             holder.categoryIcon.setIconColor(activeColor);
         } else {
-            holder.categoryIcon.setIconColor(resourceManager.getInactiveIconColor());
+            holder.categoryIcon.setIconColor(outlayTheme.inactiveIconColor);
         }
 
         holder.categoryIcon.setOnClickListener(v -> {

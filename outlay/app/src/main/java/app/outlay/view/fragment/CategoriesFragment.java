@@ -21,7 +21,6 @@ import app.outlay.view.adapter.CategoriesDraggableGridAdapter;
 import app.outlay.domain.model.Category;
 import app.outlay.mvp.presenter.CategoriesPresenter;
 import app.outlay.mvp.view.CategoriesView;
-import app.outlay.utils.ResourceUtils;
 import app.outlay.view.Navigator;
 import app.outlay.view.fragment.base.BaseMvpFragment;
 import app.outlay.view.helper.itemtouch.OnDragListener;
@@ -90,7 +89,7 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
         categoriesGrid.setLayoutManager(gridLayoutManager);
 
-        adapter = new CategoriesDraggableGridAdapter(getResourceManager());
+        adapter = new CategoriesDraggableGridAdapter(getOutlayTheme());
         adapter.setDragListener(this);
         adapter.setOnCategoryClickListener(c -> Navigator.goToCategoryDetails(getActivity(), c.getId()));
         categoriesGrid.setAdapter(adapter);
@@ -99,13 +98,13 @@ public class CategoriesFragment extends BaseMvpFragment<CategoriesView, Categori
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(categoriesGrid);
 
-        fab.setImageDrawable(ResourceUtils.getMaterialToolbarIcon(getActivity(), app.outlay.R.string.ic_material_add));
+        fab.setImageDrawable(getResourceHelper().getFabIcon(app.outlay.R.string.ic_material_add));
         fab.setOnClickListener(v -> Navigator.goToCategoryDetails(getActivity(), null));
 
         Drawable noCategoryIcon = IconUtils.getIconMaterialIcon(
                 getContext(),
                 MaterialDesignIconic.Icon.gmi_label,
-                getResourceManager().getInactiveIconColor(),
+                getOutlayTheme().inactiveIconColor,
                 app.outlay.R.dimen.icon_no_results,
                 16
         );

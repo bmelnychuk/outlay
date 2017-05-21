@@ -10,7 +10,8 @@ import android.view.View;
 import app.outlay.App;
 import app.outlay.analytics.Analytics;
 import app.outlay.di.component.AppComponent;
-import app.outlay.utils.ResourceManager;
+import app.outlay.utils.ResourceHelper;
+import app.outlay.view.OutlayTheme;
 import app.outlay.view.activity.base.BaseActivity;
 import app.outlay.view.activity.base.ParentActivity;
 
@@ -68,12 +69,17 @@ public class StaticContentFragment extends Fragment implements BaseFragment {
     }
 
     @Override
-    public ResourceManager getResourceManager() {
-        return getBaseActivity().getResourceManager();
+    public ResourceHelper getResourceHelper() {
+        return getBaseActivity().getResourceHelper();
     }
 
     @Override
     public AppComponent getAppComponent() {
         return getBaseActivity().getApplicationComponent();
+    }
+
+    @Override
+    public OutlayTheme getOutlayTheme() {
+        return getBaseActivity().getOutlayTheme();
     }
 }

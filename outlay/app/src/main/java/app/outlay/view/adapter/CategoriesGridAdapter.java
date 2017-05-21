@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import app.outlay.domain.model.Category;
 import app.outlay.utils.IconUtils;
-import app.outlay.utils.ResourceUtils;
+import app.outlay.utils.ResourceHelper;
 import app.outlay.view.adapter.listener.OnCategoryClickListener;
 import app.outlay.view.numpad.NumpadEditable;
 import app.outlay.view.numpad.NumpadValidator;
@@ -89,7 +89,7 @@ public class CategoriesGridAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             Context context = categoryViewHolder.categoryContainer.getContext();
 
             Category currentOne = items.get(position - 1);
-            int iconCodeRes = ResourceUtils.getIntegerResource(context, currentOne.getIcon());
+            int iconCodeRes = ResourceHelper.getIntegerResource(context, currentOne.getIcon());
 
             categoryViewHolder.categoryTitle.setText(currentOne.getTitle());
             Drawable categoryIcon = IconUtils.getCategoryIcon(context, iconCodeRes, currentOne.getColor(), app.outlay.R.dimen.category_icon);

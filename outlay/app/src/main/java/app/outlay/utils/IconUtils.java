@@ -8,10 +8,11 @@ import com.github.johnkil.print.PrintDrawable;
 import com.github.johnkil.print.PrintView;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.IIcon;
-import app.outlay.domain.model.Category;
 
 import java.util.Arrays;
 import java.util.List;
+
+import app.outlay.domain.model.Category;
 
 /**
  * Created by Bogdan Melnychuk on 2/2/16.
@@ -96,6 +97,7 @@ public final class IconUtils {
         printView.setIconColor(category.getColor());
     }
 
+    @Deprecated
     public static Drawable getToolbarIcon(Context context, IIcon icon) {
         return new IconicsDrawable(context)
                 .icon(icon)
@@ -103,13 +105,7 @@ public final class IconUtils {
                 .sizeDp(24);
     }
 
-    public static Drawable getIconMaterialIcon(Context context, IIcon icon, int color, int sizeRes) {
-        return new IconicsDrawable(context)
-                .icon(icon)
-                .color(color)
-                .sizeRes(sizeRes);
-    }
-
+    @Deprecated
     public static Drawable getIconMaterialIcon(Context context, IIcon icon, int color, int sizeRes, int paddingDp) {
         return new IconicsDrawable(context)
                 .icon(icon)
@@ -118,6 +114,7 @@ public final class IconUtils {
                 .sizeRes(sizeRes);
     }
 
+    @Deprecated
     public static Drawable getToolbarIcon(Context context, IIcon icon, int paddingDp) {
         return new IconicsDrawable(context)
                 .icon(icon)
@@ -128,7 +125,7 @@ public final class IconUtils {
 
     public static void loadCategoryIcon(String icon, PrintView printView) {
         printView.setIconFont("fonts/font-outlay.ttf");
-        printView.setIconCodeRes(ResourceUtils.getIntegerResource(printView.getContext(), icon));
+        printView.setIconCodeRes(ResourceHelper.getIntegerResource(printView.getContext(), icon));
     }
 
     public static Drawable getCategoryIcon(Context context, int codeResId, int color, int sizeRes) {

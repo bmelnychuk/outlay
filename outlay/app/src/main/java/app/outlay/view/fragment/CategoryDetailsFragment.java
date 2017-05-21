@@ -19,7 +19,6 @@ import app.outlay.domain.model.Category;
 import app.outlay.mvp.presenter.CategoryDetailsPresenter;
 import app.outlay.mvp.view.CategoryDetailsView;
 import app.outlay.utils.IconUtils;
-import app.outlay.utils.ResourceUtils;
 import app.outlay.view.adapter.IconsGridAdapter;
 import app.outlay.view.alert.Alert;
 import app.outlay.view.fragment.base.BaseMvpFragment;
@@ -81,7 +80,7 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(app.outlay.R.menu.menu_category_details, menu);
         MenuItem saveItem = menu.findItem(app.outlay.R.id.action_save);
-        saveItem.setIcon(getResourceManager().getMaterialToolbarIcon(app.outlay.R.string.ic_material_done));
+        saveItem.setIcon(getResourceHelper().getMaterialToolbarIcon(app.outlay.R.string.ic_material_done));
         if (category != null && category.getId() == null) {
             MenuItem deleteItem = menu.findItem(app.outlay.R.id.action_delete);
             deleteItem.setVisible(false);
@@ -120,7 +119,7 @@ public class CategoryDetailsFragment extends BaseMvpFragment<CategoryDetailsView
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
         iconsGrid.setLayoutManager(gridLayoutManager);
-        adapter = new IconsGridAdapter(IconUtils.getAll(), getResourceManager());
+        adapter = new IconsGridAdapter(IconUtils.getAll(), getOutlayTheme());
         iconsGrid.setAdapter(adapter);
         colorPicker.setOnColorChangedListener(i -> adapter.setActiveColor(i));
 

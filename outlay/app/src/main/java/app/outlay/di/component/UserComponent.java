@@ -11,6 +11,7 @@ import app.outlay.view.fragment.ExpensesListFragment;
 import app.outlay.view.fragment.MainFragment;
 import app.outlay.view.fragment.ReportFragment;
 
+import app.outlay.view.fragment.SettingsFragment;
 import dagger.Subcomponent;
 
 /**
@@ -35,4 +36,6 @@ public interface UserComponent {
     void inject(MainFragment mainFragment2);
 
     void inject(AnalysisFragment analysisFragment);
+
+    void inject(SettingsFragment settingsFragment);
 }

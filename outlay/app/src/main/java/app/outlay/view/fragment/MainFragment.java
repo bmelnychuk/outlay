@@ -2,6 +2,7 @@ package app.outlay.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import app.outlay.R;
 import app.outlay.core.utils.DateUtils;
 import app.outlay.core.utils.NumberUtils;
 import app.outlay.domain.model.Category;
@@ -21,7 +23,6 @@ import app.outlay.domain.model.Expense;
 import app.outlay.domain.model.User;
 import app.outlay.mvp.presenter.EnterExpensePresenter;
 import app.outlay.mvp.view.EnterExpenseView;
-import app.outlay.utils.ResourceUtils;
 import app.outlay.view.Navigator;
 import app.outlay.view.activity.base.DrawerActivity;
 import app.outlay.view.adapter.CategoriesGridAdapter;
@@ -47,6 +48,9 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
 
     @Bind(app.outlay.R.id.drawerIcon)
     ImageView drawerIcon;
+
+    @Bind(R.id.footer)
+    View footer;
 
     @Bind(app.outlay.R.id.categoriesGrid)
     RecyclerView categoriesGrid;
@@ -150,8 +154,10 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     }
 
     private void initStaticContent() {
-        chartIcon.setImageDrawable(getResourceManager().getCustomToolbarIcon(app.outlay.R.integer.ic_chart));
-        drawerIcon.setImageDrawable(getResourceManager().getMaterialToolbarIcon(app.outlay.R.string.ic_material_menu));
+        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(footer);
+
+        chartIcon.setImageDrawable(getResourceHelper().getCustomToolbarIcon(app.outlay.R.integer.ic_chart));
+        drawerIcon.setImageDrawable(getResourceHelper().getMaterialToolbarIcon(app.outlay.R.string.ic_material_menu));
 
         drawerIcon.setOnClickListener(v -> ((DrawerActivity) getActivity()).getMainDrawer().openDrawer());
         chartIcon.setOnClickListener(v -> {
