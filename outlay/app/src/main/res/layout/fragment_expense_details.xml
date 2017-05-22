@@ -7,12 +7,12 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:elevation="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="16dp"
+        android:background="?attr/colorPrimary"
+        android:elevation="8dp" />
 
 
     <RelativeLayout
@@ -80,15 +80,14 @@
             android:id="@+id/noteInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dateInputLayout"
-            android:visibility="gone">
+            android:layout_below="@+id/dateInputLayout">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/note"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/label_note"
-                android:textColor="@color/text_primary" />
+                android:textColor="?attr/textColorPrimary" />
 
         </android.support.design.widget.TextInputLayout>
     </RelativeLayout>

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +50,8 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     @Bind(app.outlay.R.id.drawerIcon)
     ImageView drawerIcon;
 
-    @Bind(R.id.footer)
-    View footer;
+    @Bind(R.id.bottomSheet)
+    View bottomSheet;
 
     @Bind(app.outlay.R.id.categoriesGrid)
     RecyclerView categoriesGrid;
@@ -63,6 +64,9 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
 
     @Bind(app.outlay.R.id.dateLabel)
     TextView dateLabel;
+
+    @Bind(R.id.expenseNote)
+    EditText expenseNote;
 
     @Inject
     EnterExpensePresenter presenter;
@@ -142,6 +146,9 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
 
                 Expense e = new Expense();
                 e.setCategory(category);
+                if (!TextUtils.isEmpty(expenseNote.getText())) {
+                    e.setNote(expenseNote.getText().toString());
+                }
                 e.setAmount(new BigDecimal(amountText.getText().toString()));
                 e.setReportedWhen(selectedDate);
                 analytics().trackExpenseCreated(e);
@@ -154,7 +161,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
     }
 
     private void initStaticContent() {
-        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(footer);
+        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
         chartIcon.setImageDrawable(getResourceHelper().getCustomToolbarIcon(app.outlay.R.integer.ic_chart));
         drawerIcon.setImageDrawable(getResourceHelper().getMaterialToolbarIcon(app.outlay.R.string.ic_material_menu));
@@ -173,7 +180,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
                 Date selected = c.getTime();
                 analytics().trackMainScreenDateChange(new Date(), selected);
                 selectedDate = selected;
-                dateLabel.setText(DateUtils.toLongString(selected));
+                dateLabel.setText(DateUtils.toShortString(selected));
             });
             datePickerFragment.show(getChildFragmentManager(), "datePicker");
         });
@@ -200,6 +207,7 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
                 v -> {
                     presenter.deleteExpense(expense);
                     amountText.setText(NumberUtils.formatAmount(expense.getAmount()));
+                    expenseNote.setText(expense.getNote());
                 }
         );
     }
@@ -211,5 +219,6 @@ public class MainFragment extends BaseMvpFragment<EnterExpenseView, EnterExpense
 
     private void cleanAmountInput() {
         amountText.setText("");
+        expenseNote.setText("");
     }
 }

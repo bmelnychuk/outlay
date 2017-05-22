@@ -38,18 +38,35 @@
         android:padding="@dimen/spacing_default"
         android:textColor="?attr/textColorSecondary" />
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/date"
         android:layout_toRightOf="@+id/icon"
-        android:ellipsize="end"
-        android:fontFamily="sans-serif-light"
         android:gravity="center_vertical"
-        android:lines="2"
-        android:textColor="?attr/textColorPrimary"
-        android:textStyle="bold" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-light"
+            android:textColor="?attr/textColorPrimary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-light"
+            android:textColor="?attr/textColorSecondary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </RelativeLayout>

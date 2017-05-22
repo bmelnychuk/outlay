@@ -3,6 +3,7 @@ package app.outlay.view.adapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,8 @@ public class ListExpensesAdapter extends ExpenseAdapter<ListExpensesAdapter.Expe
         int iconCodeRes = ResourceHelper.getIntegerResource(context, currentOne.getIcon());
         Drawable categoryIcon = IconUtils.getCategoryIcon(context, iconCodeRes, currentOne.getColor(), app.outlay.R.dimen.report_category_icon);
         holder.icon.setImageDrawable(categoryIcon);
-
+        holder.note.setVisibility(TextUtils.isEmpty(expense.getNote()) ? View.GONE : View.VISIBLE);
+        holder.note.setText(expense.getNote());
         holder.title.setText(currentOne.getTitle());
     }
 
@@ -65,6 +67,9 @@ public class ListExpensesAdapter extends ExpenseAdapter<ListExpensesAdapter.Expe
 
         @Bind(app.outlay.R.id.title)
         TextView title;
+
+        @Bind(app.outlay.R.id.note)
+        TextView note;
 
         @Bind(app.outlay.R.id.container)
         View container;

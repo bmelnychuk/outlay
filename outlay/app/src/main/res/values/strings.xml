@@ -28,7 +28,7 @@
     <string name="label_category_name">Category name</string>
     <string name="label_amount">Amount</string>
     <string name="label_date">Date</string>
-    <string name="label_note">Note</string>
+    <string name="label_note">Expense note</string>
     <string name="label_today">Today</string>
     <string name="label_spent_today">Spent today</string>
     <string name="label_this_week">This week</string>
