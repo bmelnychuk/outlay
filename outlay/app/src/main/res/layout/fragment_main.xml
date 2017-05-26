@@ -67,7 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/spacing_very_big"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="88dp"
             android:paddingLeft="@dimen/spacing_default"
             android:paddingRight="@dimen/spacing_default"
             android:text="Go to categories"
@@ -80,13 +81,22 @@
         android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/colorPrimary"
-        app:behavior_peekHeight="56dp"
+        android:background="?attr/backgroundColor"
+        app:behavior_peekHeight="?attr/actionBarSize"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+        <android.support.v7.widget.Toolbar
+            android:visibility="gone"
+            android:id="@+id/bottomSheetToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:background="?attr/colorPrimary"
+            android:elevation="8dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true">
 
             <View
@@ -140,12 +150,18 @@
                         android:background="@color/transparent"
                         android:hint="@string/label_note"
                         android:maxLines="1"
-                        android:textColor="?attr/textColorSecondary" />
+                        android:textColor="?attr/textColorPrimary" />
                 </FrameLayout>
 
             </RelativeLayout>
 
         </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/timelineRecycler"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

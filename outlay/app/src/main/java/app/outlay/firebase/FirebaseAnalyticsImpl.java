@@ -4,15 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+
+import java.util.Date;
+
+import javax.inject.Inject;
+
 import app.outlay.BuildConfig;
 import app.outlay.analytics.Analytics;
 import app.outlay.core.utils.DateUtils;
 import app.outlay.domain.model.Category;
 import app.outlay.domain.model.Expense;
-
-import java.util.Date;
-
-import javax.inject.Inject;
+import app.outlay.impl.AppPreferences;
 
 /**
  * Created by bmelnychuk on 2/11/17.
@@ -158,6 +160,28 @@ public class FirebaseAnalyticsImpl implements Analytics {
         b.putLong("dateToLong", to.getTime());
         b.putString("dateTo", DateUtils.toShortString(to));
         trackEvent("analysis_event", b);
+    }
+
+    @Override
+    public void trackNoteEntered() {
+        trackEvent("note_entered", null);
+    }
+
+    @Override
+    public void trackViewTimeline() {
+        trackEvent("timeline_view", null);
+    }
+
+    @Override
+    public void trackThemeChanged(int theme) {
+        switch (theme) {
+            case AppPreferences.THEME_DARK:
+                trackEvent("theme_dark_used", null);
+                break;
+            case AppPreferences.THEME_LIGHT:
+                trackEvent("theme_light_used", null);
+                break;
+        }
     }
 
     private Bundle expenseBundle(Expense e) {

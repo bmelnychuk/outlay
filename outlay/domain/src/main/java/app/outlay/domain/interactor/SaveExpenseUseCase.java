@@ -2,6 +2,7 @@ package app.outlay.domain.interactor;
 
 import app.outlay.core.executor.PostExecutionThread;
 import app.outlay.core.executor.ThreadExecutor;
+import app.outlay.core.utils.DateUtils;
 import app.outlay.domain.model.Expense;
 import app.outlay.domain.repository.ExpenseRepository;
 
@@ -31,9 +32,11 @@ public class SaveExpenseUseCase extends UseCase<Expense, Expense> {
 
     @Override
     protected Observable<Expense> buildUseCaseObservable(Expense expense) {
-        DateTime dateTime = new DateTime(expense.getReportedWhen().getTime());
-        dateTime = dateTime.withTime(LocalTime.now());
-        expense.setReportedWhen(dateTime.toDate());
+        if (DateUtils.isToday(expense.getReportedWhen())) {
+            DateTime dateTime = new DateTime(expense.getReportedWhen().getTime());
+            dateTime = dateTime.withTime(LocalTime.now());
+            expense.setReportedWhen(dateTime.toDate());
+        }
         return expenseRepository.saveExpense(expense);
     }
 }

@@ -20,6 +20,7 @@
     <string name="error_amount_invalid">Invalid amount</string>
     <string name="error_category_icon">Icon was not selected</string>
 
+    <string name="label_whats_new">What\'s New</string>
     <string name="label_send_email">Send email</string>
     <string name="label_undo">Undo</string>
     <string name="label_day">Day</string>
@@ -28,7 +29,7 @@
     <string name="label_category_name">Category name</string>
     <string name="label_amount">Amount</string>
     <string name="label_date">Date</string>
-    <string name="label_note">Expense note</string>
+    <string name="label_note">Description...</string>
     <string name="label_today">Today</string>
     <string name="label_spent_today">Spent today</string>
     <string name="label_this_week">This week</string>
@@ -40,7 +41,10 @@
     <string name="label_delete">Delete</string>
     <string name="label_summary">Summary</string>
     <string name="label_expenses_list">Expenses List</string>
-
+    <string name="label_ok">OK</string>
+    <string name="text_whats_new">
+        Based on your requests:\n - You can now add description to your expenses \n - Light theme added \n - Timeline view, just swipe up bottom panel
+    </string>
     <string name="caption_about">About</string>
     <string name="caption_categories">Categories</string>
     <string name="caption_edit_category">Edit Category</string>

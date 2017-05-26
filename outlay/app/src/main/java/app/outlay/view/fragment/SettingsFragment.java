@@ -77,6 +77,7 @@ public class SettingsFragment extends BaseMvpFragment<SettingsView, SettingsPres
                         .items("Dark", "Light")
                         .itemsCallback((dialog, view11, which, text) -> {
                             getPresenter().updateTheme(which);
+                            analytics().trackThemeChanged(which);
                             Navigator.goToMainScreen(getActivity());
                         })
                         .show());

@@ -13,5 +13,7 @@
     <color name="theme.dark.text_secondary">#B2FFFFFF</color>
     <color name="theme.dark.text_disabled">#4CFFFFFF</color>
 
+    <color name="theme.dark.divider">#212219</color>
+
     <color name="theme.dark.progress">#11FFFFFF</color>
 </resources>

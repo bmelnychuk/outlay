@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import app.outlay.BuildConfig;
+
 public class AppPreferences {
     public static final int THEME_DARK = 0;
     public static final int THEME_LIGHT = 1;
@@ -59,6 +61,15 @@ public class AppPreferences {
 
     public int getTheme() {
         return getInt(PREF_THEME);
+    }
+
+    public boolean showWhatsNew() {
+        String key = BuildConfig.VERSION_NAME + "_whatsNew";
+        boolean result = getBoolean(key, true);
+        if (result) {
+            putBoolean(key, false);
+        }
+        return result;
     }
 
 }

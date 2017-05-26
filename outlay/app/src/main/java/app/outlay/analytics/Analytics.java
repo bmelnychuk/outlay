@@ -53,4 +53,10 @@ public interface Analytics {
     void trackAnalysisView();
 
     void trackAnalysisPerformed(Date from, Date to);
+
+    void trackNoteEntered();
+
+    void trackViewTimeline();
+
+    void trackThemeChanged(int theme);
 }

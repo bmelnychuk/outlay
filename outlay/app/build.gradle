@@ -122,6 +122,9 @@ dependencies {
     compile "com.google.firebase:firebase-core:${libs.firebase}"
     compile "com.google.firebase:firebase-auth:${libs.firebase}"
     compile "com.google.firebase:firebase-database:${libs.firebase}"
+
+    compile 'ca.barrenechea.header-decor:header-decor:0.2.8'
+
     releaseCompile "com.google.firebase:firebase-crash:${libs.firebase}"
     stagingCompile "com.google.firebase:firebase-crash:${libs.firebase}"
 }

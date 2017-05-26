@@ -14,11 +14,18 @@ public final class Alert {
     }
 
     public static void info(View view, String message, View.OnClickListener clickListener) {
+        info(view, message, clickListener, null);
+    }
+
+    public static void info(View view, String message, View.OnClickListener clickListener, Snackbar.Callback callback) {
         Context context = view.getContext();
         Snackbar bar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
         if (clickListener != null) {
             bar.setAction(context.getString(app.outlay.R.string.label_undo), clickListener);
             bar.setActionTextColor(ContextCompat.getColor(context, app.outlay.R.color.red));
+        }
+        if(callback != null) {
+            bar.addCallback(callback);
         }
         bar.show();
     }

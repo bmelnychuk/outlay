@@ -3,6 +3,7 @@
 
     <attr name="backgroundColor" format="reference" />
     <attr name="backgroundDarkColor" format="reference" />
+    <attr name="divider" format="reference" />
 
     <attr name="activeIconColor" format="reference" />
     <attr name="inactiveIconColor" format="reference" />

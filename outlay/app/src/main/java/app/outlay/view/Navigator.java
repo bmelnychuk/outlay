@@ -71,6 +71,13 @@ public final class Navigator {
         changeFragment(activityFrom, ExpensesListFragment.class, b);
     }
 
+    public static void goToExpenseDetails(FragmentActivity activityFrom, Expense expense, boolean newActivity) {
+        Bundle b = new Bundle();
+        b.putString(ExpensesDetailsFragment.ARG_EXPENSE_ID, expense.getId());
+        b.putLong(ExpensesDetailsFragment.ARG_DATE, expense.getReportedWhen().getTime());
+        SingleFragmentActivity.start(activityFrom, ExpensesDetailsFragment.class, b);
+    }
+
     public static void goToExpenseDetails(FragmentActivity activityFrom, Expense expense) {
         Bundle b = new Bundle();
         if (expense != null) {

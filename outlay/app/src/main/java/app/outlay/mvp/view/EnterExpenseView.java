@@ -13,6 +13,7 @@ import java.util.List;
 
 public interface EnterExpenseView extends MvpView {
     void showCategories(List<Category> categoryList);
+    void showTimeline(List<Expense> expenses);
     void setAmount(BigDecimal amount);
     void alertExpenseSuccess(Expense expense);
 }

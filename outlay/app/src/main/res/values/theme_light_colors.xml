@@ -13,6 +13,7 @@
     <color name="theme.light.text_secondary">#8A000000</color>
     <color name="theme.light.text_disabled">#61000000</color>
 
+    <color name="theme.light.divider">#9B99A6</color>
     <color name="theme.light.progress">#E0E0E0</color>
 
 

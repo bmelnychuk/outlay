@@ -14,6 +14,7 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
 import app.outlay.App;
 import app.outlay.analytics.Analytics;
 import app.outlay.di.component.AppComponent;
+import app.outlay.impl.AppPreferences;
 import app.outlay.utils.ResourceHelper;
 import app.outlay.view.OutlayTheme;
 import app.outlay.view.activity.base.BaseActivity;
@@ -94,5 +95,11 @@ public abstract class BaseMvpFragment<V extends MvpView, P extends MvpPresenter<
     @Override
     public OutlayTheme getOutlayTheme() {
         return getBaseActivity().getOutlayTheme();
+    }
+
+
+    @Override
+    public AppPreferences appPreferences() {
+        return getBaseActivity().appPreferences();
     }
 }
