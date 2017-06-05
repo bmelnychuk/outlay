@@ -1,0 +1,48 @@
+language: android
+android:
+  components:
+    - tools
+    - build-tools-25.0.2
+    - android-25
+    - android-21
+    - add-on
+    - extra
+    - platform-tools
+    - extra-google-googleplayservices
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon-google_apis-google-19
+    - sys-img-armeabi-v7a-android-21
+  licenses:
+    - android-sdk-license-.+
+    - '.+'
+
+before_install:
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+
+env:
+  global:
+    # Add this
+    - MALLOC_ARENA_MAX=2
+
+sudo: required
+
+before_script:
+  # Create and start emulator
+  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a -s "768x1280"
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - adb wait-for-device
+  - adb shell input keyevent 82 &
+
+script: ./gradlew :app:build
+
+
+
+notifications:
+  email:
+    recipients:
+    - laszlo.tamas94@gmail.com
+    on_failure: always
+    on_success: always
