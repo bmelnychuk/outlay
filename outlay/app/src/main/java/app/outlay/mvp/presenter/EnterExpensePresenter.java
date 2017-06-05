@@ -84,7 +84,13 @@ public class EnterExpensePresenter extends MvpBasePresenter<EnterExpenseView> {
                 Collections.sort(report.getExpenses(), new Comparator<Expense>() {
                     @Override
                     public int compare(Expense e1, Expense e2) {
-                        return (int) (e2.getReportedWhen().getTime() - e1.getReportedWhen().getTime());
+                        if (e1.getReportedWhen().getTime() > e2.getReportedWhen().getTime()) {
+                            return -1;
+                        } else if (e1.getReportedWhen().getTime() < e2.getReportedWhen().getTime()) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
                     }
                 });
                 getView().showTimeline(report.getExpenses());
