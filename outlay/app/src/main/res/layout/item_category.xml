@@ -5,26 +5,28 @@
     android:layout_height="@dimen/category_item_height"
     android:padding="@dimen/spacing_small">
 
-    <ImageView
-        android:id="@+id/categoryIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="?selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:padding="@dimen/spacing_very_small" />
-
     <TextView
         android:id="@+id/categoryTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/categoryIcon"
+        android:layout_alignParentBottom="true"
         android:ellipsize="end"
         android:textColor="?attr/textColorSecondary"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:lines="2"
         android:textSize="@dimen/text_secondary" />
+
+    <ImageView
+        android:id="@+id/categoryIcon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/categoryTitle"
+        android:layout_centerHorizontal="true"
+        android:background="?selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:padding="@dimen/spacing_very_small" />
+
+
 
 </RelativeLayout>

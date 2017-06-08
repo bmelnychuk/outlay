@@ -9,7 +9,6 @@
         android:background="?selectableItemBackgroundBorderless"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:padding="@dimen/spacing_default"
         android:textColor="@color/accent"
         android:textSize="@dimen/text_number" />
 </merge>

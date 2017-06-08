@@ -150,6 +150,7 @@
                         android:background="@color/transparent"
                         android:hint="@string/label_note"
                         android:maxLines="1"
+                        android:lines="1"
                         android:textColor="?attr/textColorPrimary" />
                 </FrameLayout>
 
