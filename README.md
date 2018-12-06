@@ -1,6 +1,5 @@
 Outlay - Expense Tracker
 ====================
-[![Outlay on Google Play Store](http://style.anu.edu.au/_anu/images/icons/icon-google-play-small.png)](https://play.google.com/store/apps/details?id=app.outlay)
 
 Recently I have realized that I need to track my expenses. Unfortunately I could not find existing application that would fit me perfectly: too many configurations, options, buttons… So I decided to create my own app and share it with you. 
 
@@ -29,4 +28,4 @@ Also project shows simplified clean architecture of android app with usage:
 <img width='300' hspace='20' src='https://drive.google.com/uc?id=0B3hs6EXn55WUSjktd0h4ckJ5a00' />
 <img width='300' hspace='20' src='https://drive.google.com/uc?id=0B3hs6EXn55WULUVUOGliSU9UZUk' />
 
-* Inspired by OK Expenses https://itunes.apple.com/us/app/expenses-ok-excellent-expense/id932322041
+
