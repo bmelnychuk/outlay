@@ -11,18 +11,6 @@ Outlay makes tracking your expenses so easy and simple. Fewest taps are necessar
 
 App covers all of my current needs, but there are a lot of possible improvements, so feel free to request features and share your feedback.
 
-Also project shows simplified clean architecture of android app with usage:
-------------
-
-- Dagger 2
-- RxJava
-- ItemTouchHelper (for dragging items withing grid view)
-- MVP
-- Material Design tools
-- Iconic font usage
-- Firebase
-
-
 <img width='300' hspace='20' src='https://drive.google.com/uc?id=0B3hs6EXn55WUU3haUVY4ckVPU00' />
 <img width='300' hspace='20' src='https://drive.google.com/uc?id=0B3hs6EXn55WUbWhVc1k0WDlfelE' />
 <img width='300' hspace='20' src='https://drive.google.com/uc?id=0B3hs6EXn55WUSjktd0h4ckJ5a00' />
